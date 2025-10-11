@@ -3,12 +3,16 @@ import NavBar from "./components/NavBar";
 import Page from "./components/Page";
 
 import Properties from "./pages/Properties";
+import AddProperty from "./pages/AddProperty";
 import PropertyDashboard from "./pages/PropertyDashboard";
 import InventoryReports from "./pages/InventoryReports";
 import Rooms from "./pages/Rooms";
+import RoomDashboard from "./pages/RoomDashboard";
 import RoomInventory from "./pages/RoomInventory";
 import RoomPhotos from "./pages/RoomPhotos";
 import AddPhotos from "./pages/AddPhotos";
+import Gallery from "./pages/Gallery";
+import AddToGallery from "./pages/AddToGallery";
 import PhoneGallery from "./pages/PhoneGallery";
 import Settings from "./pages/Settings";
 
@@ -27,6 +31,10 @@ export default function App() {
               element={<Page title="My Properties"><Properties /></Page>}
             />
             <Route
+              path="/add-property"
+              element={<Page title="Add New Property"><AddProperty /></Page>}
+            />
+            <Route
               path="/properties/:id/dashboard"
               element={<Page title="Property Dashboard"><PropertyDashboard /></Page>}
             />
@@ -39,6 +47,10 @@ export default function App() {
               element={<Page title="Rooms"><Rooms /></Page>}
             />
             <Route
+              path="/properties/:id/rooms/:roomId/dashboard"
+              element={<Page title="Room Dashboard"><RoomDashboard /></Page>}
+            />
+            <Route
               path="/properties/:id/rooms/:roomId/inventory"
               element={<Page title="Room Inventory"><RoomInventory /></Page>}
             />
@@ -49,6 +61,14 @@ export default function App() {
             <Route
               path="/properties/:id/rooms/:roomId/add-photos"
               element={<Page title="Add Photos"><AddPhotos /></Page>}
+            />
+            <Route
+              path="/gallery"
+              element={<Page title="Gallery"><Gallery /></Page>}
+            />
+            <Route
+              path="/gallery/add"
+              element={<Page title="Add to Gallery"><AddToGallery /></Page>}
             />
             <Route
               path="/phone"

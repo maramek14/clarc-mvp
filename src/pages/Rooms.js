@@ -37,7 +37,7 @@ export default function Rooms() {
   if (!property) return <div>Property not found.</div>;
 
   const handleRoomClick = (roomId) => {
-    navigate(`/properties/${id}/rooms/${roomId}/inventory`);
+    navigate(`/properties/${id}/rooms/${roomId}/dashboard`);
   };
 
   return (
