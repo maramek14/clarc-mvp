@@ -21,6 +21,7 @@ import AddPhotos from "./pages/AddPhotos";
 import Gallery from "./pages/Gallery";
 import AddToGallery from "./pages/AddToGallery";
 import PhoneGallery from "./pages/PhoneGallery";
+import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
 
 import "./App.css";
@@ -108,6 +109,10 @@ export default function App() {
             <Route
               path="/phone"
               element={<Page title="Phone Gallery"><PhoneGallery /></Page>}
+            />
+            <Route
+              path="/reports"
+              element={<Page title="Reports"><Reports /></Page>}
             />
             <Route
               path="/settings"
