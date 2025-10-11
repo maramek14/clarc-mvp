@@ -72,6 +72,31 @@ export const propertyReports = [
   }
 ];
 
+export const liverpoolPropertyReport = {
+  id: "prop-report-liverpool-1",
+  propertyId: "prop-2",
+  name: "Check-in Property Report - Jack Brookes",
+  reportType: "check-in",
+  tenantName: "Jack Brookes",
+  tenancyPeriod: "August 2024 - August 2025",
+  createdDate: "2024-08-15",
+  inspectionDate: "2024-08-15",
+  status: "complete",
+  roomsIncluded: ["room-1", "room-2", "room-3"],
+  roomsExcluded: [],
+  warnings: [],
+  totalItems: 34,
+  conditionSummary: {
+    excellent: 21,
+    good: 13,
+    fair: 0,
+    poor: 0,
+    damaged: 0
+  },
+  notes: "Complete check-in inspection for Jack Brookes. All rooms inspected and documented. Property in excellent overall condition with minor wear on select furniture items. All appliances tested and working. Tenant briefed on property condition and given keys."
+};
+
+
 // Helper function to get property reports by property
 export function getPropertyReportsByProperty(propertyId) {
   return propertyReports.filter(report => report.propertyId === propertyId);
