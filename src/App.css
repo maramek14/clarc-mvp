@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
-/* -------------------------
+/* =========================
    GLOBAL BACKGROUND + FRAME
--------------------------- */
+========================= */
 html, body {
   height: 100%;
-  overflow: hidden;  /* no outer scroll */
+  overflow: hidden;
 }
 
 body {
@@ -27,23 +27,9 @@ body {
   min-height: 100vh;
 }
 
-/* -------------------------
-   RESPONSIVE BEHAVIOUR
--------------------------- */
-@media (max-width: 440px) {
-  .app-shell,
-  .navbar {
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-    border-radius: 0;
-    box-shadow: none;
-  }
-}
-
-/* -------------------------
+/* =========================
    GLOBAL RESET
--------------------------- */
+========================= */
 * {
   box-sizing: border-box;
 }
@@ -64,7 +50,7 @@ a {
 }
 
 /* =========================
-   GLOBAL LAYOUT
+   CSS VARIABLES
 ========================= */
 :root {
   --accent: #0b63f6;
@@ -77,17 +63,20 @@ a {
   --shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
+/* =========================
+   APP SHELL
+========================= */
 .app-shell {
   display: flex;
   flex-direction: column;
   width: 420px;
   min-width: 420px;
   max-width: 420px;
-  height: 100vh;               /* fixed height for phone frame */
+  height: 100vh;
   background: var(--card-bg);
   border-radius: 24px;
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
-  overflow: hidden;            /* keeps frame tidy, not scrollable */
+  overflow: hidden;
 }
 
 .app-content {
@@ -95,7 +84,7 @@ a {
   display: flex;
   flex-direction: column;
   height: 100%;
-  overflow: hidden;            /* only page-content scrolls */
+  overflow: hidden;
 }
 
 /* =========================
@@ -110,6 +99,13 @@ h1 {
 h3 {
   margin: 0.5rem 0;
   font-size: 1.1rem;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0 0 1.5rem;
+  text-align: center;
 }
 
 /* =========================
@@ -144,18 +140,6 @@ h3 {
 
 .button-primary:hover {
   background: var(--accent-dark);
-}
-
-/* =========================
-   CARDS
-========================= */
-.property-card,
-.room-card {
-  background: var(--card-bg);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 1rem;
-  margin-bottom: 1rem;
 }
 
 /* =========================
@@ -200,7 +184,6 @@ h3 {
   overflow: hidden;
 }
 
-/* ---- header ---- */
 .page-header {
   position: sticky;
   top: 0;
@@ -216,11 +199,14 @@ h3 {
 }
 
 .page-title {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 600;
+  line-height: 1.4;
   margin: 0;
+  max-width: 90%;
   text-align: center;
   color: var(--text);
+  word-break: break-word;
 }
 
 .back-button {
@@ -242,61 +228,17 @@ h3 {
   color: var(--accent);
 }
 
-/* ---- content ---- */
 .page-content {
   flex: 1;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch; /* smooth on phones */
-  padding: 1rem 1.25rem 5rem;        /* space for navbar */
+  -webkit-overflow-scrolling: touch;
+  padding: 1rem 1.25rem 5rem;
   box-sizing: border-box;
   background: var(--bg);
 }
-/* =========================
-   PHOTO GRID
-========================= */
-.photo-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-  gap: 0.75rem;
-}
-
-.photo-grid img {
-  width: 100%;
-  height: 110px;
-  object-fit: cover;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
 
 /* =========================
-   TABLES
-========================= */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-  background: var(--card-bg);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  overflow: hidden;
-}
-
-th, td {
-  padding: 0.75rem 1rem;
-  text-align: left;
-  border-bottom: 1px solid #eee;
-}
-
-th {
-  background: #f3f4f6;
-  font-weight: 600;
-}
-
-tr:last-child td {
-  border-bottom: none;
-}
-/* =========================
-   PROPERTY LIST + CLICKABLE CARDS
+   PROPERTY CARDS
 ========================= */
 .property-list {
   display: flex;
@@ -345,7 +287,99 @@ tr:last-child td {
   font-size: 0.9rem;
 }
 
-/* ---- Add Property card ---- */
+/* =========================
+   ROOM CARDS (NEW CLEAN DESIGN)
+========================= */
+.room-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.room-card-clean {
+  display: flex;
+  align-items: center;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  gap: 1rem;
+  min-height: 72px;
+}
+
+.room-card-clean:hover,
+.room-card-clean:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+
+.room-card-clean:active {
+  transform: translateY(0);
+}
+
+.room-icon-clean {
+  font-size: 2rem;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.room-info-clean {
+  flex: 1;
+}
+
+.room-info-clean h3 {
+  font-size: 1rem;
+  margin: 0;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.room-arrow {
+  font-size: 1.25rem;
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+.room-card-clean:hover .room-arrow {
+  transform: translateX(4px);
+  color: var(--accent);
+}
+
+/* Add Room Card */
+.add-room-card {
+  background: linear-gradient(135deg, #f8f9fa 0%, #f1f3f5 100%);
+  border: 2px dashed #dee2e6;
+  justify-content: center;
+  min-height: 72px;
+}
+
+.add-room-card:hover {
+  background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+  border-color: var(--accent);
+}
+
+.add-room-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--accent);
+}
+
+/* =========================
+   ADD CARD (PROPERTIES)
+========================= */
 .add-card {
   justify-content: center;
   align-items: center;
@@ -369,26 +403,129 @@ tr:last-child td {
 .add-card:focus-visible {
   background: #e5e9f5;
 }
-.page-title {
-  text-align: center;
-  font-size: 1.1rem;
-  font-weight: 600;
-  line-height: 1.4;
-  margin: 0;
-  max-width: 90%;
-  color: var(--text);
-  word-break: break-word;
+
+/* =========================
+   PHOTO GRID
+========================= */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 0.75rem;
 }
 
-.page-header {
-  text-align: center;
+.photo-grid img {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* =========================
+   TABLES
+========================= */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
   background: var(--card-bg);
-  height: 56px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+th, td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+th {
+  background: #f3f4f6;
+  font-weight: 600;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+@media (max-width: 440px) {
+  .app-shell,
+  .navbar {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  
+  .room-icon-clean {
+    width: 48px;
+    height: 48px;
+    font-size: 1.75rem;
+  }
+  
+  .room-info-clean h3 {
+    font-size: 0.95rem;
+  }
+}
+
+/* =========================
+   PROPERTY DASHBOARD
+========================= */
+.dashboard-header {
+  margin-bottom: 2rem;
+}
+
+.dashboard-tenancy {
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.dashboard-tenancy strong {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.dashboard-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.dashboard-action-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1.5rem 1rem;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: var(--shadow);
+}
+
+.dashboard-action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(11, 99, 246, 0.3);
+}
+
+.dashboard-action-btn:active {
+  transform: translateY(0);
+}
+
+.dashboard-action-btn svg {
+  flex-shrink: 0;
 }
