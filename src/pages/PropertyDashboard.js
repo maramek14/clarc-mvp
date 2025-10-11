@@ -25,10 +25,10 @@ export default function PropertyDashboard() {
       color: "#0b63f6"
     },
     {
-      id: "reports",
-      label: "Inventory Reports",
+      id: "inventory",
+      label: "Property Inventory",
       icon: FileText,
-      path: `/properties/${id}/reports`,
+      path: `/properties/${id}/inventory`,
       color: "#0b63f6"
     }
   ];

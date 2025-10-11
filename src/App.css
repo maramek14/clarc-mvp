@@ -253,6 +253,77 @@ h3 {
 }
 
 /* =========================
+   PAGE HEADER SECTIONS
+========================= */
+.page-header-section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+
+.page-header-section > div {
+  width: 100%;
+}
+
+.page-header-section h2 {
+  margin: 0 0 4px 0;
+  font-size: 24px;
+  font-weight: 600;
+  word-wrap: break-word;
+}
+
+.page-header-section .subtitle {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+  text-align: left;
+}
+
+.page-header-section .button-primary {
+  width: 100%;
+}
+
+/* List Header (for ViewInventoryList) */
+.list-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+
+.list-info-section {
+  width: 100%;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+.action-buttons .button-primary,
+.action-buttons .button-secondary {
+  flex: 1;
+}
+
+/* Report Header (for ViewPropertyReport) */
+.report-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+
+.report-header > div {
+  width: 100%;
+}
+
+.report-header .button-primary {
+  width: 100%;
+}
+
+/* =========================
    CARDS (PROPERTY & ROOM)
 ========================= */
 .property-list,
@@ -1203,6 +1274,19 @@ tr:last-child td {
     max-width: 100%;
     border-radius: 0;
     box-shadow: none;
+  }
+  
+  .page-header-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .page-header-section .button-primary {
+    width: 100%;
+  }
+  
+  .page-header-section h2 {
+    font-size: 20px;
   }
   
   .room-icon-clean {

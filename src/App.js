@@ -50,6 +50,18 @@ export default function App() {
               element={<Page title="Information"><PropertyInformation /></Page>}
             />
             <Route
+              path="/properties/:id/inventory"
+              element={<Page title="Property Inventory"><PropertyInventoryOverview /></Page>}
+            />
+            <Route
+              path="/properties/:id/inventory/create-report"
+              element={<Page title="Create Property Report"><CreatePropertyReport /></Page>}
+            />
+            <Route
+              path="/properties/:id/inventory/reports/:reportId"
+              element={<Page title="View Report"><ViewPropertyReport /></Page>}
+            />
+            <Route
               path="/properties/:id/reports"
               element={<Page title="Inventory Reports"><InventoryReports /></Page>}
             />
