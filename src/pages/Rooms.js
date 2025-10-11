@@ -1,20 +1,29 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getPropertyById } from "../utils";
-import RoomCard from "../components/RoomCard";
 
 export default function Rooms() {
   const { id } = useParams();
   const property = getPropertyById(id);
-
-  if (!property) return <p>Property not found.</p>;
+  if (!property) return <div>Property not found.</div>;
 
   return (
-    <div>
-      <h1>Rooms — {property.name}</h1>
-      {property.rooms.map((room) => (
-        <RoomCard key={room.id} room={room} />
-      ))}
-      <button className="button-primary">+ Add Room</button>
+    <div className="page-content">
+      <ul className="clean">
+        {property.rooms.map((room) => (
+          <li key={room.id}>
+            <Link className="button" to={`/properties/${id}/rooms/${room.id}`}>
+              {room.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
+
+      <button
+        className="button-primary"
+        onClick={() => alert("Add Room feature coming soon")}
+      >
+        + Add Room
+      </button>
     </div>
   );
 }

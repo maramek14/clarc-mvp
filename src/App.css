@@ -1,120 +1,394 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* -------------------------
+   GLOBAL BACKGROUND + FRAME
+-------------------------- */
+html, body {
+  height: 100%;
+  overflow: hidden;  /* no outer scroll */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at top, #d7d8db 0%, #bfc2c7 100%);
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  min-height: 100vh;
+}
+
+/* -------------------------
+   RESPONSIVE BEHAVIOUR
+-------------------------- */
+@media (max-width: 440px) {
+  .app-shell,
+  .navbar {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+/* -------------------------
+   GLOBAL RESET
+-------------------------- */
+* {
+  box-sizing: border-box;
+}
+
+select,
+button {
+  font-family: inherit;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================
+   GLOBAL LAYOUT
+========================= */
+:root {
+  --accent: #0b63f6;
+  --accent-dark: #0846b9;
+  --bg: #f8f9fb;
+  --card-bg: #fff;
+  --text: #222;
+  --muted: #666;
+  --radius: 12px;
+  --shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
 .app-shell {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  background: #fafafa;
-  font-family: 'Inter', sans-serif;
-  color: #222;
+  width: 420px;
+  min-width: 420px;
+  max-width: 420px;
+  height: 100vh;               /* fixed height for phone frame */
+  background: var(--card-bg);
+  border-radius: 24px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  overflow: hidden;            /* keeps frame tidy, not scrollable */
 }
 
 .app-content {
   flex: 1;
-  padding: 1.5rem;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;            /* only page-content scrolls */
 }
 
+/* =========================
+   TYPOGRAPHY
+========================= */
 h1 {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 1rem;
 }
 
+h3 {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+/* =========================
+   BUTTONS
+========================= */
 .button,
 .button-primary {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  margin-top: 0.5rem;
-  text-decoration: none;
   display: inline-block;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.6rem 1.1rem;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: 0.15s ease;
+}
+
+.button {
+  background: #e7e9ee;
+  color: var(--text);
+}
+
+.button:hover {
+  background: #d6d8dd;
+}
+
+.button-primary {
+  background: var(--accent);
+  color: #fff;
 }
 
 .button-primary:hover {
-  background-color: #0056b3;
+  background: var(--accent-dark);
 }
 
+/* =========================
+   CARDS
+========================= */
 .property-card,
 .room-card {
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
   padding: 1rem;
   margin-bottom: 1rem;
 }
 
+/* =========================
+   NAVBAR
+========================= */
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: var(--card-bg);
+  border-top: 1px solid #ddd;
+  padding: 0.6rem 0;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 420px;
+  min-width: 420px;
+  max-width: 420px;
+  z-index: 10;
+}
+
+.nav-item {
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.nav-item.active {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* =========================
+   PAGE LAYOUT
+========================= */
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ---- header ---- */
+.page-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  padding: 0 1rem;
+  background: var(--card-bg);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  flex-shrink: 0;
+  z-index: 5;
+}
+
+.page-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+  color: var(--text);
+}
+
+.back-button {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-button:hover {
+  color: var(--accent);
+}
+
+/* ---- content ---- */
+.page-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* smooth on phones */
+  padding: 1rem 1.25rem 5rem;        /* space for navbar */
+  box-sizing: border-box;
+  background: var(--bg);
+}
+/* =========================
+   PHOTO GRID
+========================= */
 .photo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
   gap: 0.75rem;
 }
 
 .photo-grid img {
   width: 100%;
-  height: 120px;
+  height: 110px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 
-.tabs {
-  display: flex;
-  gap: 0.5rem;
+/* =========================
+   TABLES
+========================= */
+table {
+  width: 100%;
+  border-collapse: collapse;
   margin-top: 1rem;
-}
-/* ---------- NAVBAR ---------- */
-.navbar {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  background: #ffffff;
-  border-top: 1px solid #ddd;
-  padding: 0.75rem 0;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
 }
 
-.nav-item {
-  font-size: 0.9rem;
-  color: #444;
-  text-decoration: none;
+th, td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
 }
 
-.nav-item.active {
-  color: #007bff;
+th {
+  background: #f3f4f6;
   font-weight: 600;
 }
 
-/* ---------- PAGE WRAPPER ---------- */
-.page {
-  margin-bottom: 4rem; /* leave space for navbar */
+tr:last-child td {
+  border-bottom: none;
 }
-
-.page-header h1 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.page-content {
-  padding-bottom: 3rem;
-}
-
-/* ---------- CARDS ---------- */
-.property-card,
-.room-card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-  padding: 1rem;
-  margin-bottom: 1rem;
-}
-
-.room-card .room-actions {
+/* =========================
+   PROPERTY LIST + CLICKABLE CARDS
+========================= */
+.property-list {
   display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.property-card {
+  display: flex;
+  align-items: center;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.15s ease;
+  height: 100px;
+}
+
+.property-card:hover,
+.property-card:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.property-thumb {
+  width: 100px;
+  height: 100%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.property-info {
+  padding: 0.75rem 1rem;
+  flex: 1;
+}
+
+.property-info h3 {
+  font-size: 1rem;
+  margin: 0 0 0.25rem;
+}
+
+.property-info p {
+  color: var(--muted);
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* ---- Add Property card ---- */
+.add-card {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #f2f4f7;
+  color: var(--muted);
+  display: flex;
+}
+
+.add-card-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  margin-top: 0.5rem;
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--accent);
+}
+
+.add-card:hover,
+.add-card:focus-visible {
+  background: #e5e9f5;
+}
+.page-title {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0;
+  max-width: 90%;
+  color: var(--text);
+  word-break: break-word;
+}
+
+.page-header {
+  text-align: center;
+  background: var(--card-bg);
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
