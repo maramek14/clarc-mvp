@@ -1,0 +1,120 @@
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #fafafa;
+  font-family: 'Inter', sans-serif;
+  color: #222;
+}
+
+.app-content {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.button,
+.button-primary {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.button-primary:hover {
+  background-color: #0056b3;
+}
+
+.property-card,
+.room-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.75rem;
+}
+
+.photo-grid img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+/* ---------- NAVBAR ---------- */
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: #ffffff;
+  border-top: 1px solid #ddd;
+  padding: 0.75rem 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.nav-item {
+  font-size: 0.9rem;
+  color: #444;
+  text-decoration: none;
+}
+
+.nav-item.active {
+  color: #007bff;
+  font-weight: 600;
+}
+
+/* ---------- PAGE WRAPPER ---------- */
+.page {
+  margin-bottom: 4rem; /* leave space for navbar */
+}
+
+.page-header h1 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.page-content {
+  padding-bottom: 3rem;
+}
+
+/* ---------- CARDS ---------- */
+.property-card,
+.room-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.room-card .room-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
