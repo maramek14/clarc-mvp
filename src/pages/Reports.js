@@ -102,7 +102,7 @@ export default function Reports() {
           <Search size={18} />
           <input
             type="text"
-            placeholder="Search reports, tenants, or properties..."
+            placeholder="Search reports..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -300,10 +300,14 @@ export default function Reports() {
 
         .search-box input {
           flex: 1;
+          min-width: 0;
           border: none;
           outline: none;
           font-size: 14px;
           color: #111827;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
 
         .search-box input::placeholder {
