@@ -1,38 +1,48 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { Image, List } from "lucide-react";
-import { getPropertyById, getRoomById } from "../utils";
+import { FileText, Home, Info } from "lucide-react";
+import { getPropertyById } from "../utils";
 
-export default function RoomDashboard() {
-  const { id, roomId } = useParams();
+export default function PropertyDashboard() {
+  const { id } = useParams();
   const navigate = useNavigate();
   const property = getPropertyById(id);
-  const room = getRoomById(property, roomId);
 
-  if (!property || !room) {
-    return <div className="page-content"><p>Room not found.</p></div>;
-  }
+  if (!property) return <div className="page-content"><p>Property not found.</p></div>;
 
-  const roomActions = [
+  const dashboardActions = [
     {
-      id: "photos",
-      label: "Photos",
-      icon: Image,
-      path: `/properties/${id}/rooms/${roomId}/photos`,
+      id: "information",
+      label: "Information",
+      icon: Info,
+      path: `/properties/${id}/information`,
+      color: "#0b63f6"
+    },
+    {
+      id: "rooms",
+      label: "Rooms",
+      icon: Home,
+      path: `/properties/${id}/rooms`,
       color: "#0b63f6"
     },
     {
       id: "inventory",
-      label: "Inventory List",
-      icon: List,
-      path: `/properties/${id}/rooms/${roomId}/inventory`,
+      label: "Property Inventory",
+      icon: FileText,
+      path: `/properties/${id}/inventory`,
       color: "#0b63f6"
     }
   ];
 
   return (
     <div className="page-content">
+      <div className="dashboard-header">
+        <p className="dashboard-tenancy">
+          Current Tenancy: <strong>{property.tenant}</strong> until <strong>{property.tenancyEnd}</strong>
+        </p>
+      </div>
+
       <div className="dashboard-actions">
-        {roomActions.map((action) => {
+        {dashboardActions.map((action) => {
           const Icon = action.icon;
           return (
             <button

@@ -5,10 +5,17 @@ import Page from "./components/Page";
 import Properties from "./pages/Properties";
 import AddProperty from "./pages/AddProperty";
 import PropertyDashboard from "./pages/PropertyDashboard";
+import PropertyInformation from "./pages/PropertyInformation";
+import PropertyInventoryOverview from "./pages/PropertyInventoryOverview";
+import CreatePropertyReport from "./pages/CreatePropertyReport";
+import ViewPropertyReport from "./pages/ViewPropertyReport";
 import InventoryReports from "./pages/InventoryReports";
 import Rooms from "./pages/Rooms";
+import AddRoom from "./pages/AddRoom";
 import RoomDashboard from "./pages/RoomDashboard";
-import RoomInventory from "./pages/RoomInventory";
+import RoomInventoryLists from "./pages/RoomInventoryLists";
+import CreateInventoryList from "./pages/CreateInventoryList";
+import ViewInventoryList from "./pages/ViewInventoryList";
 import RoomPhotos from "./pages/RoomPhotos";
 import AddPhotos from "./pages/AddPhotos";
 import Gallery from "./pages/Gallery";
@@ -39,6 +46,10 @@ export default function App() {
               element={<Page title="Property Dashboard"><PropertyDashboard /></Page>}
             />
             <Route
+              path="/properties/:id/information"
+              element={<Page title="Information"><PropertyInformation /></Page>}
+            />
+            <Route
               path="/properties/:id/reports"
               element={<Page title="Inventory Reports"><InventoryReports /></Page>}
             />
@@ -47,12 +58,24 @@ export default function App() {
               element={<Page title="Rooms"><Rooms /></Page>}
             />
             <Route
+              path="/properties/:id/add-room"
+              element={<Page title="Add New Room"><AddRoom /></Page>}
+            />
+            <Route
               path="/properties/:id/rooms/:roomId/dashboard"
               element={<Page title="Room Dashboard"><RoomDashboard /></Page>}
             />
             <Route
               path="/properties/:id/rooms/:roomId/inventory"
-              element={<Page title="Room Inventory"><RoomInventory /></Page>}
+              element={<Page title="Inventory Lists"><RoomInventoryLists /></Page>}
+            />
+            <Route
+              path="/properties/:id/rooms/:roomId/inventory/create"
+              element={<Page title="Create Inventory List"><CreateInventoryList /></Page>}
+            />
+            <Route
+              path="/properties/:id/rooms/:roomId/inventory/:listId"
+              element={<Page title="Inventory List"><ViewInventoryList /></Page>}
             />
             <Route
               path="/properties/:id/rooms/:roomId/photos"

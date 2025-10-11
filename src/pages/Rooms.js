@@ -75,12 +75,12 @@ export default function Rooms() {
         {/* Add New Room card */}
         <div
           className="room-card-clean add-room-card"
-          onClick={() => alert("Add Room feature coming soon")}
+          onClick={() => navigate(`/properties/${id}/add-room`)}
           role="button"
           tabIndex={0}
           onKeyPress={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
-              alert("Add Room feature coming soon");
+              navigate(`/properties/${id}/add-room`);
             }
           }}
         >

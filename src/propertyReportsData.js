@@ -1,0 +1,140 @@
+// Demo property-level reports data
+// In a real app, this would come from a database
+
+export const propertyReports = [
+  {
+    id: "prop-report-1",
+    propertyId: "prop-1",
+    name: "Annual Inspection 2024",
+    reportType: "annual-inspection",
+    createdDate: "2024-09-15",
+    inspectionDate: "2024-09-15",
+    tenantName: "John Sheeves",
+    status: "complete",
+    roomsIncluded: ["room-1", "room-2", "room-3"],
+    roomsExcluded: [],
+    warnings: [],
+    totalItems: 15,
+    conditionSummary: {
+      excellent: 9,
+      good: 5,
+      fair: 1,
+      poor: 0,
+      damaged: 0
+    },
+    notes: "Annual inspection completed successfully"
+  },
+  {
+    id: "prop-report-2",
+    propertyId: "prop-1",
+    name: "Mid-Tenancy Check - John Sheeves",
+    reportType: "mid-tenancy",
+    createdDate: "2024-03-10",
+    inspectionDate: "2024-03-10",
+    tenantName: "John Sheeves",
+    status: "complete",
+    roomsIncluded: ["room-1", "room-2", "room-3", "room-4"],
+    roomsExcluded: ["room-5", "room-6", "room-7"],
+    warnings: [
+      "Bathrooms 1 & 2 and Entrance Hall excluded - no recent inventories"
+    ],
+    totalItems: 20,
+    conditionSummary: {
+      excellent: 8,
+      good: 10,
+      fair: 2,
+      poor: 0,
+      damaged: 0
+    },
+    notes: "Mid-tenancy inspection - some rooms excluded due to missing data"
+  },
+  {
+    id: "prop-report-3",
+    propertyId: "prop-2",
+    name: "Check-in Report - Jack Brookes",
+    reportType: "check-in",
+    createdDate: "2023-08-15",
+    inspectionDate: "2023-08-15",
+    tenantName: "Jack Brookes",
+    status: "complete",
+    roomsIncluded: ["room-1", "room-2", "room-3"],
+    roomsExcluded: [],
+    warnings: [],
+    totalItems: 12,
+    conditionSummary: {
+      excellent: 5,
+      good: 5,
+      fair: 2,
+      poor: 0,
+      damaged: 0
+    },
+    notes: "Initial check-in inventory for new tenancy"
+  }
+];
+
+// Helper function to get property reports by property
+export function getPropertyReportsByProperty(propertyId) {
+  return propertyReports.filter(report => report.propertyId === propertyId);
+}
+
+// Helper function to get a specific property report
+export function getPropertyReportById(reportId) {
+  return propertyReports.find(report => report.id === reportId);
+}
+
+// Helper function to get room inventory status for a property
+export function getRoomInventoryStatus(propertyId, rooms, inventoryLists) {
+  const now = new Date();
+  
+  return rooms.map(room => {
+    // Get all inventory lists for this room
+    const roomLists = inventoryLists.filter(
+      list => list.propertyId === propertyId && list.roomId === room.id
+    );
+
+    if (roomLists.length === 0) {
+      return {
+        roomId: room.id,
+        roomName: room.name,
+        status: 'missing',
+        lastInventoryDate: null,
+        daysSinceLastInventory: null,
+        inventoryCount: 0,
+        color: '#6b7280'
+      };
+    }
+
+    // Find most recent inventory
+    const latestList = roomLists.reduce((latest, current) => {
+      const currentDate = new Date(current.inspectionDate);
+      const latestDate = new Date(latest.inspectionDate);
+      return currentDate > latestDate ? current : latest;
+    });
+
+    const lastInventoryDate = new Date(latestList.inspectionDate);
+    const daysSince = Math.floor((now - lastInventoryDate) / (1000 * 60 * 60 * 24));
+
+    let status, color;
+    if (daysSince <= 30) {
+      status = 'up-to-date';
+      color = '#10b981'; // Green
+    } else if (daysSince <= 90) {
+      status = 'needs-attention';
+      color = '#f59e0b'; // Yellow
+    } else {
+      status = 'outdated';
+      color = '#ef4444'; // Red
+    }
+
+    return {
+      roomId: room.id,
+      roomName: room.name,
+      status,
+      lastInventoryDate: latestList.inspectionDate,
+      daysSinceLastInventory: daysSince,
+      inventoryCount: roomLists.length,
+      color,
+      latestListId: latestList.id
+    };
+  });
+}
