@@ -74,13 +74,7 @@ export default function PropertyInventoryOverview() {
           <p className="subtitle">Complete inventory management</p>
         </div>
         <div className="header-actions">
-          <button
-            className="button-secondary"
-            onClick={() => navigate(`/properties/${id}/add-room`)}
-          >
-            <Plus size={20} />
-            Add Room
-          </button>
+          
           <button
             className="button-primary"
             onClick={() => navigate(`/properties/${id}/inventory/create-report`)}
@@ -180,6 +174,7 @@ export default function PropertyInventoryOverview() {
               className="room-status-card"
               onClick={() => navigate(`/properties/${id}/rooms/${room.roomId}/inventory`)}
             >
+              {/* existing room card content stays the same */}
               <div className="room-status-header">
                 <h4>{room.roomName}</h4>
                 <div
@@ -220,59 +215,22 @@ export default function PropertyInventoryOverview() {
               </button>
             </div>
           ))}
+
+          {/* Add Room Card */}
+          <div
+            className="room-status-card add-room-card"
+            onClick={() => navigate(`/properties/${id}/add-room`)}
+          >
+            <div className="add-room-content">
+              <Plus size={48} strokeWidth={2} />
+              <h4>Add New Room</h4>
+              <p>Create a new room to start tracking inventory</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Property Reports History */}
-      <div className="section">
-        <div className="section-header">
-          <h3>Property Reports History</h3>
-          <p className="section-subtitle">{propertyReports.length} reports generated</p>
-        </div>
 
-        {propertyReports.length === 0 ? (
-          <div className="empty-state-small">
-            <FileText size={48} strokeWidth={1.5} />
-            <p>No property reports yet</p>
-            <button
-              className="button-primary"
-              onClick={() => navigate(`/properties/${id}/inventory/create-report`)}
-            >
-              Create First Report
-            </button>
-          </div>
-        ) : (
-          <div className="reports-list">
-            {propertyReports.map((report) => (
-              <div
-                key={report.id}
-                className="report-card"
-                onClick={() => navigate(`/properties/${id}/inventory/reports/${report.id}`)}
-              >
-                <div className="report-header">
-                  <div>
-                    <h4>{report.name}</h4>
-                    <p className="report-meta">
-                      {report.tenantName} • {report.inspectionDate}
-                    </p>
-                  </div>
-                  <span
-                    className="report-type-badge"
-                    style={{
-                      backgroundColor: report.reportType === 'check-in' ? '#10b981' :
-                        report.reportType === 'check-out' ? '#ef4444' :
-                        report.reportType === 'annual-inspection' ? '#f59e0b' : '#6b7280'
-                    }}
-                  >
-                    {report.reportType}
-                  </span>
-                </div>
-                <p className="report-rooms">{report.roomsIncluded.length} rooms included</p>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
 
       <style jsx>{`
         .page-header-section {
@@ -616,6 +574,49 @@ export default function PropertyInventoryOverview() {
           color: #6b7280;
         }
 
+                  .add-room-card {
+          background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+          border: 2px dashed #d1d5db;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 200px;
+        }
+
+        .add-room-card:hover {
+          border-color: #0b63f6;
+          background: linear-gradient(135deg, #f0f7ff 0%, #e0f0ff 100%);
+          transform: translateY(-2px);
+        }
+
+        .add-room-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          color: #6b7280;
+          text-align: center;
+          padding: 20px;
+        }
+
+        .add-room-content h4 {
+          margin: 0;
+          font-size: 18px;
+          font-weight: 600;
+          color: #111827;
+        }
+
+        .add-room-content p {
+          margin: 0;
+          font-size: 14px;
+          color: #6b7280;
+        }
+
+        .add-room-card:hover .add-room-content {
+          color: #0b63f6;
+        }
+
         @media (max-width: 768px) {
           .page-header-section {
             flex-direction: column;
@@ -633,6 +634,8 @@ export default function PropertyInventoryOverview() {
           .room-status-grid {
             grid-template-columns: 1fr;
           }
+          
+
         }
       `}</style>
     </div>
