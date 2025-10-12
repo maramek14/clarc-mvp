@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Plus, AlertTriangle, CheckCircle, Clock, FileText, Package, Calendar } from "lucide-react";
+import { Plus, AlertTriangle, CheckCircle, Clock, FileText, Package, Calendar, Info } from "lucide-react";
 import { getPropertyById } from "../utils";
 import { inventoryLists } from "../inventoryData";
 import { getPropertyReportsByProperty, getRoomInventoryStatus } from "../propertyReportsData";
@@ -9,7 +9,7 @@ export default function PropertyInventoryOverview() {
   const { id } = useParams();
   const navigate = useNavigate();
   const property = getPropertyById(id);
-  const propertyReports = getPropertyReportsByProperty(id);
+  const propertyReports = getPropertyReportsByProperty(id) || [];
   
   const [roomStatuses] = useState(
     getRoomInventoryStatus(id, property?.rooms || [], inventoryLists)
@@ -70,16 +70,45 @@ export default function PropertyInventoryOverview() {
       {/* Header */}
       <div className="page-header-section">
         <div>
-          <h2>Property Inventory Overview</h2>
-          <p className="subtitle">Complete inventory management for {property.name}</p>
+          <h2>{property.name}</h2>
+          <p className="subtitle">Complete inventory management</p>
         </div>
-        <button
-          className="button-primary"
-          onClick={() => navigate(`/properties/${id}/inventory/create-report`)}
-        >
-          <Plus size={20} />
-          Create Property Report
-        </button>
+        <div className="header-actions">
+          <button
+            className="button-secondary"
+            onClick={() => navigate(`/properties/${id}/add-room`)}
+          >
+            <Plus size={20} />
+            Add Room
+          </button>
+          <button
+            className="button-primary"
+            onClick={() => navigate(`/properties/${id}/inventory/create-report`)}
+          >
+            <Plus size={20} />
+            Create Property Report
+          </button>
+        </div>
+      </div>
+
+      {/* Property Information Card */}
+      <div 
+        className="property-info-card"
+        onClick={() => navigate(`/properties/${id}/information`)}
+      >
+        <div className="property-info-icon">
+          <Info size={24} />
+        </div>
+        <div className="property-info-content">
+          <h3>Property Information</h3>
+          <p className="property-info-address">{property.address || "Add property details"}</p>
+          <p className="property-info-meta">
+            {property.bedrooms && `${property.bedrooms} bed • `}
+            {property.bathrooms && `${property.bathrooms} bath • `}
+            {property.type || "View details"}
+          </p>
+        </div>
+        <div className="property-info-arrow">→</div>
       </div>
 
       {/* Summary Cards */}
@@ -187,7 +216,7 @@ export default function PropertyInventoryOverview() {
               </div>
 
               <button className="view-room-btn">
-                View Room Inventories →
+                View Room Inventory →
               </button>
             </div>
           ))}
@@ -232,33 +261,13 @@ export default function PropertyInventoryOverview() {
                     style={{
                       backgroundColor: report.reportType === 'check-in' ? '#10b981' :
                         report.reportType === 'check-out' ? '#ef4444' :
-                        report.reportType === 'annual-inspection' ? '#0b63f6' : '#6b7280'
+                        report.reportType === 'annual-inspection' ? '#f59e0b' : '#6b7280'
                     }}
                   >
-                    {report.reportType.replace('-', ' ')}
+                    {report.reportType}
                   </span>
                 </div>
-
-                <div className="report-stats">
-                  <div className="report-stat">
-                    <Package size={16} />
-                    <span>{report.totalItems} items</span>
-                  </div>
-                  <div className="report-stat">
-                    <FileText size={16} />
-                    <span>{report.roomsIncluded.length} rooms</span>
-                  </div>
-                  {report.warnings.length > 0 && (
-                    <div className="report-stat warning">
-                      <AlertTriangle size={16} />
-                      <span>{report.warnings.length} warnings</span>
-                    </div>
-                  )}
-                </div>
-
-                {report.notes && (
-                  <p className="report-notes">{report.notes}</p>
-                )}
+                <p className="report-rooms">{report.roomsIncluded.length} rooms included</p>
               </div>
             ))}
           </div>
@@ -271,46 +280,91 @@ export default function PropertyInventoryOverview() {
           justify-content: space-between;
           align-items: flex-start;
           margin-bottom: 32px;
-          gap: 16px;
         }
 
         .page-header-section h2 {
           margin: 0 0 4px 0;
-          font-size: 28px;
-          font-weight: 600;
+          font-size: 32px;
+          font-weight: 700;
         }
 
         .subtitle {
           margin: 0;
           color: #6b7280;
-          font-size: 15px;
+          font-size: 16px;
         }
 
-        .button-primary {
+        .header-actions {
+          display: flex;
+          gap: 12px;
+        }
+
+        .property-info-card {
           display: flex;
           align-items: center;
-          gap: 8px;
-          padding: 12px 24px;
-          background: #0b63f6;
-          color: white;
-          border: none;
-          border-radius: 8px;
-          font-size: 14px;
-          font-weight: 500;
+          gap: 20px;
+          background: linear-gradient(135deg, #f0f7ff 0%, #e0f0ff 100%);
+          border: 2px solid #0b63f6;
+          border-radius: 16px;
+          padding: 24px;
+          margin-bottom: 32px;
           cursor: pointer;
-          transition: background 0.2s;
-          white-space: nowrap;
+          transition: all 0.2s;
         }
 
-        .button-primary:hover {
-          background: #0952d4;
+        .property-info-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 16px rgba(11, 99, 246, 0.2);
+        }
+
+        .property-info-icon {
+          width: 64px;
+          height: 64px;
+          background: white;
+          border-radius: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #0b63f6;
+          flex-shrink: 0;
+        }
+
+        .property-info-content {
+          flex: 1;
+          min-width: 0;
+        }
+
+        .property-info-content h3 {
+          margin: 0 0 8px 0;
+          font-size: 20px;
+          font-weight: 600;
+          color: #111827;
+        }
+
+        .property-info-address {
+          margin: 0 0 4px 0;
+          font-size: 15px;
+          color: #374151;
+        }
+
+        .property-info-meta {
+          margin: 0;
+          font-size: 13px;
+          color: #6b7280;
+        }
+
+        .property-info-arrow {
+          font-size: 24px;
+          color: #0b63f6;
+          font-weight: bold;
+          flex-shrink: 0;
         }
 
         .summary-cards {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
           gap: 20px;
-          margin-bottom: 24px;
+          margin-bottom: 32px;
         }
 
         .summary-card {
@@ -420,9 +474,8 @@ export default function PropertyInventoryOverview() {
         .room-status-header {
           display: flex;
           justify-content: space-between;
-          align-items: center;
+          align-items: flex-start;
           margin-bottom: 16px;
-          gap: 12px;
         }
 
         .room-status-header h4 {
@@ -437,26 +490,22 @@ export default function PropertyInventoryOverview() {
           gap: 6px;
           padding: 6px 12px;
           border-radius: 20px;
-          font-size: 12px;
-          font-weight: 500;
           color: white;
-          white-space: nowrap;
+          font-size: 12px;
+          font-weight: 600;
         }
 
         .room-status-details {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
           margin-bottom: 16px;
         }
 
         .detail-row {
           display: flex;
           justify-content: space-between;
-          align-items: center;
-          padding: 8px 0;
           font-size: 14px;
-        }
-
-        .detail-row:not(:last-child) {
-          border-bottom: 1px solid #f3f4f6;
         }
 
         .detail-label {
@@ -464,8 +513,8 @@ export default function PropertyInventoryOverview() {
         }
 
         .detail-value {
-          font-weight: 500;
           color: #111827;
+          font-weight: 500;
         }
 
         .no-inventory-message {
@@ -476,47 +525,47 @@ export default function PropertyInventoryOverview() {
           background: #fef3c7;
           border-radius: 8px;
           color: #92400e;
-          font-size: 14px;
+          font-size: 13px;
         }
 
         .view-room-btn {
           width: 100%;
           padding: 10px;
-          background: #f3f4f6;
-          border: none;
+          background: #f9fafb;
+          border: 1px solid #e5e7eb;
           border-radius: 8px;
+          color: #0b63f6;
           font-size: 14px;
-          font-weight: 500;
-          color: #374151;
+          font-weight: 600;
           cursor: pointer;
-          transition: background 0.2s;
+          transition: all 0.2s;
         }
 
         .view-room-btn:hover {
-          background: #e5e7eb;
+          background: #0b63f6;
+          color: white;
         }
 
         .empty-state-small {
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: center;
-          padding: 60px 20px;
+          padding: 40px;
           background: white;
           border: 1px solid #e5e7eb;
           border-radius: 12px;
-          text-align: center;
           color: #6b7280;
+          text-align: center;
         }
 
         .empty-state-small p {
-          margin: 16px 0 24px;
-          font-size: 15px;
+          margin: 16px 0 20px 0;
         }
 
         .reports-list {
-          display: grid;
-          gap: 16px;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
         }
 
         .report-card {
@@ -537,13 +586,12 @@ export default function PropertyInventoryOverview() {
           display: flex;
           justify-content: space-between;
           align-items: flex-start;
-          margin-bottom: 12px;
-          gap: 16px;
+          margin-bottom: 8px;
         }
 
         .report-header h4 {
           margin: 0 0 4px 0;
-          font-size: 18px;
+          font-size: 16px;
           font-weight: 600;
         }
 
@@ -554,41 +602,18 @@ export default function PropertyInventoryOverview() {
         }
 
         .report-type-badge {
-          padding: 6px 12px;
+          padding: 4px 12px;
           border-radius: 12px;
-          font-size: 12px;
-          font-weight: 500;
           color: white;
+          font-size: 12px;
+          font-weight: 600;
           text-transform: capitalize;
-          white-space: nowrap;
         }
 
-        .report-stats {
-          display: flex;
-          gap: 20px;
-          flex-wrap: wrap;
-          margin-bottom: 12px;
-        }
-
-        .report-stat {
-          display: flex;
-          align-items: center;
-          gap: 6px;
+        .report-rooms {
+          margin: 0;
           font-size: 14px;
           color: #6b7280;
-        }
-
-        .report-stat.warning {
-          color: #dc2626;
-        }
-
-        .report-notes {
-          margin: 12px 0 0;
-          padding-top: 12px;
-          border-top: 1px solid #e5e7eb;
-          font-size: 14px;
-          color: #6b7280;
-          font-style: italic;
         }
 
         @media (max-width: 768px) {
@@ -597,13 +622,12 @@ export default function PropertyInventoryOverview() {
             align-items: stretch;
           }
 
-          .summary-cards {
-            grid-template-columns: 1fr;
+          .header-actions {
+            flex-direction: column;
           }
 
-          .stats-row {
-            flex-direction: column;
-            gap: 12px;
+          .summary-cards {
+            grid-template-columns: 1fr;
           }
 
           .room-status-grid {

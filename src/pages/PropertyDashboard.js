@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { FileText, Home, Info, ChevronRight } from "lucide-react";
+import { FileText, Info, ChevronRight } from "lucide-react";
 import { getPropertyById } from "../utils";
 import { getInventoryListsByProperty } from "../inventoryData";
 import { getPropertyReportsByProperty } from "../propertyReportsData";
@@ -44,37 +44,19 @@ export default function PropertyDashboard() {
       preview: property.address || "Add property details"
     },
     {
-      id: "rooms",
-      label: "Rooms",
-      description: "Manage rooms and room inventories",
-      icon: Home,
-      path: `/properties/${id}/rooms`,
-      preview: `${totalRooms} room${totalRooms !== 1 ? 's' : ''}`
-    },
-    {
       id: "inventory",
       label: "Property Inventory",
-      description: "Overview and property-level reports",
+      description: "Manage rooms, inventory lists, and property reports",
       icon: FileText,
       path: `/properties/${id}/inventory`,
       preview: lastInventory 
-        ? `Last updated ${getDaysAgo(lastInventory.inspectionDate)}`
-        : "No inventory data"
+        ? `${totalRooms} room${totalRooms !== 1 ? 's' : ''} • Last inventory ${getDaysAgo(lastInventory.inspectionDate)}`
+        : `${totalRooms} room${totalRooms !== 1 ? 's' : ''} • No inventory yet`
     }
   ];
 
   return (
     <div className="page-content">
-      {/* Tenancy Info Banner */}
-      <div className="info-banner">
-        <div className="banner-content">
-          <p className="banner-label">Current Tenancy</p>
-          <p className="banner-value">
-            <strong>{property.tenant}</strong> • Until {property.tenancyEnd}
-          </p>
-        </div>
-      </div>
-
       {/* Action List */}
       <div className="action-list">
         {dashboardActions.map((action) => {
@@ -100,39 +82,6 @@ export default function PropertyDashboard() {
       </div>
 
       <style jsx>{`
-        .info-banner {
-          background: linear-gradient(135deg, #0b63f6 0%, #0952d4 100%);
-          border-radius: 12px;
-          padding: 20px;
-          margin-bottom: 24px;
-          color: white;
-        }
-
-        .banner-content {
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-        }
-
-        .banner-label {
-          margin: 0;
-          font-size: 13px;
-          opacity: 0.9;
-          font-weight: 500;
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
-        }
-
-        .banner-value {
-          margin: 0;
-          font-size: 16px;
-          line-height: 1.5;
-        }
-
-        .banner-value strong {
-          font-weight: 600;
-        }
-
         .action-list {
           display: flex;
           flex-direction: column;
@@ -182,16 +131,16 @@ export default function PropertyDashboard() {
 
         .action-title {
           margin: 0 0 4px 0;
-          font-size: 17px;
+          font-size: 18px;
           font-weight: 600;
           color: #111827;
         }
 
         .action-description {
-          margin: 0 0 6px 0;
+          margin: 0 0 8px 0;
           font-size: 14px;
           color: #6b7280;
-          line-height: 1.4;
+          line-height: 1.5;
         }
 
         .action-preview {
@@ -202,17 +151,15 @@ export default function PropertyDashboard() {
         }
 
         .action-arrow {
-          color: #d1d5db;
+          color: #9ca3af;
           flex-shrink: 0;
-          transition: all 0.2s;
-        }
-
-        .action-item:hover .action-arrow {
-          color: #0b63f6;
-          transform: translateX(4px);
         }
 
         @media (max-width: 768px) {
+          .action-item {
+            padding: 16px;
+          }
+
           .action-icon {
             width: 48px;
             height: 48px;
@@ -220,10 +167,6 @@ export default function PropertyDashboard() {
 
           .action-title {
             font-size: 16px;
-          }
-
-          .action-description {
-            font-size: 13px;
           }
         }
       `}</style>
