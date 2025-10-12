@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Edit2, Save, X, FileDown, Package, Calendar, User } from "lucide-react";
+import { Edit2, Save, X, FileDown, Package, Calendar, User, FileText } from "lucide-react";
+import { getPropertyReportsByProperty } from "../propertyReportsData";
 import { getPropertyById, getRoomById } from "../utils";
 import { getInventoryListById } from "../inventoryData";
 
@@ -67,6 +68,20 @@ export default function ViewInventoryList() {
     setIsEditing(false);
   };
 
+  const propertyReports = getPropertyReportsByProperty(id);
+  const relatedReport = propertyReports.find(report => 
+    report.roomInventoryListIds?.includes(listId)
+  );
+
+  // DEBUG - Remove after testing
+// DEBUG - Remove after testing
+// DEBUG - Remove after testing
+  console.log('All Property Reports:', JSON.stringify(propertyReports, null, 2));
+  console.log('Looking for room:', roomId);
+  console.log('List inspection date:', listData.inspectionDate);
+  console.log('List tenant name:', listData.tenantName);
+  console.log('Related Report Found:', relatedReport);
+
   const handleExport = () => {
     // Navigate to export configuration page (to be built later)
     alert("Export to PDF feature coming soon!");
@@ -106,10 +121,20 @@ export default function ViewInventoryList() {
         <div className="action-buttons">
           {!isEditing ? (
             <>
+              {relatedReport && (
+                <button 
+                  className="button-secondary" 
+                  onClick={() => navigate(`/properties/${id}/inventory/reports/${relatedReport.id}`)}
+                >
+                  <FileText size={18} />
+                  View Full Report
+                </button>
+              )}
               <button className="button-secondary" onClick={handleExport}>
                 <FileDown size={18} />
                 Export PDF
               </button>
+              
               <button className="button-primary" onClick={() => setIsEditing(true)}>
                 <Edit2 size={18} />
                 Edit

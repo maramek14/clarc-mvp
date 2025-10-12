@@ -13,6 +13,7 @@ export const propertyReports = [
     status: "complete",
     roomsIncluded: ["room-1", "room-2", "room-3"],
     roomsExcluded: [],
+    roomInventoryListIds: ["inv-list-1", "inv-list-2", "inv-list-3"], // Links to specific inventory lists used
     warnings: [],
     totalItems: 15,
     conditionSummary: {
@@ -35,6 +36,7 @@ export const propertyReports = [
     status: "complete",
     roomsIncluded: ["room-1", "room-2", "room-3", "room-4"],
     roomsExcluded: ["room-5", "room-6", "room-7"],
+    roomInventoryListIds: ["inv-list-1", "inv-list-2", "inv-list-3", "inv-list-4"], // Links to specific inventory lists
     warnings: [
       "Bathrooms 1 & 2 and Entrance Hall excluded - no recent inventories"
     ],
@@ -59,6 +61,7 @@ export const propertyReports = [
     status: "complete",
     roomsIncluded: ["room-1", "room-2", "room-3"],
     roomsExcluded: [],
+    roomInventoryListIds: ["inv-list-liverpool-1", "inv-list-liverpool-2", "inv-list-liverpool-3"], // Liverpool Grove inventory lists
     warnings: [],
     totalItems: 12,
     conditionSummary: {
@@ -84,6 +87,7 @@ export const liverpoolPropertyReport = {
   status: "complete",
   roomsIncluded: ["room-1", "room-2", "room-3"],
   roomsExcluded: [],
+  roomInventoryListIds: ["inv-list-liverpool-1", "inv-list-liverpool-2", "inv-list-liverpool-3"], // Liverpool Grove inventory lists
   warnings: [],
   totalItems: 34,
   conditionSummary: {
