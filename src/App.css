@@ -1366,26 +1366,29 @@ tr:last-child td {
   }
 }
 
-@media (hover: hover) {
-  .button:hover,
-  .button-primary:hover,
-  .button-secondary:hover,
-  .back-button:hover,
-  .clear-filters-btn:hover,
-  .filter-chip:hover,
-  .tag-button:hover,
-  .tag-button-large:hover,
-  .property-card:hover,
-  .room-card-clean:hover,
-  .room-card-clean:hover .room-arrow,
-  .action-btn:hover,
-  .action-btn.logout:hover,
-  .action-btn.logout:hover svg {
-    /* Reset all hover styles to default */
-    background: inherit;
-    border-color: inherit;
-    color: inherit;
-    transform: none;
-    box-shadow: inherit;
-  }
+/* Disable all hover effects - mobile-first approach */
+.button:hover,
+.button-primary:hover,
+.button-secondary:hover,
+.back-button:hover,
+.clear-filters-btn:hover,
+.filter-chip:hover,
+.tag-button:hover,
+.tag-button-large:hover,
+.property-card:hover,
+.room-card-clean:hover,
+.room-card-clean:hover .room-arrow,
+.action-btn:hover,
+.action-btn.logout:hover,
+.action-btn.logout:hover svg,
+.filter-toggle-btn:hover,
+.gallery-photo-card:hover,
+.selectable-photo:hover,
+.property-info-card:hover {
+  /* Completely disable hover effects */
+  background: none;
+  border-color: none;
+  color: none;
+  transform: none;
+  box-shadow: none;
 }
