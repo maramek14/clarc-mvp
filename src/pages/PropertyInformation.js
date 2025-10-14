@@ -294,7 +294,7 @@ export default function PropertyInformation() {
           color: white;
         }
 
-        .button-primary:hover {
+        .button-primary:active {
           background: #1E4466;
         }
 
@@ -303,7 +303,7 @@ export default function PropertyInformation() {
           color: #2A2A2A;
         }
 
-        .button-secondary:hover {
+        .button-secondary:active {
           background: #EBE8E1;
         }
 

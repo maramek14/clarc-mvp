@@ -293,7 +293,7 @@ export default function RoomInventory() {
           margin-bottom: -2px;
         }
 
-        .tab:hover {
+        .tab:active {
           color: #2C5F8D;
         }
 
@@ -340,7 +340,7 @@ export default function RoomInventory() {
           transition: all 0.2s;
         }
 
-        .filter-chip:hover {
+        .filter-chip:active {
           border-color: #2C5F8D;
           color: #2C5F8D;
         }
@@ -366,7 +366,7 @@ export default function RoomInventory() {
           transition: all 0.2s;
         }
 
-        .inventory-list-card:hover {
+        .inventory-list-card:active {
           border-color: #2C5F8D;
           box-shadow: 0 4px 12px rgba(44, 95, 141, 0.1);
           transform: translateY(-2px);
@@ -442,7 +442,7 @@ export default function RoomInventory() {
           transition: transform 0.2s;
         }
 
-        .gallery-photo-card:hover {
+        .gallery-photo-card:active {
           transform: scale(1.05);
         }
 
@@ -515,7 +515,7 @@ export default function RoomInventory() {
           transition: background 0.2s;
         }
 
-        .close-modal-btn:hover {
+        .close-modal-btn:active {
           background: rgba(0, 0, 0, 0.7);
         }
 

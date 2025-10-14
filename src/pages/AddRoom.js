@@ -576,7 +576,7 @@ export default function AddRoom() {
           transition: all 0.2s;
         }
 
-        .template-btn:hover {
+        .template-btn:active {
           border-color: #2C5F8D;
           background: #F8FBFD;
         }
@@ -641,7 +641,7 @@ export default function AddRoom() {
           transition: all 0.2s;
         }
 
-        .feature-btn:hover {
+        .feature-btn:active {
           border-color: #2C5F8D;
           background: #F8FBFD;
         }
@@ -673,7 +673,7 @@ export default function AddRoom() {
           transition: all 0.2s;
         }
 
-        .add-feature-btn:hover {
+        .add-feature-btn:active {
           background: #EBE8E1;
         }
 
@@ -764,7 +764,7 @@ export default function AddRoom() {
           transition: background 0.2s;
         }
 
-        .selected-photo-item .remove-photo-btn:hover {
+        .selected-photo-item .remove-photo-btn:active {
           background: rgba(0, 0, 0, 0.8);
         }
 
@@ -785,7 +785,7 @@ export default function AddRoom() {
           transition: all 0.2s;
         }
 
-        .select-photo-btn:hover {
+        .select-photo-btn:active {
           border-color: #2C5F8D;
           background: #F8FBFD;
           color: #2C5F8D;
@@ -842,7 +842,7 @@ export default function AddRoom() {
           transition: background 0.2s;
         }
 
-        .close-btn:hover {
+        .close-btn:active {
           background: #EBE8E1;
         }
 
@@ -865,7 +865,7 @@ export default function AddRoom() {
           border: 3px solid transparent;
         }
 
-        .gallery-photo:hover {
+        .gallery-photo:active {
           transform: scale(1.05);
         }
 
@@ -944,7 +944,7 @@ export default function AddRoom() {
           transition: all 0.2s;
         }
 
-        .tag-btn:hover {
+        .tag-btn:active {
           border-color: #2C5F8D;
           background: #F8FBFD;
         }
@@ -992,7 +992,7 @@ export default function AddRoom() {
           color: white;
         }
 
-        .button-primary:hover:not(:disabled) {
+        .button-primary:active:not(:disabled) {
           background: #1E4466;
         }
 
@@ -1006,7 +1006,7 @@ export default function AddRoom() {
           color: #2A2A2A;
         }
 
-        .button-secondary:hover:not(:disabled) {
+        .button-secondary:active:not(:disabled) {
           background: #EBE8E1;
         }
 

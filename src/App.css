@@ -155,16 +155,17 @@ h3 {
   font-weight: 500;
 }
 
-.button:hover {
+.button:active {
   background: #DDD9D0;
 }
+
 
 .button-primary {
   background: var(--accent);
   color: #FFFFFF;
 }
 
-.button-primary:hover {
+.button-primary:active {
   background: var(--accent-dark);
 }
 
@@ -174,7 +175,7 @@ h3 {
   color: var(--accent);
 }
 
-.button-secondary:hover {
+.button-secondary:active {
   background: var(--accent-light);
   transform: translateY(-1px);
 }
@@ -261,7 +262,7 @@ h3 {
   justify-content: center;
 }
 
-.back-button:hover {
+.back-button:active {
   color: var(--accent);
 }
 
@@ -375,9 +376,9 @@ h3 {
   height: 100px;
 }
 
-.property-card:hover,
+.property-card:active,
 .property-card:focus-visible,
-.room-card-clean:hover,
+.room-card-clean:active,
 .room-card-clean:focus-visible {
   transform: translateY(-2px);
   box-shadow: var(--shadow-hover);
@@ -447,7 +448,7 @@ h3 {
   transition: transform 0.15s ease;
 }
 
-.room-card-clean:hover .room-arrow {
+.room-card-clean:active .room-arrow {
   transform: translateX(4px);
   color: var(--accent);
 }
@@ -467,14 +468,14 @@ h3 {
   background: #F5F3EF;
 }
 
-.add-card:hover,
+.add-card:active,
 .add-card:focus-visible,
-.add-room-card:hover {
+.add-room-card:active {
   background: linear-gradient(135deg, #EBE8E1 0%, #DDD9D0 100%);
   border-color: var(--accent);
 }
 
-.add-card:hover {
+.add-card:active {
   background: #EBE8E1;
 }
 
@@ -539,7 +540,7 @@ h3 {
   box-shadow: var(--shadow);
 }
 
-.dashboard-action-btn:hover {
+.dashboard-action-btn:active {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(44, 95, 141, 0.3);
 }
@@ -623,7 +624,7 @@ h3 {
   transition: all 0.15s ease;
 }
 
-.image-upload-area:hover {
+.image-upload-area:active {
   border-color: var(--accent);
   background: #F5F3EF;
 }
@@ -675,7 +676,7 @@ h3 {
   transition: background 0.15s ease;
 }
 
-.remove-image-btn:hover {
+.remove-image-btn:active {
   background: rgba(0, 0, 0, 0.9);
 }
 
@@ -710,7 +711,7 @@ h3 {
   transition: all 0.15s ease;
 }
 
-.add-room-btn:hover {
+.add-room-btn:active {
   background: var(--accent-dark);
   transform: scale(1.05);
 }
@@ -745,7 +746,7 @@ h3 {
   transition: transform 0.15s ease;
 }
 
-.remove-room-btn:hover {
+.remove-room-btn:active {
   transform: scale(1.2);
   color: var(--error);
 }
@@ -782,7 +783,7 @@ h3 {
   transition: all 0.15s ease;
 }
 
-.gallery-photo-card:hover {
+.gallery-photo-card:active {
   transform: translateY(-2px);
   box-shadow: var(--shadow-hover);
 }
@@ -791,7 +792,7 @@ h3 {
   border: 3px solid transparent;
 }
 
-.selectable-photo:hover {
+.selectable-photo:active {
   transform: scale(1.02);
 }
 
@@ -878,7 +879,7 @@ h3 {
   transition: all 0.15s ease;
 }
 
-.filter-toggle-btn:hover {
+.filter-toggle-btn:active {
   background: var(--accent-light);
 }
 
@@ -911,7 +912,7 @@ h3 {
   transition: all 0.15s ease;
 }
 
-.clear-filters-btn:hover {
+.clear-filters-btn:active {
   background: #EBE8E1;
   color: var(--text);
 }
@@ -952,7 +953,7 @@ h3 {
   white-space: nowrap;
 }
 
-.filter-chip:hover {
+.filter-chip:active {
   border-color: var(--accent);
   background: var(--accent-light);
 }
@@ -987,7 +988,7 @@ h3 {
   transition: all 0.15s ease;
 }
 
-.tag-button:hover {
+.tag-button:active {
   border-color: var(--accent);
   background: var(--accent-light);
 }
@@ -1112,7 +1113,7 @@ h3 {
   text-align: center;
 }
 
-.tag-button-large:hover {
+.tag-button-large:active {
   border-color: var(--accent);
   background: var(--accent-light);
   transform: translateY(-2px);
@@ -1216,7 +1217,7 @@ h3 {
   transition: color 0.15s ease;
 }
 
-.close-modal-btn:hover {
+.close-modal-btn:active {
   color: var(--text);
 }
 
@@ -1362,5 +1363,29 @@ tr:last-child td {
     text-align: center;
     order: -1;
     margin-bottom: 0.5rem;
+  }
+}
+
+@media (hover: hover) {
+  .button:hover,
+  .button-primary:hover,
+  .button-secondary:hover,
+  .back-button:hover,
+  .clear-filters-btn:hover,
+  .filter-chip:hover,
+  .tag-button:hover,
+  .tag-button-large:hover,
+  .property-card:hover,
+  .room-card-clean:hover,
+  .room-card-clean:hover .room-arrow,
+  .action-btn:hover,
+  .action-btn.logout:hover,
+  .action-btn.logout:hover svg {
+    /* Reset all hover styles to default */
+    background: inherit;
+    border-color: inherit;
+    color: inherit;
+    transform: none;
+    box-shadow: inherit;
   }
 }

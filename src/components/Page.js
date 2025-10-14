@@ -90,9 +90,9 @@ export default function Page({ title, children }) {
           flex-shrink: 0;
         }
 
-        .back-button:hover {
+        .back-button:active {
           background: #f3f4f6;
-          color: #0b63f6;
+          color: #2C5F8D;
         }
 
         .page-title-section {

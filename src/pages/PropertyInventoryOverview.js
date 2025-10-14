@@ -108,7 +108,7 @@ export default function PropertyInventoryOverview() {
       {/* Summary Cards */}
       <div className="summary-cards">
         <div className="summary-card">
-          <div className="card-icon" style={{ backgroundColor: '#e0f0ff', color: '#0b63f6' }}>
+          <div className="card-icon" style={{ backgroundColor: '#E8F1F8', color: '#2C5F8D' }}>
             <Package size={24} />
           </div>
           <div className="card-content">
@@ -270,7 +270,7 @@ export default function PropertyInventoryOverview() {
           transition: all 0.2s;
         }
 
-        .property-info-card:hover {
+        .property-info-card:active {
           transform: translateY(-2px);
           box-shadow: 0 8px 16px rgba(44, 95, 141, 0.2);
         }
@@ -423,7 +423,7 @@ export default function PropertyInventoryOverview() {
           transition: all 0.2s;
         }
 
-        .room-status-card:hover {
+        .room-status-card:active {
           border-color: #2C5F8D;
           box-shadow: 0 4px 12px rgba(44, 95, 141, 0.1);
           transform: translateY(-2px);
@@ -499,7 +499,7 @@ export default function PropertyInventoryOverview() {
           transition: all 0.2s;
         }
 
-        .view-room-btn:hover {
+        .view-room-btn:active {
           background: #2C5F8D;
           color: white;
         }
@@ -535,7 +535,7 @@ export default function PropertyInventoryOverview() {
           transition: all 0.2s;
         }
 
-        .report-card:hover {
+        .report-card:active {
           border-color: #2C5F8D;
           box-shadow: 0 4px 12px rgba(44, 95, 141, 0.1);
         }
@@ -583,7 +583,7 @@ export default function PropertyInventoryOverview() {
           min-height: 200px;
         }
 
-        .add-room-card:hover {
+        .add-room-card:active {
           border-color: #2C5F8D;
           background: linear-gradient(135deg, #F8FBFD 0%, #E8F1F8 100%);
           transform: translateY(-2px);
@@ -613,7 +613,7 @@ export default function PropertyInventoryOverview() {
           color: #9B958C;
         }
 
-        .add-room-card:hover .add-room-content {
+        .add-room-card:active .add-room-content {
           color: #2C5F8D;
         }
 

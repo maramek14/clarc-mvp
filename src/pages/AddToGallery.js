@@ -204,7 +204,7 @@ export default function AddToGallery() {
           }
 
           .selectable-photo.selected {
-            border-color: #0b63f6;
+            border-color: #2C5F8D;
           }
 
           .selectable-photo img {
@@ -217,7 +217,7 @@ export default function AddToGallery() {
             position: absolute;
             top: 8px;
             right: 8px;
-            background: #0b63f6;
+            background: #2C5F8D;
             color: white;
             width: 32px;
             height: 32px;
@@ -263,12 +263,12 @@ export default function AddToGallery() {
           }
 
           .button-primary {
-            background: #0b63f6;
+            background: #2C5F8D;
             color: white;
           }
 
-          .button-primary:hover:not(:disabled) {
-            background: #0952d4;
+          .button-primary:active:not(:disabled) {
+            background: #1E4466;
           }
 
           .button-primary:disabled {
@@ -282,7 +282,7 @@ export default function AddToGallery() {
             color: #374151;
           }
 
-          .button-secondary:hover {
+          .button-secondary:active {
             background: #f9fafb;
             border-color: #d1d5db;
           }
@@ -436,7 +436,7 @@ export default function AddToGallery() {
           transition: background 0.2s;
         }
 
-        .back-to-selection:hover {
+        .back-to-selection:active {
           background: #F8FBFD;
         }
 
@@ -522,7 +522,7 @@ export default function AddToGallery() {
           transition: all 0.2s;
         }
 
-        .tag-button:hover {
+        .tag-button:active {
           border-color: #2C5F8D;
           background: #F8FBFD;
         }
@@ -573,7 +573,7 @@ export default function AddToGallery() {
           color: white;
         }
 
-        .button-primary:hover:not(:disabled) {
+        .button-primary:active:not(:disabled) {
           background: #1E4466;
         }
 
@@ -588,7 +588,7 @@ export default function AddToGallery() {
           color: #2A2A2A;
         }
 
-        .button-secondary:hover:not(:disabled) {
+        .button-secondary:active:not(:disabled) {
           background: #F9F8F6;
           border-color: #E6E3DD;
         }

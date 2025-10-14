@@ -684,7 +684,7 @@ export default function CreatePropertyReport() {
           transition: all 0.2s;
         }
 
-        .quick-action-btn:hover {
+        .quick-action-btn:active {
           background: #FFFBF0;
         }
 
@@ -891,7 +891,7 @@ export default function CreatePropertyReport() {
           color: white;
         }
 
-        .button-primary:hover {
+        .button-primary:active {
           background: #1E4466;
         }
 
@@ -900,7 +900,7 @@ export default function CreatePropertyReport() {
           color: #2A2A2A;
         }
 
-        .button-secondary:hover {
+        .button-secondary:active {
           background: #EBE8E1;
         }
 

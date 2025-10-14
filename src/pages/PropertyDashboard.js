@@ -102,7 +102,7 @@ export default function PropertyDashboard() {
           width: 100%;
         }
 
-        .action-item:hover {
+        .action-item:active {
           border-color: #2C5F8D;
           box-shadow: 0 4px 12px rgba(44, 95, 141, 0.1);
           transform: translateY(-2px);

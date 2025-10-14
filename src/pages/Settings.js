@@ -277,7 +277,7 @@ export default function Settings() {
           align-self: flex-start;
         }
 
-        .button-primary:hover {
+        .button-primary:active {
           background: #1E4466;
         }
 
@@ -380,7 +380,7 @@ export default function Settings() {
           width: 100%;
         }
 
-        .action-btn:hover {
+        .action-btn:active {
           background: #F9F8F6;
           border-color: #2C5F8D;
         }
@@ -390,12 +390,12 @@ export default function Settings() {
           flex-shrink: 0;
         }
 
-        .action-btn.logout:hover {
+        .action-btn.logout:active {
           background: #FEF5F4;
           border-color: #B85C4F;
         }
 
-        .action-btn.logout:hover svg {
+        .action-btn.logout:active svg {
           color: #B85C4F;
         }
 

@@ -271,7 +271,7 @@ export default function ViewInventoryList() {
           color: white;
         }
 
-        .button-primary:hover {
+        .button-primary:active {
           background: #1E4466;
         }
 
@@ -281,7 +281,7 @@ export default function ViewInventoryList() {
           border: 1px solid #E6E3DD;
         }
 
-        .button-secondary:hover {
+        .button-secondary:active {
           background: #EBE8E1;
         }
 

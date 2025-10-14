@@ -86,7 +86,7 @@ export default function Reports() {
     switch (type) {
       case "check-in": return "#10b981";
       case "check-out": return "#ef4444";
-      case "annual-inspection": return "#0b63f6";
+      case "annual-inspection": return "#2C5F8D";
       case "mid-tenancy": return "#f59e0b";
       case "damage-assessment": return "#dc2626";
       case "maintenance": return "#6b7280";
@@ -331,7 +331,7 @@ export default function Reports() {
           flex-shrink: 0;
         }
 
-        .filter-toggle-btn:hover {
+        .filter-toggle-btn:active {
           background: #F9F8F6;
           border-color: #2C5F8D;
         }
@@ -388,7 +388,7 @@ export default function Reports() {
           transition: all 0.2s;
         }
 
-        .clear-filters-btn:hover {
+        .clear-filters-btn:active {
           background: #F5F3EF;
           color: #2A2A2A;
         }
@@ -444,7 +444,7 @@ export default function Reports() {
           transition: all 0.2s;
         }
 
-        .report-card:hover {
+        .report-card:active {
           border-color: #2C5F8D;
           box-shadow: 0 4px 12px rgba(44, 95, 141, 0.1);
           transform: translateY(-2px);

@@ -5,11 +5,11 @@ import { getPropertyReportById } from "../propertyReportsData";
 import { inventoryLists } from "../inventoryData";
 
 const conditionColors = {
-  "excellent": "#10b981",
-  "good": "#3b82f6",
-  "fair": "#f59e0b",
-  "poor": "#ef4444",
-  "damaged": "#dc2626"
+  "excellent": "#3D7C5C",    // muted sage green
+  "good": "#2C5F8D",         // navy blue (your primary)
+  "fair": "#C89F5A",         // deeper golden yellow (more saturated)
+  "poor": "#D97856",         // bright terracotta/coral (clearly orange-red)
+  "damaged": "#8B3A31"       // deep burgundy red (dark red)
 };
 
 export default function ViewPropertyReport() {
@@ -97,7 +97,7 @@ export default function ViewPropertyReport() {
             style={{
               backgroundColor: report.reportType === 'check-in' ? '#10b981' :
                 report.reportType === 'check-out' ? '#ef4444' :
-                report.reportType === 'annual-inspection' ? '#0b63f6' : '#6b7280'
+                report.reportType === 'annual-inspection' ? '#2C5F8D' : '#6b7280'
             }}
           >
             {report.reportType.replace('-', ' ')}
@@ -274,7 +274,7 @@ export default function ViewPropertyReport() {
           white-space: nowrap;
         }
 
-        .button-primary:hover {
+        .button-primary:active {
           background: #1E4466;
         }
 
@@ -470,7 +470,7 @@ export default function ViewPropertyReport() {
           white-space: nowrap;
         }
 
-        .view-details-btn:hover:not(:disabled) {
+        .view-details-btn:active:not(:disabled) {
           background: #EBE8E1;
         }
 
