@@ -272,7 +272,7 @@ export default function Reports() {
         </div>
       )}
 
-      <style jsx>{`
+<style jsx>{`
         .search-filter-bar {
           display: flex;
           gap: 12px;
@@ -288,13 +288,13 @@ export default function Reports() {
           align-items: center;
           gap: 8px;
           background: white;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 8px;
           padding: 12px 16px;
         }
 
         .search-box svg {
-          color: #6b7280;
+          color: #9B958C;
           flex-shrink: 0;
         }
 
@@ -304,14 +304,14 @@ export default function Reports() {
           border: none;
           outline: none;
           font-size: 14px;
-          color: #111827;
+          color: #2A2A2A;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
 
         .search-box input::placeholder {
-          color: #9ca3af;
+          color: #9B958C;
         }
 
         .filter-toggle-btn {
@@ -320,11 +320,11 @@ export default function Reports() {
           gap: 6px;
           padding: 12px 16px;
           background: white;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 8px;
           font-size: 14px;
           font-weight: 500;
-          color: #374151;
+          color: #2A2A2A;
           cursor: pointer;
           transition: all 0.2s;
           white-space: nowrap;
@@ -332,13 +332,13 @@ export default function Reports() {
         }
 
         .filter-toggle-btn:hover {
-          background: #f9fafb;
-          border-color: #0b63f6;
+          background: #F9F8F6;
+          border-color: #2C5F8D;
         }
 
         .filter-panel {
           background: white;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 12px;
           padding: 20px;
           margin-bottom: 16px;
@@ -356,15 +356,15 @@ export default function Reports() {
         .filter-group label {
           font-size: 13px;
           font-weight: 500;
-          color: #374151;
+          color: #2A2A2A;
         }
 
         .filter-group select {
           padding: 10px 12px;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 8px;
           font-size: 14px;
-          color: #111827;
+          color: #2A2A2A;
           background: white;
           cursor: pointer;
           transition: border-color 0.2s;
@@ -372,25 +372,25 @@ export default function Reports() {
 
         .filter-group select:focus {
           outline: none;
-          border-color: #0b63f6;
+          border-color: #2C5F8D;
         }
 
         .clear-filters-btn {
           grid-column: 1 / -1;
           padding: 10px 16px;
-          background: #f9fafb;
-          border: 1px solid #e5e7eb;
+          background: #F9F8F6;
+          border: 1px solid #E6E3DD;
           border-radius: 8px;
           font-size: 14px;
           font-weight: 500;
-          color: #6b7280;
+          color: #9B958C;
           cursor: pointer;
           transition: all 0.2s;
         }
 
         .clear-filters-btn:hover {
-          background: #f3f4f6;
-          color: #374151;
+          background: #F5F3EF;
+          color: #2A2A2A;
         }
 
         .results-header {
@@ -400,20 +400,20 @@ export default function Reports() {
         .results-count {
           margin: 0;
           font-size: 14px;
-          color: #6b7280;
+          color: #9B958C;
           font-weight: 500;
         }
 
         .empty-state {
           background: white;
-          border: 2px dashed #e5e7eb;
+          border: 2px dashed #E6E3DD;
           border-radius: 12px;
           padding: 48px 24px;
           text-align: center;
         }
 
         .empty-state svg {
-          color: #d1d5db;
+          color: #E6E3DD;
           margin-bottom: 16px;
         }
 
@@ -421,13 +421,13 @@ export default function Reports() {
           margin: 0 0 8px 0;
           font-size: 18px;
           font-weight: 600;
-          color: #111827;
+          color: #2A2A2A;
         }
 
         .empty-state p {
           margin: 0;
           font-size: 14px;
-          color: #6b7280;
+          color: #9B958C;
         }
 
         .reports-list {
@@ -437,7 +437,7 @@ export default function Reports() {
 
         .report-card {
           background: white;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 12px;
           padding: 20px;
           cursor: pointer;
@@ -445,8 +445,8 @@ export default function Reports() {
         }
 
         .report-card:hover {
-          border-color: #0b63f6;
-          box-shadow: 0 4px 12px rgba(11, 99, 246, 0.1);
+          border-color: #2C5F8D;
+          box-shadow: 0 4px 12px rgba(44, 95, 141, 0.1);
           transform: translateY(-2px);
         }
 
@@ -467,7 +467,7 @@ export default function Reports() {
           margin: 0 0 6px 0;
           font-size: 18px;
           font-weight: 600;
-          color: #111827;
+          color: #2A2A2A;
           word-wrap: break-word;
         }
 
@@ -476,7 +476,7 @@ export default function Reports() {
           align-items: center;
           gap: 6px;
           font-size: 13px;
-          color: #6b7280;
+          color: #9B958C;
         }
 
         .report-type-badge {
@@ -496,7 +496,7 @@ export default function Reports() {
           gap: 16px;
           margin-bottom: 12px;
           padding-bottom: 12px;
-          border-bottom: 1px solid #f3f4f6;
+          border-bottom: 1px solid #F5F3EF;
         }
 
         .meta-item {
@@ -504,7 +504,7 @@ export default function Reports() {
           align-items: center;
           gap: 6px;
           font-size: 14px;
-          color: #6b7280;
+          color: #9B958C;
         }
 
         .report-card-stats {
@@ -519,57 +519,57 @@ export default function Reports() {
           align-items: center;
           gap: 4px;
           padding: 6px 12px;
-          background: #f3f4f6;
+          background: #F5F3EF;
           border-radius: 8px;
           font-size: 13px;
         }
 
         .stat-badge.success {
-          background: #dcfce7;
-          color: #15803d;
+          background: #E8F5EC;
+          color: #3D7C5C;
         }
 
         .stat-badge.warning {
-          background: #fef3c7;
-          color: #a16207;
+          background: #FFF8E7;
+          color: #8B6914;
         }
 
         .stat-badge.danger {
-          background: #fee2e2;
-          color: #dc2626;
+          background: #FDECEA;
+          color: #B85C4F;
         }
 
         .stat-badge-label {
-          color: #6b7280;
+          color: #9B958C;
           font-weight: 500;
         }
 
         .stat-badge-value {
           font-weight: 600;
-          color: #111827;
+          color: #2A2A2A;
         }
 
         .stat-badge.success .stat-badge-value {
-          color: #15803d;
+          color: #3D7C5C;
         }
 
         .stat-badge.warning .stat-badge-value {
-          color: #a16207;
+          color: #8B6914;
         }
 
         .stat-badge.danger .stat-badge-value {
-          color: #dc2626;
+          color: #B85C4F;
         }
 
         .report-card-notes {
           padding-top: 12px;
-          border-top: 1px solid #f3f4f6;
+          border-top: 1px solid #F5F3EF;
         }
 
         .report-card-notes p {
           margin: 0;
           font-size: 14px;
-          color: #6b7280;
+          color: #9B958C;
           font-style: italic;
         }
 

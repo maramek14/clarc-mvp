@@ -241,7 +241,7 @@ export default function ViewInventoryList() {
         ))}
       </div>
 
-      <style jsx>{`
+<style jsx>{`
         .list-header {
           display: flex;
           justify-content: space-between;
@@ -267,7 +267,7 @@ export default function ViewInventoryList() {
           align-items: center;
           gap: 6px;
           font-size: 14px;
-          color: #6b7280;
+          color: #9B958C;
         }
 
         .action-buttons {
@@ -291,27 +291,27 @@ export default function ViewInventoryList() {
         }
 
         .button-primary {
-          background: #0b63f6;
+          background: #2C5F8D;
           color: white;
         }
 
         .button-primary:hover {
-          background: #0952d4;
+          background: #1E4466;
         }
 
         .button-secondary {
-          background: #f3f4f6;
-          color: #374151;
-          border: 1px solid #d1d5db;
+          background: #F5F3EF;
+          color: #2A2A2A;
+          border: 1px solid #E6E3DD;
         }
 
         .button-secondary:hover {
-          background: #e5e7eb;
+          background: #EBE8E1;
         }
 
         .list-details-card {
           background: white;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 12px;
           padding: 20px;
           margin-bottom: 24px;
@@ -326,12 +326,12 @@ export default function ViewInventoryList() {
         }
 
         .detail-row:not(:last-child) {
-          border-bottom: 1px solid #f3f4f6;
+          border-bottom: 1px solid #F5F3EF;
         }
 
         .detail-row strong {
           min-width: 140px;
-          color: #374151;
+          color: #2A2A2A;
         }
 
         .event-badge {
@@ -357,7 +357,7 @@ export default function ViewInventoryList() {
           margin: 0 0 16px 0;
           font-size: 16px;
           font-weight: 600;
-          color: #6b7280;
+          color: #9B958C;
           text-transform: uppercase;
           letter-spacing: 0.5px;
         }
@@ -370,7 +370,7 @@ export default function ViewInventoryList() {
 
         .item-card {
           background: white;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 12px;
           padding: 16px;
         }
@@ -390,11 +390,11 @@ export default function ViewInventoryList() {
 
         .quantity-badge {
           padding: 4px 8px;
-          background: #f3f4f6;
+          background: #F5F3EF;
           border-radius: 8px;
           font-size: 12px;
           font-weight: 600;
-          color: #6b7280;
+          color: #9B958C;
         }
 
         .item-condition {
@@ -406,7 +406,7 @@ export default function ViewInventoryList() {
           display: block;
           font-size: 12px;
           font-weight: 600;
-          color: #6b7280;
+          color: #9B958C;
           margin-bottom: 6px;
           text-transform: uppercase;
           letter-spacing: 0.5px;
@@ -434,20 +434,20 @@ export default function ViewInventoryList() {
 
         .condition-select:focus {
           outline: none;
-          box-shadow: 0 0 0 3px rgba(11, 99, 246, 0.1);
+          box-shadow: 0 0 0 3px rgba(44, 95, 141, 0.1);
         }
 
         .item-notes p {
           margin: 0;
           font-size: 13px;
-          color: #6b7280;
+          color: #9B958C;
           font-style: italic;
         }
 
         .notes-input {
           width: 100%;
           padding: 8px 12px;
-          border: 1px solid #d1d5db;
+          border: 1px solid #E6E3DD;
           border-radius: 8px;
           font-size: 13px;
           font-family: inherit;
@@ -457,7 +457,7 @@ export default function ViewInventoryList() {
 
         .notes-input:focus {
           outline: none;
-          border-color: #0b63f6;
+          border-color: #2C5F8D;
         }
 
         @media (max-width: 768px) {

@@ -269,12 +269,12 @@ export default function RoomInventory() {
         </>
       )}
 
-      <style jsx>{`
+<style jsx>{`
         .tabs-container {
           display: flex;
           gap: 8px;
           margin-bottom: 32px;
-          border-bottom: 2px solid #e5e7eb;
+          border-bottom: 2px solid #E6E3DD;
         }
 
         .tab {
@@ -285,7 +285,7 @@ export default function RoomInventory() {
           background: none;
           border: none;
           border-bottom: 3px solid transparent;
-          color: #6b7280;
+          color: #9B958C;
           font-size: 15px;
           font-weight: 500;
           cursor: pointer;
@@ -294,12 +294,12 @@ export default function RoomInventory() {
         }
 
         .tab:hover {
-          color: #0b63f6;
+          color: #2C5F8D;
         }
 
         .tab.active {
-          color: #0b63f6;
-          border-bottom-color: #0b63f6;
+          color: #2C5F8D;
+          border-bottom-color: #2C5F8D;
         }
 
         .page-header-section {
@@ -317,7 +317,7 @@ export default function RoomInventory() {
 
         .subtitle {
           margin: 0;
-          color: #6b7280;
+          color: #9B958C;
           font-size: 15px;
         }
 
@@ -330,10 +330,10 @@ export default function RoomInventory() {
 
         .filter-chip {
           padding: 8px 16px;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 20px;
           background: white;
-          color: #6b7280;
+          color: #9B958C;
           font-size: 14px;
           font-weight: 500;
           cursor: pointer;
@@ -341,13 +341,13 @@ export default function RoomInventory() {
         }
 
         .filter-chip:hover {
-          border-color: #0b63f6;
-          color: #0b63f6;
+          border-color: #2C5F8D;
+          color: #2C5F8D;
         }
 
         .filter-chip.active {
-          background: #0b63f6;
-          border-color: #0b63f6;
+          background: #2C5F8D;
+          border-color: #2C5F8D;
           color: white;
         }
 
@@ -359,7 +359,7 @@ export default function RoomInventory() {
 
         .inventory-list-card {
           background: white;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 12px;
           padding: 20px;
           cursor: pointer;
@@ -367,8 +367,8 @@ export default function RoomInventory() {
         }
 
         .inventory-list-card:hover {
-          border-color: #0b63f6;
-          box-shadow: 0 4px 12px rgba(11, 99, 246, 0.1);
+          border-color: #2C5F8D;
+          box-shadow: 0 4px 12px rgba(44, 95, 141, 0.1);
           transform: translateY(-2px);
         }
 
@@ -380,7 +380,7 @@ export default function RoomInventory() {
           margin: 0 0 8px 0;
           font-size: 18px;
           font-weight: 600;
-          color: #111827;
+          color: #2A2A2A;
         }
 
         .badges {
@@ -410,19 +410,19 @@ export default function RoomInventory() {
           align-items: center;
           gap: 8px;
           font-size: 14px;
-          color: #6b7280;
+          color: #9B958C;
         }
 
         .card-notes {
           margin-top: 12px;
           padding-top: 12px;
-          border-top: 1px solid #e5e7eb;
+          border-top: 1px solid #E6E3DD;
         }
 
         .card-notes p {
           margin: 0;
           font-size: 13px;
-          color: #6b7280;
+          color: #9B958C;
           font-style: italic;
         }
 
@@ -469,7 +469,7 @@ export default function RoomInventory() {
           border-radius: 4px;
           font-size: 11px;
           font-weight: 600;
-          color: #111827;
+          color: #2A2A2A;
         }
 
         .photo-detail-modal {
@@ -540,12 +540,12 @@ export default function RoomInventory() {
 
         .detail-row strong {
           min-width: 80px;
-          color: #6b7280;
+          color: #9B958C;
           font-size: 14px;
         }
 
         .detail-row span {
-          color: #111827;
+          color: #2A2A2A;
           font-size: 14px;
         }
 
@@ -557,8 +557,8 @@ export default function RoomInventory() {
 
         .tag-badge {
           padding: 4px 10px;
-          background: #e0f0ff;
-          color: #0b63f6;
+          background: #E8F1F8;
+          color: #2C5F8D;
           border-radius: 12px;
           font-size: 12px;
           font-weight: 500;
@@ -571,12 +571,12 @@ export default function RoomInventory() {
           justify-content: center;
           padding: 60px 20px;
           text-align: center;
-          color: #6b7280;
+          color: #9B958C;
         }
 
         .empty-state h3 {
           margin: 16px 0 8px 0;
-          color: #111827;
+          color: #2A2A2A;
           font-size: 20px;
         }
 

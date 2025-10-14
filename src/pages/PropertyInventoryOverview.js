@@ -232,7 +232,7 @@ export default function PropertyInventoryOverview() {
 
 
 
-      <style jsx>{`
+<style jsx>{`
         .page-header-section {
           display: flex;
           justify-content: space-between;
@@ -248,7 +248,7 @@ export default function PropertyInventoryOverview() {
 
         .subtitle {
           margin: 0;
-          color: #6b7280;
+          color: #9B958C;
           font-size: 16px;
         }
 
@@ -261,8 +261,8 @@ export default function PropertyInventoryOverview() {
           display: flex;
           align-items: center;
           gap: 20px;
-          background: linear-gradient(135deg, #f0f7ff 0%, #e0f0ff 100%);
-          border: 2px solid #0b63f6;
+          background: linear-gradient(135deg, #F8FBFD 0%, #E8F1F8 100%);
+          border: 2px solid #2C5F8D;
           border-radius: 16px;
           padding: 24px;
           margin-bottom: 32px;
@@ -272,7 +272,7 @@ export default function PropertyInventoryOverview() {
 
         .property-info-card:hover {
           transform: translateY(-2px);
-          box-shadow: 0 8px 16px rgba(11, 99, 246, 0.2);
+          box-shadow: 0 8px 16px rgba(44, 95, 141, 0.2);
         }
 
         .property-info-icon {
@@ -283,7 +283,7 @@ export default function PropertyInventoryOverview() {
           display: flex;
           align-items: center;
           justify-content: center;
-          color: #0b63f6;
+          color: #2C5F8D;
           flex-shrink: 0;
         }
 
@@ -296,24 +296,24 @@ export default function PropertyInventoryOverview() {
           margin: 0 0 8px 0;
           font-size: 20px;
           font-weight: 600;
-          color: #111827;
+          color: #2A2A2A;
         }
 
         .property-info-address {
           margin: 0 0 4px 0;
           font-size: 15px;
-          color: #374151;
+          color: #2A2A2A;
         }
 
         .property-info-meta {
           margin: 0;
           font-size: 13px;
-          color: #6b7280;
+          color: #9B958C;
         }
 
         .property-info-arrow {
           font-size: 24px;
-          color: #0b63f6;
+          color: #2C5F8D;
           font-weight: bold;
           flex-shrink: 0;
         }
@@ -330,7 +330,7 @@ export default function PropertyInventoryOverview() {
           align-items: center;
           gap: 16px;
           background: white;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 12px;
           padding: 20px;
         }
@@ -351,7 +351,7 @@ export default function PropertyInventoryOverview() {
         .card-label {
           margin: 0 0 4px 0;
           font-size: 13px;
-          color: #6b7280;
+          color: #9B958C;
           font-weight: 500;
         }
 
@@ -359,7 +359,7 @@ export default function PropertyInventoryOverview() {
           margin: 0;
           font-size: 28px;
           font-weight: 700;
-          color: #111827;
+          color: #2A2A2A;
         }
 
         .stats-row {
@@ -367,7 +367,7 @@ export default function PropertyInventoryOverview() {
           gap: 24px;
           flex-wrap: wrap;
           background: white;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 12px;
           padding: 16px 20px;
           margin-bottom: 32px;
@@ -378,7 +378,7 @@ export default function PropertyInventoryOverview() {
           align-items: center;
           gap: 8px;
           font-size: 14px;
-          color: #6b7280;
+          color: #9B958C;
         }
 
         .section {
@@ -405,7 +405,7 @@ export default function PropertyInventoryOverview() {
         .section-subtitle {
           margin: 0;
           font-size: 14px;
-          color: #6b7280;
+          color: #9B958C;
         }
 
         .room-status-grid {
@@ -416,7 +416,7 @@ export default function PropertyInventoryOverview() {
 
         .room-status-card {
           background: white;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 12px;
           padding: 20px;
           cursor: pointer;
@@ -424,8 +424,8 @@ export default function PropertyInventoryOverview() {
         }
 
         .room-status-card:hover {
-          border-color: #0b63f6;
-          box-shadow: 0 4px 12px rgba(11, 99, 246, 0.1);
+          border-color: #2C5F8D;
+          box-shadow: 0 4px 12px rgba(44, 95, 141, 0.1);
           transform: translateY(-2px);
         }
 
@@ -467,11 +467,11 @@ export default function PropertyInventoryOverview() {
         }
 
         .detail-label {
-          color: #6b7280;
+          color: #9B958C;
         }
 
         .detail-value {
-          color: #111827;
+          color: #2A2A2A;
           font-weight: 500;
         }
 
@@ -480,19 +480,19 @@ export default function PropertyInventoryOverview() {
           align-items: center;
           gap: 8px;
           padding: 12px;
-          background: #fef3c7;
+          background: #FFF8E7;
           border-radius: 8px;
-          color: #92400e;
+          color: #8B6914;
           font-size: 13px;
         }
 
         .view-room-btn {
           width: 100%;
           padding: 10px;
-          background: #f9fafb;
-          border: 1px solid #e5e7eb;
+          background: #F9F8F6;
+          border: 1px solid #E6E3DD;
           border-radius: 8px;
-          color: #0b63f6;
+          color: #2C5F8D;
           font-size: 14px;
           font-weight: 600;
           cursor: pointer;
@@ -500,7 +500,7 @@ export default function PropertyInventoryOverview() {
         }
 
         .view-room-btn:hover {
-          background: #0b63f6;
+          background: #2C5F8D;
           color: white;
         }
 
@@ -510,9 +510,9 @@ export default function PropertyInventoryOverview() {
           align-items: center;
           padding: 40px;
           background: white;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 12px;
-          color: #6b7280;
+          color: #9B958C;
           text-align: center;
         }
 
@@ -528,7 +528,7 @@ export default function PropertyInventoryOverview() {
 
         .report-card {
           background: white;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 12px;
           padding: 20px;
           cursor: pointer;
@@ -536,8 +536,8 @@ export default function PropertyInventoryOverview() {
         }
 
         .report-card:hover {
-          border-color: #0b63f6;
-          box-shadow: 0 4px 12px rgba(11, 99, 246, 0.1);
+          border-color: #2C5F8D;
+          box-shadow: 0 4px 12px rgba(44, 95, 141, 0.1);
         }
 
         .report-header {
@@ -556,7 +556,7 @@ export default function PropertyInventoryOverview() {
         .report-meta {
           margin: 0;
           font-size: 13px;
-          color: #6b7280;
+          color: #9B958C;
         }
 
         .report-type-badge {
@@ -571,12 +571,12 @@ export default function PropertyInventoryOverview() {
         .report-rooms {
           margin: 0;
           font-size: 14px;
-          color: #6b7280;
+          color: #9B958C;
         }
 
-                  .add-room-card {
-          background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
-          border: 2px dashed #d1d5db;
+        .add-room-card {
+          background: linear-gradient(135deg, #F9F8F6 0%, #F5F3EF 100%);
+          border: 2px dashed #E6E3DD;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -584,8 +584,8 @@ export default function PropertyInventoryOverview() {
         }
 
         .add-room-card:hover {
-          border-color: #0b63f6;
-          background: linear-gradient(135deg, #f0f7ff 0%, #e0f0ff 100%);
+          border-color: #2C5F8D;
+          background: linear-gradient(135deg, #F8FBFD 0%, #E8F1F8 100%);
           transform: translateY(-2px);
         }
 
@@ -595,7 +595,7 @@ export default function PropertyInventoryOverview() {
           align-items: center;
           justify-content: center;
           gap: 12px;
-          color: #6b7280;
+          color: #9B958C;
           text-align: center;
           padding: 20px;
         }
@@ -604,17 +604,17 @@ export default function PropertyInventoryOverview() {
           margin: 0;
           font-size: 18px;
           font-weight: 600;
-          color: #111827;
+          color: #2A2A2A;
         }
 
         .add-room-content p {
           margin: 0;
           font-size: 14px;
-          color: #6b7280;
+          color: #9B958C;
         }
 
         .add-room-card:hover .add-room-content {
-          color: #0b63f6;
+          color: #2C5F8D;
         }
 
         @media (max-width: 768px) {
@@ -634,8 +634,6 @@ export default function PropertyInventoryOverview() {
           .room-status-grid {
             grid-template-columns: 1fr;
           }
-          
-
         }
       `}</style>
     </div>

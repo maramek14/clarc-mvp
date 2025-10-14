@@ -81,7 +81,7 @@ export default function PropertyDashboard() {
         })}
       </div>
 
-      <style jsx>{`
+<style jsx>{`
         .action-list {
           display: flex;
           flex-direction: column;
@@ -94,7 +94,7 @@ export default function PropertyDashboard() {
           gap: 16px;
           padding: 20px;
           background: white;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 12px;
           cursor: pointer;
           transition: all 0.2s;
@@ -103,8 +103,8 @@ export default function PropertyDashboard() {
         }
 
         .action-item:hover {
-          border-color: #0b63f6;
-          box-shadow: 0 4px 12px rgba(11, 99, 246, 0.1);
+          border-color: #2C5F8D;
+          box-shadow: 0 4px 12px rgba(44, 95, 141, 0.1);
           transform: translateY(-2px);
         }
 
@@ -116,11 +116,11 @@ export default function PropertyDashboard() {
           width: 56px;
           height: 56px;
           border-radius: 12px;
-          background: linear-gradient(135deg, #f0f7ff 0%, #e0f0ff 100%);
+          background: linear-gradient(135deg, #F8FBFD 0%, #E8F1F8 100%);
           display: flex;
           align-items: center;
           justify-content: center;
-          color: #0b63f6;
+          color: #2C5F8D;
           flex-shrink: 0;
         }
 
@@ -133,25 +133,25 @@ export default function PropertyDashboard() {
           margin: 0 0 4px 0;
           font-size: 18px;
           font-weight: 600;
-          color: #111827;
+          color: #2A2A2A;
         }
 
         .action-description {
           margin: 0 0 8px 0;
           font-size: 14px;
-          color: #6b7280;
+          color: #9B958C;
           line-height: 1.5;
         }
 
         .action-preview {
           margin: 0;
           font-size: 13px;
-          color: #0b63f6;
+          color: #2C5F8D;
           font-weight: 500;
         }
 
         .action-arrow {
-          color: #9ca3af;
+          color: #9B958C;
           flex-shrink: 0;
         }
 

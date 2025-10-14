@@ -229,7 +229,7 @@ export default function ViewPropertyReport() {
         </div>
       )}
 
-      <style jsx>{`
+<style jsx>{`
         .report-header {
           display: flex;
           justify-content: space-between;
@@ -255,7 +255,7 @@ export default function ViewPropertyReport() {
           align-items: center;
           gap: 6px;
           font-size: 14px;
-          color: #6b7280;
+          color: #9B958C;
         }
 
         .button-primary {
@@ -263,7 +263,7 @@ export default function ViewPropertyReport() {
           align-items: center;
           gap: 8px;
           padding: 12px 24px;
-          background: #0b63f6;
+          background: #2C5F8D;
           color: white;
           border: none;
           border-radius: 8px;
@@ -275,12 +275,12 @@ export default function ViewPropertyReport() {
         }
 
         .button-primary:hover {
-          background: #0952d4;
+          background: #1E4466;
         }
 
         .details-card {
           background: white;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 12px;
           padding: 24px;
           margin-bottom: 24px;
@@ -295,12 +295,12 @@ export default function ViewPropertyReport() {
         }
 
         .detail-row:not(:last-child) {
-          border-bottom: 1px solid #f3f4f6;
+          border-bottom: 1px solid #F5F3EF;
         }
 
         .detail-row strong {
           min-width: 140px;
-          color: #374151;
+          color: #2A2A2A;
           font-weight: 600;
         }
 
@@ -312,7 +312,7 @@ export default function ViewPropertyReport() {
         .notes-row span {
           margin-top: 8px;
           padding: 12px;
-          background: #f9fafb;
+          background: #F9F8F6;
           border-radius: 8px;
           width: 100%;
         }
@@ -331,16 +331,16 @@ export default function ViewPropertyReport() {
         }
 
         .status-text.complete {
-          color: #10b981;
+          color: #3D7C5C;
         }
 
         .status-text.incomplete {
-          color: #ef4444;
+          color: #B85C4F;
         }
 
         .warnings-section {
-          background: #fef3c7;
-          border: 1px solid #fbbf24;
+          background: #FFF8E7;
+          border: 1px solid #D4A574;
           border-radius: 12px;
           padding: 20px;
           margin-bottom: 24px;
@@ -353,7 +353,7 @@ export default function ViewPropertyReport() {
           margin: 0 0 12px 0;
           font-size: 18px;
           font-weight: 600;
-          color: #92400e;
+          color: #8B6914;
         }
 
         .warnings-list {
@@ -366,9 +366,9 @@ export default function ViewPropertyReport() {
           align-items: center;
           gap: 8px;
           padding: 10px 12px;
-          background: #fffbeb;
+          background: #FFFBF0;
           border-radius: 8px;
-          color: #92400e;
+          color: #8B6914;
           font-size: 14px;
         }
 
@@ -393,7 +393,7 @@ export default function ViewPropertyReport() {
           align-items: center;
           gap: 12px;
           background: white;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 12px;
           padding: 16px;
         }
@@ -411,7 +411,7 @@ export default function ViewPropertyReport() {
         .condition-label {
           margin: 0 0 4px 0;
           font-size: 13px;
-          color: #6b7280;
+          color: #9B958C;
           text-transform: capitalize;
         }
 
@@ -419,7 +419,7 @@ export default function ViewPropertyReport() {
           margin: 0;
           font-size: 24px;
           font-weight: 700;
-          color: #111827;
+          color: #2A2A2A;
         }
 
         .rooms-breakdown {
@@ -429,7 +429,7 @@ export default function ViewPropertyReport() {
 
         .room-breakdown-card {
           background: white;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 12px;
           padding: 20px;
         }
@@ -451,7 +451,7 @@ export default function ViewPropertyReport() {
         .room-meta {
           margin: 0;
           font-size: 14px;
-          color: #6b7280;
+          color: #9B958C;
         }
 
         .view-details-btn {
@@ -459,19 +459,19 @@ export default function ViewPropertyReport() {
           align-items: center;
           gap: 6px;
           padding: 8px 16px;
-          background: #f3f4f6;
+          background: #F5F3EF;
           border: none;
           border-radius: 8px;
           font-size: 14px;
           font-weight: 500;
-          color: #374151;
+          color: #2A2A2A;
           cursor: pointer;
           transition: all 0.2s;
           white-space: nowrap;
         }
 
         .view-details-btn:hover:not(:disabled) {
-          background: #e5e7eb;
+          background: #EBE8E1;
         }
 
         .view-details-btn:disabled {
@@ -481,7 +481,7 @@ export default function ViewPropertyReport() {
 
         .room-items-preview {
           padding: 16px;
-          background: #f9fafb;
+          background: #F9F8F6;
           border-radius: 8px;
         }
 
@@ -489,7 +489,7 @@ export default function ViewPropertyReport() {
           margin: 0 0 12px 0;
           font-size: 13px;
           font-weight: 600;
-          color: #6b7280;
+          color: #9B958C;
         }
 
         .items-list-preview {
@@ -508,7 +508,7 @@ export default function ViewPropertyReport() {
         }
 
         .item-name {
-          color: #111827;
+          color: #2A2A2A;
         }
 
         .item-condition {
@@ -519,7 +519,7 @@ export default function ViewPropertyReport() {
         .more-items {
           margin: 8px 0 0;
           font-size: 13px;
-          color: #6b7280;
+          color: #9B958C;
           font-style: italic;
           text-align: center;
         }
@@ -529,9 +529,9 @@ export default function ViewPropertyReport() {
           align-items: center;
           gap: 8px;
           padding: 16px;
-          background: #fef3c7;
+          background: #FFF8E7;
           border-radius: 8px;
-          color: #92400e;
+          color: #8B6914;
           font-size: 14px;
         }
 
@@ -547,17 +547,17 @@ export default function ViewPropertyReport() {
           align-items: center;
           padding: 12px 16px;
           background: white;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 8px;
           font-size: 14px;
         }
 
         .excluded-badge {
           padding: 4px 10px;
-          background: #f3f4f6;
+          background: #F5F3EF;
           border-radius: 12px;
           font-size: 12px;
-          color: #6b7280;
+          color: #9B958C;
           font-weight: 500;
         }
 

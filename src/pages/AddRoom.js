@@ -533,7 +533,7 @@ export default function AddRoom() {
         </div>
       </form>
 
-      <style jsx>{`
+<style jsx>{`
         .room-form {
           max-width: 100%;
         }
@@ -546,13 +546,13 @@ export default function AddRoom() {
           display: block;
           font-size: 14px;
           font-weight: 600;
-          color: #374151;
+          color: #2A2A2A;
           margin-bottom: 8px;
         }
 
         .form-hint {
           font-size: 13px;
-          color: #6b7280;
+          color: #9B958C;
           margin-top: 4px;
           margin-bottom: 12px;
         }
@@ -569,7 +569,7 @@ export default function AddRoom() {
           align-items: center;
           gap: 8px;
           padding: 16px 12px;
-          border: 2px solid #e5e7eb;
+          border: 2px solid #E6E3DD;
           border-radius: 12px;
           background: white;
           cursor: pointer;
@@ -577,13 +577,13 @@ export default function AddRoom() {
         }
 
         .template-btn:hover {
-          border-color: #0b63f6;
-          background: #f0f7ff;
+          border-color: #2C5F8D;
+          background: #F8FBFD;
         }
 
         .template-btn.selected {
-          border-color: #0b63f6;
-          background: #e0f0ff;
+          border-color: #2C5F8D;
+          background: #E8F1F8;
         }
 
         .template-emoji {
@@ -593,7 +593,7 @@ export default function AddRoom() {
         .template-name {
           font-size: 13px;
           font-weight: 500;
-          color: #374151;
+          color: #2A2A2A;
           text-align: center;
         }
 
@@ -603,7 +603,7 @@ export default function AddRoom() {
         textarea {
           width: 100%;
           padding: 10px 12px;
-          border: 1px solid #d1d5db;
+          border: 1px solid #E6E3DD;
           border-radius: 8px;
           font-size: 15px;
           font-family: inherit;
@@ -614,7 +614,7 @@ export default function AddRoom() {
         select:focus,
         textarea:focus {
           outline: none;
-          border-color: #0b63f6;
+          border-color: #2C5F8D;
         }
 
         textarea {
@@ -633,7 +633,7 @@ export default function AddRoom() {
           align-items: center;
           gap: 8px;
           padding: 10px 14px;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 8px;
           background: white;
           cursor: pointer;
@@ -642,14 +642,14 @@ export default function AddRoom() {
         }
 
         .feature-btn:hover {
-          border-color: #0b63f6;
-          background: #f0f7ff;
+          border-color: #2C5F8D;
+          background: #F8FBFD;
         }
 
         .feature-btn.selected {
-          border-color: #0b63f6;
-          background: #e0f0ff;
-          color: #0b63f6;
+          border-color: #2C5F8D;
+          background: #E8F1F8;
+          color: #2C5F8D;
           font-weight: 500;
         }
 
@@ -664,8 +664,8 @@ export default function AddRoom() {
 
         .add-feature-btn {
           padding: 10px 20px;
-          background: #f3f4f6;
-          border: 1px solid #d1d5db;
+          background: #F5F3EF;
+          border: 1px solid #E6E3DD;
           border-radius: 8px;
           font-size: 14px;
           font-weight: 500;
@@ -674,7 +674,7 @@ export default function AddRoom() {
         }
 
         .add-feature-btn:hover {
-          background: #e5e7eb;
+          background: #EBE8E1;
         }
 
         .selected-features {
@@ -689,10 +689,10 @@ export default function AddRoom() {
           align-items: center;
           gap: 8px;
           padding: 6px 12px;
-          background: #e0f0ff;
+          background: #E8F1F8;
           border-radius: 20px;
           font-size: 13px;
-          color: #0b63f6;
+          color: #2C5F8D;
           font-weight: 500;
         }
 
@@ -702,7 +702,7 @@ export default function AddRoom() {
           padding: 2px;
           border: none;
           background: transparent;
-          color: #0b63f6;
+          color: #2C5F8D;
           cursor: pointer;
         }
 
@@ -718,7 +718,7 @@ export default function AddRoom() {
           aspect-ratio: 1;
           border-radius: 8px;
           overflow: hidden;
-          border: 2px solid #e5e7eb;
+          border: 2px solid #E6E3DD;
         }
 
         .selected-photo-item img {
@@ -742,7 +742,7 @@ export default function AddRoom() {
         .mini-tag {
           font-size: 10px;
           padding: 2px 6px;
-          background: #0b63f6;
+          background: #2C5F8D;
           color: white;
           border-radius: 4px;
         }
@@ -775,10 +775,10 @@ export default function AddRoom() {
           gap: 8px;
           width: 100%;
           padding: 16px 20px;
-          border: 2px dashed #d1d5db;
+          border: 2px dashed #E6E3DD;
           border-radius: 12px;
-          background: #f9fafb;
-          color: #6b7280;
+          background: #F9F8F6;
+          color: #9B958C;
           font-size: 14px;
           font-weight: 500;
           cursor: pointer;
@@ -786,9 +786,9 @@ export default function AddRoom() {
         }
 
         .select-photo-btn:hover {
-          border-color: #0b63f6;
-          background: #f0f7ff;
-          color: #0b63f6;
+          border-color: #2C5F8D;
+          background: #F8FBFD;
+          color: #2C5F8D;
         }
 
         .photo-gallery-modal {
@@ -820,7 +820,7 @@ export default function AddRoom() {
           justify-content: space-between;
           align-items: center;
           padding: 20px;
-          border-bottom: 1px solid #e5e7eb;
+          border-bottom: 1px solid #E6E3DD;
         }
 
         .modal-header h3 {
@@ -836,14 +836,14 @@ export default function AddRoom() {
           width: 36px;
           height: 36px;
           border: none;
-          background: #f3f4f6;
+          background: #F5F3EF;
           border-radius: 8px;
           cursor: pointer;
           transition: background 0.2s;
         }
 
         .close-btn:hover {
-          background: #e5e7eb;
+          background: #EBE8E1;
         }
 
         .photo-grid-compact {
@@ -870,7 +870,7 @@ export default function AddRoom() {
         }
 
         .gallery-photo.selected {
-          border-color: #0b63f6;
+          border-color: #2C5F8D;
         }
 
         .gallery-photo img {
@@ -888,7 +888,7 @@ export default function AddRoom() {
           justify-content: center;
           width: 28px;
           height: 28px;
-          background: #0b63f6;
+          background: #2C5F8D;
           border-radius: 50%;
           color: white;
         }
@@ -921,7 +921,7 @@ export default function AddRoom() {
         .tags-prompt {
           font-size: 14px;
           font-weight: 600;
-          color: #374151;
+          color: #2A2A2A;
           margin-bottom: 12px;
         }
 
@@ -936,7 +936,7 @@ export default function AddRoom() {
           align-items: center;
           gap: 8px;
           padding: 12px 16px;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 8px;
           background: white;
           cursor: pointer;
@@ -945,14 +945,14 @@ export default function AddRoom() {
         }
 
         .tag-btn:hover {
-          border-color: #0b63f6;
-          background: #f0f7ff;
+          border-color: #2C5F8D;
+          background: #F8FBFD;
         }
 
         .tag-btn.selected {
-          border-color: #0b63f6;
-          background: #e0f0ff;
-          color: #0b63f6;
+          border-color: #2C5F8D;
+          background: #E8F1F8;
+          color: #2C5F8D;
           font-weight: 500;
         }
 
@@ -960,7 +960,7 @@ export default function AddRoom() {
           display: flex;
           gap: 12px;
           padding: 20px;
-          border-top: 1px solid #e5e7eb;
+          border-top: 1px solid #E6E3DD;
         }
 
         .form-actions {
@@ -968,7 +968,7 @@ export default function AddRoom() {
           gap: 12px;
           margin-top: 32px;
           padding-top: 24px;
-          border-top: 1px solid #e5e7eb;
+          border-top: 1px solid #E6E3DD;
         }
 
         .button-primary,
@@ -988,26 +988,26 @@ export default function AddRoom() {
         }
 
         .button-primary {
-          background: #0b63f6;
+          background: #2C5F8D;
           color: white;
         }
 
         .button-primary:hover:not(:disabled) {
-          background: #0952d4;
+          background: #1E4466;
         }
 
         .button-primary:disabled {
-          background: #d1d5db;
+          background: #E6E3DD;
           cursor: not-allowed;
         }
 
         .button-secondary {
-          background: #f3f4f6;
-          color: #374151;
+          background: #F5F3EF;
+          color: #2A2A2A;
         }
 
         .button-secondary:hover:not(:disabled) {
-          background: #e5e7eb;
+          background: #EBE8E1;
         }
 
         .button-secondary:disabled {

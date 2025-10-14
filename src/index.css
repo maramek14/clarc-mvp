@@ -8,11 +8,10 @@ html, body {
   padding: 0;
   height: 100%;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: radial-gradient(circle at top, #d7d8db 0%, #bfc2c7 100%);
+  background: radial-gradient(circle at top, #F5F3EF 0%, #EBE8E1 100%);
   display: flex;
   justify-content: center;
   align-items: center;
-  /* ⛔ remove overflow hidden */
 }
 
 #root {

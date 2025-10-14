@@ -490,7 +490,7 @@ export default function CreatePropertyReport() {
         </div>
       )}
 
-      <style jsx>{`
+<style jsx>{`
         .progress-steps {
           display: flex;
           align-items: center;
@@ -499,7 +499,7 @@ export default function CreatePropertyReport() {
           padding: 20px;
           background: white;
           border-radius: 12px;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
         }
 
         .progress-step {
@@ -511,16 +511,16 @@ export default function CreatePropertyReport() {
 
         .progress-step span {
           font-size: 13px;
-          color: #6b7280;
+          color: #9B958C;
           font-weight: 500;
         }
 
         .progress-step.active span {
-          color: #0b63f6;
+          color: #2C5F8D;
         }
 
         .progress-step.completed span {
-          color: #10b981;
+          color: #3D7C5C;
         }
 
         .step-circle {
@@ -530,34 +530,34 @@ export default function CreatePropertyReport() {
           width: 40px;
           height: 40px;
           border-radius: 50%;
-          background: #f3f4f6;
-          color: #6b7280;
+          background: #F5F3EF;
+          color: #9B958C;
           font-weight: 600;
-          border: 2px solid #e5e7eb;
+          border: 2px solid #E6E3DD;
         }
 
         .progress-step.active .step-circle {
-          background: #e0f0ff;
-          color: #0b63f6;
-          border-color: #0b63f6;
+          background: #E8F1F8;
+          color: #2C5F8D;
+          border-color: #2C5F8D;
         }
 
         .progress-step.completed .step-circle {
-          background: #10b981;
+          background: #3D7C5C;
           color: white;
-          border-color: #10b981;
+          border-color: #3D7C5C;
         }
 
         .step-line {
           width: 60px;
           height: 2px;
-          background: #e5e7eb;
+          background: #E6E3DD;
           margin: 0 16px;
         }
 
         .form-step {
           background: white;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 12px;
           padding: 32px;
         }
@@ -570,7 +570,7 @@ export default function CreatePropertyReport() {
 
         .step-description {
           margin: 0 0 24px 0;
-          color: #6b7280;
+          color: #9B958C;
           font-size: 14px;
         }
 
@@ -578,11 +578,11 @@ export default function CreatePropertyReport() {
           display: flex;
           gap: 16px;
           padding: 16px;
-          background: #fef3c7;
-          border: 1px solid #fbbf24;
+          background: #FFF8E7;
+          border: 1px solid #D4A574;
           border-radius: 12px;
           margin-bottom: 24px;
-          color: #92400e;
+          color: #8B6914;
         }
 
         .warning-banner strong {
@@ -602,8 +602,8 @@ export default function CreatePropertyReport() {
         }
 
         .room-check-item {
-          background: #f9fafb;
-          border: 1px solid #e5e7eb;
+          background: #F9F8F6;
+          border: 1px solid #E6E3DD;
           border-radius: 12px;
           padding: 16px;
         }
@@ -631,7 +631,7 @@ export default function CreatePropertyReport() {
         .room-name {
           font-size: 16px;
           font-weight: 600;
-          color: #111827;
+          color: #2A2A2A;
         }
 
         .status-badge {
@@ -650,12 +650,12 @@ export default function CreatePropertyReport() {
           gap: 8px;
           flex-wrap: wrap;
           font-size: 13px;
-          color: #6b7280;
+          color: #9B958C;
           margin-bottom: 8px;
         }
 
         .no-data {
-          color: #dc2626;
+          color: #B85C4F;
           font-weight: 500;
         }
 
@@ -664,10 +664,10 @@ export default function CreatePropertyReport() {
           align-items: center;
           gap: 8px;
           padding: 8px 12px;
-          background: #fef3c7;
+          background: #FFF8E7;
           border-radius: 8px;
           font-size: 13px;
-          color: #92400e;
+          color: #8B6914;
           margin-top: 8px;
         }
 
@@ -675,17 +675,17 @@ export default function CreatePropertyReport() {
           margin-left: auto;
           padding: 4px 12px;
           background: white;
-          border: 1px solid #d97706;
+          border: 1px solid #D4A574;
           border-radius: 6px;
           font-size: 12px;
           font-weight: 500;
-          color: #92400e;
+          color: #8B6914;
           cursor: pointer;
           transition: all 0.2s;
         }
 
         .quick-action-btn:hover {
-          background: #fffbeb;
+          background: #FFFBF0;
         }
 
         .selection-summary {
@@ -693,7 +693,7 @@ export default function CreatePropertyReport() {
           justify-content: space-between;
           align-items: center;
           padding: 16px;
-          background: #f3f4f6;
+          background: #F5F3EF;
           border-radius: 8px;
           margin-bottom: 24px;
         }
@@ -707,7 +707,7 @@ export default function CreatePropertyReport() {
           display: flex;
           align-items: center;
           gap: 6px;
-          color: #dc2626;
+          color: #B85C4F;
           font-weight: 500;
         }
 
@@ -719,7 +719,7 @@ export default function CreatePropertyReport() {
           display: block;
           font-size: 14px;
           font-weight: 600;
-          color: #374151;
+          color: #2A2A2A;
           margin-bottom: 8px;
         }
 
@@ -729,7 +729,7 @@ export default function CreatePropertyReport() {
         textarea {
           width: 100%;
           padding: 10px 12px;
-          border: 1px solid #d1d5db;
+          border: 1px solid #E6E3DD;
           border-radius: 8px;
           font-size: 15px;
           font-family: inherit;
@@ -740,7 +740,7 @@ export default function CreatePropertyReport() {
         select:focus,
         textarea:focus {
           outline: none;
-          border-color: #0b63f6;
+          border-color: #2C5F8D;
         }
 
         textarea {
@@ -750,7 +750,7 @@ export default function CreatePropertyReport() {
         .review-section {
           margin-bottom: 32px;
           padding-bottom: 32px;
-          border-bottom: 1px solid #e5e7eb;
+          border-bottom: 1px solid #E6E3DD;
         }
 
         .review-section:last-of-type {
@@ -777,13 +777,13 @@ export default function CreatePropertyReport() {
 
         .review-label {
           font-size: 13px;
-          color: #6b7280;
+          color: #9B958C;
           font-weight: 500;
         }
 
         .review-value {
           font-size: 15px;
-          color: #111827;
+          color: #2A2A2A;
           font-weight: 500;
         }
 
@@ -795,8 +795,8 @@ export default function CreatePropertyReport() {
 
         .room-summary-card {
           padding: 12px;
-          background: #f9fafb;
-          border: 1px solid #e5e7eb;
+          background: #F9F8F6;
+          border: 1px solid #E6E3DD;
           border-radius: 8px;
         }
 
@@ -823,7 +823,7 @@ export default function CreatePropertyReport() {
 
         .room-summary-detail {
           font-size: 12px;
-          color: #6b7280;
+          color: #9B958C;
         }
 
         .warnings-list {
@@ -837,28 +837,28 @@ export default function CreatePropertyReport() {
           align-items: center;
           gap: 8px;
           padding: 12px;
-          background: #fef3c7;
+          background: #FFF8E7;
           border-radius: 8px;
-          color: #92400e;
+          color: #8B6914;
           font-size: 14px;
         }
 
         .warning-note {
           margin: 0;
           padding: 12px;
-          background: #fffbeb;
+          background: #FFFBF0;
           border-radius: 8px;
           font-size: 13px;
-          color: #92400e;
+          color: #8B6914;
         }
 
         .notes-display {
           margin: 0;
           padding: 16px;
-          background: #f9fafb;
+          background: #F9F8F6;
           border-radius: 8px;
           font-size: 14px;
-          color: #374151;
+          color: #2A2A2A;
           white-space: pre-wrap;
         }
 
@@ -867,7 +867,7 @@ export default function CreatePropertyReport() {
           gap: 12px;
           margin-top: 32px;
           padding-top: 24px;
-          border-top: 1px solid #e5e7eb;
+          border-top: 1px solid #E6E3DD;
         }
 
         .button-primary,
@@ -887,21 +887,21 @@ export default function CreatePropertyReport() {
         }
 
         .button-primary {
-          background: #0b63f6;
+          background: #2C5F8D;
           color: white;
         }
 
         .button-primary:hover {
-          background: #0952d4;
+          background: #1E4466;
         }
 
         .button-secondary {
-          background: #f3f4f6;
-          color: #374151;
+          background: #F5F3EF;
+          color: #2A2A2A;
         }
 
         .button-secondary:hover {
-          background: #e5e7eb;
+          background: #EBE8E1;
         }
 
         @media (max-width: 768px) {

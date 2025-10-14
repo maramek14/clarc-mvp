@@ -410,7 +410,7 @@ export default function AddToGallery() {
         </div>
       </div>
 
-      <style jsx>{`
+<style jsx>{`
         .tagging-header {
           display: flex;
           justify-content: space-between;
@@ -427,7 +427,7 @@ export default function AddToGallery() {
         .back-to-selection {
           background: none;
           border: none;
-          color: #0b63f6;
+          color: #2C5F8D;
           font-size: 14px;
           font-weight: 500;
           cursor: pointer;
@@ -437,7 +437,7 @@ export default function AddToGallery() {
         }
 
         .back-to-selection:hover {
-          background: #f0f7ff;
+          background: #F8FBFD;
         }
 
         .photo-preview {
@@ -447,7 +447,7 @@ export default function AddToGallery() {
           border-radius: 12px;
           overflow: hidden;
           margin-bottom: 24px;
-          border: 2px solid #e5e7eb;
+          border: 2px solid #E6E3DD;
         }
 
         .photo-preview img {
@@ -460,7 +460,7 @@ export default function AddToGallery() {
           position: absolute;
           top: 16px;
           right: 16px;
-          background: #10b981;
+          background: #3D7C5C;
           color: white;
           width: 48px;
           height: 48px;
@@ -468,7 +468,7 @@ export default function AddToGallery() {
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+          box-shadow: 0 4px 12px rgba(61, 124, 92, 0.3);
         }
 
         .form-section {
@@ -480,16 +480,16 @@ export default function AddToGallery() {
           margin-bottom: 8px;
           font-size: 14px;
           font-weight: 500;
-          color: #374151;
+          color: #2A2A2A;
         }
 
         .form-section select {
           width: 100%;
           padding: 12px 16px;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 8px;
           font-size: 15px;
-          color: #111827;
+          color: #2A2A2A;
           background: white;
           cursor: pointer;
           transition: border-color 0.2s;
@@ -497,8 +497,8 @@ export default function AddToGallery() {
 
         .form-section select:focus {
           outline: none;
-          border-color: #0b63f6;
-          box-shadow: 0 0 0 3px rgba(11, 99, 246, 0.1);
+          border-color: #2C5F8D;
+          box-shadow: 0 0 0 3px rgba(44, 95, 141, 0.1);
         }
 
         .tag-buttons {
@@ -513,23 +513,23 @@ export default function AddToGallery() {
           gap: 6px;
           padding: 10px 16px;
           background: white;
-          border: 2px solid #e5e7eb;
+          border: 2px solid #E6E3DD;
           border-radius: 8px;
           font-size: 14px;
           font-weight: 500;
-          color: #374151;
+          color: #2A2A2A;
           cursor: pointer;
           transition: all 0.2s;
         }
 
         .tag-button:hover {
-          border-color: #0b63f6;
-          background: #f0f7ff;
+          border-color: #2C5F8D;
+          background: #F8FBFD;
         }
 
         .tag-button.selected {
-          background: #0b63f6;
-          border-color: #0b63f6;
+          background: #2C5F8D;
+          border-color: #2C5F8D;
           color: white;
         }
 
@@ -541,8 +541,8 @@ export default function AddToGallery() {
           width: 420px;
           max-width: 420px;
           background: white;
-          border-top: 1px solid #e5e7eb;
-          box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+          border-top: 1px solid #E6E3DD;
+          box-shadow: 0 -4px 12px rgba(44, 95, 141, 0.1);
           z-index: 11;
           padding: 16px 20px;
         }
@@ -569,28 +569,28 @@ export default function AddToGallery() {
         }
 
         .button-primary {
-          background: #0b63f6;
+          background: #2C5F8D;
           color: white;
         }
 
         .button-primary:hover:not(:disabled) {
-          background: #0952d4;
+          background: #1E4466;
         }
 
         .button-primary:disabled {
-          background: #d1d5db;
+          background: #E6E3DD;
           cursor: not-allowed;
         }
 
         .button-secondary {
           background: white;
-          border: 2px solid #e5e7eb;
-          color: #374151;
+          border: 2px solid #E6E3DD;
+          color: #2A2A2A;
         }
 
         .button-secondary:hover:not(:disabled) {
-          background: #f9fafb;
-          border-color: #d1d5db;
+          background: #F9F8F6;
+          border-color: #E6E3DD;
         }
 
         .button-secondary:disabled {

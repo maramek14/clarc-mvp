@@ -255,14 +255,14 @@ export default function PropertyInformation() {
         </section>
       </div>
 
-      <style jsx>{`
+<style jsx>{`
         .info-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
           margin-bottom: 24px;
           padding-bottom: 16px;
-          border-bottom: 1px solid #e5e7eb;
+          border-bottom: 1px solid #E6E3DD;
         }
 
         .info-header h2 {
@@ -290,21 +290,21 @@ export default function PropertyInformation() {
         }
 
         .button-primary {
-          background: #0b63f6;
+          background: #2C5F8D;
           color: white;
         }
 
         .button-primary:hover {
-          background: #0952d4;
+          background: #1E4466;
         }
 
         .button-secondary {
-          background: #f3f4f6;
-          color: #374151;
+          background: #F5F3EF;
+          color: #2A2A2A;
         }
 
         .button-secondary:hover {
-          background: #e5e7eb;
+          background: #EBE8E1;
         }
 
         .info-sections {
@@ -315,7 +315,7 @@ export default function PropertyInformation() {
 
         .info-section {
           background: white;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 12px;
           padding: 20px;
         }
@@ -324,7 +324,7 @@ export default function PropertyInformation() {
           margin: 0 0 16px 0;
           font-size: 18px;
           font-weight: 600;
-          color: #111827;
+          color: #2A2A2A;
         }
 
         .info-field {
@@ -345,20 +345,20 @@ export default function PropertyInformation() {
         .info-field-header label {
           font-size: 14px;
           font-weight: 500;
-          color: #6b7280;
+          color: #9B958C;
         }
 
         .info-value {
           margin: 0;
           font-size: 15px;
-          color: #111827;
+          color: #2A2A2A;
           padding: 8px 0;
         }
 
         .info-input {
           width: 100%;
           padding: 10px 12px;
-          border: 1px solid #d1d5db;
+          border: 1px solid #E6E3DD;
           border-radius: 8px;
           font-size: 15px;
           transition: border-color 0.2s;
@@ -366,7 +366,7 @@ export default function PropertyInformation() {
 
         .info-input:focus {
           outline: none;
-          border-color: #0b63f6;
+          border-color: #2C5F8D;
         }
 
         textarea.info-input {
@@ -389,10 +389,10 @@ export default function PropertyInformation() {
 
         .room-chip {
           padding: 8px 16px;
-          background: #f3f4f6;
+          background: #F5F3EF;
           border-radius: 20px;
           font-size: 14px;
-          color: #374151;
+          color: #2A2A2A;
           font-weight: 500;
         }
 

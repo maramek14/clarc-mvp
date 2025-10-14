@@ -202,10 +202,10 @@ export default function Settings() {
         <p className="app-info-sub">© 2024 - MVP Version</p>
       </div>
 
-      <style jsx>{`
+<style jsx>{`
         .settings-section {
           background: white;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 12px;
           padding: 24px;
           margin-bottom: 20px;
@@ -217,18 +217,18 @@ export default function Settings() {
           gap: 12px;
           margin-bottom: 24px;
           padding-bottom: 16px;
-          border-bottom: 1px solid #f3f4f6;
+          border-bottom: 1px solid #F5F3EF;
         }
 
         .section-header svg {
-          color: #0b63f6;
+          color: #2C5F8D;
         }
 
         .section-header h2 {
           margin: 0;
           font-size: 20px;
           font-weight: 600;
-          color: #111827;
+          color: #2A2A2A;
         }
 
         .profile-form {
@@ -246,27 +246,27 @@ export default function Settings() {
         .form-field label {
           font-size: 14px;
           font-weight: 500;
-          color: #374151;
+          color: #2A2A2A;
         }
 
         .form-field input {
           padding: 12px 16px;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 8px;
           font-size: 15px;
-          color: #111827;
+          color: #2A2A2A;
           transition: border-color 0.2s;
         }
 
         .form-field input:focus {
           outline: none;
-          border-color: #0b63f6;
-          box-shadow: 0 0 0 3px rgba(11, 99, 246, 0.1);
+          border-color: #2C5F8D;
+          box-shadow: 0 0 0 3px rgba(44, 95, 141, 0.1);
         }
 
         .button-primary {
           padding: 12px 24px;
-          background: #0b63f6;
+          background: #2C5F8D;
           color: white;
           border: none;
           border-radius: 8px;
@@ -278,7 +278,7 @@ export default function Settings() {
         }
 
         .button-primary:hover {
-          background: #0952d4;
+          background: #1E4466;
         }
 
         .toggle-list {
@@ -293,7 +293,7 @@ export default function Settings() {
           align-items: center;
           gap: 16px;
           padding: 16px;
-          background: #f9fafb;
+          background: #F9F8F6;
           border-radius: 8px;
         }
 
@@ -305,13 +305,13 @@ export default function Settings() {
           margin: 0 0 4px 0;
           font-size: 15px;
           font-weight: 500;
-          color: #111827;
+          color: #2A2A2A;
         }
 
         .toggle-description {
           margin: 0;
           font-size: 13px;
-          color: #6b7280;
+          color: #9B958C;
         }
 
         .toggle-switch {
@@ -335,7 +335,7 @@ export default function Settings() {
           left: 0;
           right: 0;
           bottom: 0;
-          background-color: #d1d5db;
+          background-color: #E6E3DD;
           transition: 0.3s;
           border-radius: 26px;
         }
@@ -353,7 +353,7 @@ export default function Settings() {
         }
 
         .toggle-switch input:checked + .toggle-slider {
-          background-color: #0b63f6;
+          background-color: #2C5F8D;
         }
 
         .toggle-switch input:checked + .toggle-slider:before {
@@ -372,7 +372,7 @@ export default function Settings() {
           gap: 16px;
           padding: 16px;
           background: white;
-          border: 1px solid #e5e7eb;
+          border: 1px solid #E6E3DD;
           border-radius: 8px;
           cursor: pointer;
           transition: all 0.2s;
@@ -381,22 +381,22 @@ export default function Settings() {
         }
 
         .action-btn:hover {
-          background: #f9fafb;
-          border-color: #0b63f6;
+          background: #F9F8F6;
+          border-color: #2C5F8D;
         }
 
         .action-btn svg {
-          color: #6b7280;
+          color: #9B958C;
           flex-shrink: 0;
         }
 
         .action-btn.logout:hover {
-          background: #fef2f2;
-          border-color: #ef4444;
+          background: #FEF5F4;
+          border-color: #B85C4F;
         }
 
         .action-btn.logout:hover svg {
-          color: #ef4444;
+          color: #B85C4F;
         }
 
         .action-content {
@@ -407,13 +407,13 @@ export default function Settings() {
           margin: 0 0 4px 0;
           font-size: 15px;
           font-weight: 500;
-          color: #111827;
+          color: #2A2A2A;
         }
 
         .action-description {
           margin: 0;
           font-size: 13px;
-          color: #6b7280;
+          color: #9B958C;
         }
 
         .app-info {
@@ -425,7 +425,7 @@ export default function Settings() {
         .app-info p {
           margin: 4px 0;
           font-size: 13px;
-          color: #9ca3af;
+          color: #9B958C;
         }
 
         .app-info-sub {
