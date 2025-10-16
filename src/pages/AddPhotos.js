@@ -107,38 +107,41 @@ export default function AddPhotos() {
     navigate(`/properties/${id}/rooms/${roomId}/inventory`);
   };
 
-  // Step 1: Select Photos
+// Step 1: Select Photos
   if (step === 1) {
     return (
-      <div className="page-content">
-        <p className="subtitle">Select From Phone Gallery:</p>
+      <>
+        <div className="page-content" style={{ paddingBottom: '80px' }}>
+          <p className="subtitle">Select From Phone Gallery:</p>
 
-        <div className="photo-grid">
-          {phonePhotos.map((photo) => (
-            <div
-              key={photo.id}
-              className={`selectable-photo ${isPhotoSelected(photo) ? 'selected' : ''}`}
-              onClick={() => togglePhoto(photo)}
-            >
-              <img src={photo.url} alt="" />
-              {isPhotoSelected(photo) && (
-                <div className="selection-indicator">
-                  <Check size={24} strokeWidth={3} />
-                </div>
-              )}
-            </div>
-          ))}
+          <div className="photo-grid">
+            {phonePhotos.map((photo) => (
+              <div
+                key={photo.id}
+                className={`selectable-photo ${isPhotoSelected(photo) ? 'selected' : ''}`}
+                onClick={() => togglePhoto(photo)}
+              >
+                <img src={photo.url} alt="" />
+                {isPhotoSelected(photo) && (
+                  <div className="selection-indicator">
+                    <Check size={24} strokeWidth={3} />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
 
-        <button
-          className="button-primary"
-          disabled={selectedPhotos.length === 0}
-          onClick={handleContinueToTagging}
-          style={{ marginTop: '1rem' }}
-        >
-          Confirm Selection ({selectedPhotos.length})
-        </button>
-      </div>
+        <div className="fixed-bottom-button">
+          <button
+            className="button-primary"
+            disabled={selectedPhotos.length === 0}
+            onClick={handleContinueToTagging}
+          >
+            Confirm Selection ({selectedPhotos.length})
+          </button>
+        </div>
+      </>
     );
   }
 
@@ -214,3 +217,4 @@ export default function AddPhotos() {
     </div>
   );
 }
+

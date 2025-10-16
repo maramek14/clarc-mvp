@@ -1350,3 +1350,32 @@ tr:last-child td {
   }
 }
 
+/* =========================
+   FIXED BOTTOM BUTTON (for AddPhotos page)
+========================= */
+.fixed-bottom-button {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 420px;
+  min-width: 420px;
+  max-width: 420px;
+  padding: 1rem;
+  background: var(--card-bg);
+  border-top: 1px solid var(--border);
+  z-index: 10;
+  box-shadow: 0 -2px 8px rgba(44, 95, 141, 0.08);
+}
+
+.fixed-bottom-button button {
+  width: 100%;
+}
+
+@media (max-width: 440px) {
+  .fixed-bottom-button {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+}

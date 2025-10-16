@@ -84,12 +84,26 @@ export function useAppGallery() {
     setPhotos(globalAppGallery);
   };
 
+  const deletePhotos = (photoIds) => {
+    globalAppGallery = globalAppGallery.filter(photo => !photoIds.includes(photo.id));
+    setPhotos(globalAppGallery);
+  };
+
+  const movePhotos = (photoIds, newRoomId) => {
+    globalAppGallery = globalAppGallery.map(photo => 
+      photoIds.includes(photo.id) 
+        ? { ...photo, roomId: newRoomId }
+        : photo
+    );
+    setPhotos(globalAppGallery);
+  };
+
   const resetGallery = () => {
     globalAppGallery = [];
     setPhotos(globalAppGallery);
   };
 
-  return { photos, addPhotos, resetGallery };
+  return { photos, addPhotos, deletePhotos, movePhotos, resetGallery };
 }
 
 export function usePhoneGallery() {
