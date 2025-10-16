@@ -255,7 +255,6 @@ export default function Settings() {
           border-radius: 8px;
           font-size: 15px;
           color: #2A2A2A;
-          transition: border-color 0.2s;
         }
 
         .form-field input:focus {
@@ -273,7 +272,6 @@ export default function Settings() {
           font-size: 15px;
           font-weight: 500;
           cursor: pointer;
-          transition: background 0.2s;
           align-self: flex-start;
         }
 
@@ -336,7 +334,6 @@ export default function Settings() {
           right: 0;
           bottom: 0;
           background-color: #E6E3DD;
-          transition: 0.3s;
           border-radius: 26px;
         }
 
@@ -348,7 +345,6 @@ export default function Settings() {
           left: 3px;
           bottom: 3px;
           background-color: white;
-          transition: 0.3s;
           border-radius: 50%;
         }
 
@@ -375,7 +371,6 @@ export default function Settings() {
           border: 1px solid #E6E3DD;
           border-radius: 8px;
           cursor: pointer;
-          transition: all 0.2s;
           text-align: left;
           width: 100%;
         }

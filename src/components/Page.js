@@ -1,6 +1,7 @@
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { ArrowLeft, ChevronRight } from "lucide-react";
 import { getPropertyById, getRoomById } from "../utils";
+import Logo from "./Logo";
 
 /**
  * Universal Page wrapper with clean, hierarchical header
@@ -30,6 +31,13 @@ export default function Page({ title, children }) {
           >
             <ArrowLeft size={20} />
           </button>
+        )}
+        
+        {/* Show logo on main pages instead of back button */}
+        {hideBack && (
+          <div className="logo-container">
+            <Logo width={180} height={96} />
+          </div>
         )}
         
         <div className="page-title-section">
@@ -93,6 +101,13 @@ export default function Page({ title, children }) {
         .back-button:active {
           background: #f3f4f6;
           color: #2C5F8D;
+        }
+
+        .logo-container {
+          flex-shrink: 0;
+          display: flex;
+          align-items: center;
+          padding: 4px 0;
         }
 
         .page-title-section {

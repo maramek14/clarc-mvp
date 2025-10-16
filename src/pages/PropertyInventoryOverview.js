@@ -267,7 +267,6 @@ export default function PropertyInventoryOverview() {
           padding: 24px;
           margin-bottom: 32px;
           cursor: pointer;
-          transition: all 0.2s;
         }
 
         .property-info-card:active {
@@ -420,7 +419,6 @@ export default function PropertyInventoryOverview() {
           border-radius: 12px;
           padding: 20px;
           cursor: pointer;
-          transition: all 0.2s;
         }
 
         .room-status-card:active {
@@ -496,7 +494,6 @@ export default function PropertyInventoryOverview() {
           font-size: 14px;
           font-weight: 600;
           cursor: pointer;
-          transition: all 0.2s;
         }
 
         .view-room-btn:active {
@@ -532,7 +529,6 @@ export default function PropertyInventoryOverview() {
           border-radius: 12px;
           padding: 20px;
           cursor: pointer;
-          transition: all 0.2s;
         }
 
         .report-card:active {

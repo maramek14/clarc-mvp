@@ -200,7 +200,6 @@ export default function AddToGallery() {
             overflow: hidden;
             cursor: pointer;
             border: 3px solid transparent;
-            transition: all 0.2s;
           }
 
           .selectable-photo.selected {
@@ -259,7 +258,6 @@ export default function AddToGallery() {
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
           }
 
           .button-primary {
@@ -433,7 +431,6 @@ export default function AddToGallery() {
           cursor: pointer;
           padding: 8px 12px;
           border-radius: 6px;
-          transition: background 0.2s;
         }
 
         .back-to-selection:active {
@@ -492,7 +489,6 @@ export default function AddToGallery() {
           color: #2A2A2A;
           background: white;
           cursor: pointer;
-          transition: border-color 0.2s;
         }
 
         .form-section select:focus {
@@ -519,7 +515,6 @@ export default function AddToGallery() {
           font-weight: 500;
           color: #2A2A2A;
           cursor: pointer;
-          transition: all 0.2s;
         }
 
         .tag-button:active {
@@ -565,7 +560,6 @@ export default function AddToGallery() {
           font-size: 15px;
           font-weight: 600;
           cursor: pointer;
-          transition: all 0.2s;
         }
 
         .button-primary {

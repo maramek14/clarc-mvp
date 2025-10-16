@@ -262,7 +262,6 @@ export default function ViewInventoryList() {
           font-size: 14px;
           font-weight: 500;
           cursor: pointer;
-          transition: all 0.2s;
           white-space: nowrap;
         }
 
@@ -405,7 +404,6 @@ export default function ViewInventoryList() {
           font-size: 14px;
           font-weight: 500;
           cursor: pointer;
-          transition: all 0.2s;
         }
 
         .condition-select:focus {
@@ -428,7 +426,6 @@ export default function ViewInventoryList() {
           font-size: 13px;
           font-family: inherit;
           resize: vertical;
-          transition: border-color 0.2s;
         }
 
         .notes-input:focus {

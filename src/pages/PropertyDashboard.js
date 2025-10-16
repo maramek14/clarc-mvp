@@ -97,7 +97,6 @@ export default function PropertyDashboard() {
           border: 1px solid #E6E3DD;
           border-radius: 12px;
           cursor: pointer;
-          transition: all 0.2s;
           text-align: left;
           width: 100%;
         }

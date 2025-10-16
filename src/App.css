@@ -144,7 +144,6 @@ h3 {
   font-weight: 600;
   font-size: 1rem;
   text-decoration: none;
-  transition: all 0.15s ease;
 }
 
 .button {
@@ -368,7 +367,6 @@ h3 {
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   cursor: pointer;
-  transition: all 0.15s ease;
 }
 
 .property-card {
@@ -445,7 +443,6 @@ h3 {
   font-size: 1.25rem;
   color: var(--muted);
   flex-shrink: 0;
-  transition: transform 0.15s ease;
 }
 
 .room-card-clean:active .room-arrow {
@@ -536,7 +533,6 @@ h3 {
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.15s ease;
   box-shadow: var(--shadow);
 }
 
@@ -591,7 +587,6 @@ h3 {
   font-size: 1rem;
   font-family: inherit;
   background: white;
-  transition: border-color 0.15s ease;
 }
 
 .form-group input:focus,
@@ -621,7 +616,6 @@ h3 {
   padding: 1rem;
   text-align: center;
   background: var(--bg);
-  transition: all 0.15s ease;
 }
 
 .image-upload-area:active {
@@ -673,7 +667,6 @@ h3 {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.15s ease;
 }
 
 .remove-image-btn:active {
@@ -708,7 +701,6 @@ h3 {
   justify-content: center;
   cursor: pointer;
   flex-shrink: 0;
-  transition: all 0.15s ease;
 }
 
 .add-room-btn:active {
@@ -743,7 +735,6 @@ h3 {
   align-items: center;
   justify-content: center;
   padding: 0;
-  transition: transform 0.15s ease;
 }
 
 .remove-room-btn:active {
@@ -780,7 +771,6 @@ h3 {
   cursor: pointer;
   border-radius: var(--radius);
   overflow: hidden;
-  transition: all 0.15s ease;
 }
 
 .gallery-photo-card:active {
@@ -876,7 +866,6 @@ h3 {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  transition: all 0.15s ease;
 }
 
 .filter-toggle-btn:active {
@@ -909,7 +898,6 @@ h3 {
   font-weight: 600;
   color: var(--muted);
   cursor: pointer;
-  transition: all 0.15s ease;
 }
 
 .clear-filters-btn:active {
@@ -949,7 +937,6 @@ h3 {
   font-weight: 500;
   color: var(--text);
   cursor: pointer;
-  transition: all 0.15s ease;
   white-space: nowrap;
 }
 
@@ -985,7 +972,6 @@ h3 {
   font-weight: 500;
   color: var(--text);
   cursor: pointer;
-  transition: all 0.15s ease;
 }
 
 .tag-button:active {
@@ -1109,7 +1095,6 @@ h3 {
   font-weight: 600;
   color: var(--text);
   cursor: pointer;
-  transition: all 0.15s ease;
   text-align: center;
 }
 
@@ -1214,7 +1199,6 @@ h3 {
   align-items: center;
   justify-content: center;
   padding: 0.25rem;
-  transition: color 0.15s ease;
 }
 
 .close-modal-btn:active {
@@ -1366,29 +1350,3 @@ tr:last-child td {
   }
 }
 
-/* Disable all hover effects - mobile-first approach */
-.button:hover,
-.button-primary:hover,
-.button-secondary:hover,
-.back-button:hover,
-.clear-filters-btn:hover,
-.filter-chip:hover,
-.tag-button:hover,
-.tag-button-large:hover,
-.property-card:hover,
-.room-card-clean:hover,
-.room-card-clean:hover .room-arrow,
-.action-btn:hover,
-.action-btn.logout:hover,
-.action-btn.logout:hover svg,
-.filter-toggle-btn:hover,
-.gallery-photo-card:hover,
-.selectable-photo:hover,
-.property-info-card:hover {
-  /* Completely disable hover effects */
-  background: none;
-  border-color: none;
-  color: none;
-  transform: none;
-  box-shadow: none;
-}

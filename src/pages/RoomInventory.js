@@ -289,7 +289,6 @@ export default function RoomInventory() {
           font-size: 15px;
           font-weight: 500;
           cursor: pointer;
-          transition: all 0.2s;
           margin-bottom: -2px;
         }
 
@@ -337,7 +336,6 @@ export default function RoomInventory() {
           font-size: 14px;
           font-weight: 500;
           cursor: pointer;
-          transition: all 0.2s;
         }
 
         .filter-chip:active {
@@ -363,7 +361,6 @@ export default function RoomInventory() {
           border-radius: 12px;
           padding: 20px;
           cursor: pointer;
-          transition: all 0.2s;
         }
 
         .inventory-list-card:active {
@@ -439,7 +436,6 @@ export default function RoomInventory() {
           border-radius: 12px;
           overflow: hidden;
           cursor: pointer;
-          transition: transform 0.2s;
         }
 
         .gallery-photo-card:active {
@@ -512,7 +508,6 @@ export default function RoomInventory() {
           align-items: center;
           justify-content: center;
           z-index: 10;
-          transition: background 0.2s;
         }
 
         .close-modal-btn:active {

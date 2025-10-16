@@ -270,7 +270,6 @@ export default function ViewPropertyReport() {
           font-size: 14px;
           font-weight: 500;
           cursor: pointer;
-          transition: background 0.2s;
           white-space: nowrap;
         }
 
@@ -466,7 +465,6 @@ export default function ViewPropertyReport() {
           font-weight: 500;
           color: #2A2A2A;
           cursor: pointer;
-          transition: all 0.2s;
           white-space: nowrap;
         }
 

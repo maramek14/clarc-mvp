@@ -118,7 +118,6 @@ export default function Reports() {
             size={16}
             style={{
               transform: showFilters ? "rotate(180deg)" : "rotate(0deg)",
-              transition: "transform 0.2s"
             }}
           />
         </button>
@@ -326,7 +325,6 @@ export default function Reports() {
           font-weight: 500;
           color: #2A2A2A;
           cursor: pointer;
-          transition: all 0.2s;
           white-space: nowrap;
           flex-shrink: 0;
         }
@@ -367,7 +365,6 @@ export default function Reports() {
           color: #2A2A2A;
           background: white;
           cursor: pointer;
-          transition: border-color 0.2s;
         }
 
         .filter-group select:focus {
@@ -385,7 +382,6 @@ export default function Reports() {
           font-weight: 500;
           color: #9B958C;
           cursor: pointer;
-          transition: all 0.2s;
         }
 
         .clear-filters-btn:active {
@@ -441,7 +437,6 @@ export default function Reports() {
           border-radius: 12px;
           padding: 20px;
           cursor: pointer;
-          transition: all 0.2s;
         }
 
         .report-card:active {

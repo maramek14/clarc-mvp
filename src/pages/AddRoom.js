@@ -573,7 +573,6 @@ export default function AddRoom() {
           border-radius: 12px;
           background: white;
           cursor: pointer;
-          transition: all 0.2s;
         }
 
         .template-btn:active {
@@ -607,7 +606,6 @@ export default function AddRoom() {
           border-radius: 8px;
           font-size: 15px;
           font-family: inherit;
-          transition: border-color 0.2s;
         }
 
         input:focus,
@@ -638,7 +636,6 @@ export default function AddRoom() {
           background: white;
           cursor: pointer;
           font-size: 14px;
-          transition: all 0.2s;
         }
 
         .feature-btn:active {
@@ -670,7 +667,6 @@ export default function AddRoom() {
           font-size: 14px;
           font-weight: 500;
           cursor: pointer;
-          transition: all 0.2s;
         }
 
         .add-feature-btn:active {
@@ -761,7 +757,6 @@ export default function AddRoom() {
           border-radius: 50%;
           color: white;
           cursor: pointer;
-          transition: background 0.2s;
         }
 
         .selected-photo-item .remove-photo-btn:active {
@@ -782,7 +777,6 @@ export default function AddRoom() {
           font-size: 14px;
           font-weight: 500;
           cursor: pointer;
-          transition: all 0.2s;
         }
 
         .select-photo-btn:active {
@@ -839,7 +833,6 @@ export default function AddRoom() {
           background: #F5F3EF;
           border-radius: 8px;
           cursor: pointer;
-          transition: background 0.2s;
         }
 
         .close-btn:active {
@@ -861,7 +854,6 @@ export default function AddRoom() {
           border-radius: 8px;
           overflow: hidden;
           cursor: pointer;
-          transition: transform 0.2s;
           border: 3px solid transparent;
         }
 
@@ -941,7 +933,6 @@ export default function AddRoom() {
           background: white;
           cursor: pointer;
           font-size: 14px;
-          transition: all 0.2s;
         }
 
         .tag-btn:active {
@@ -984,7 +975,6 @@ export default function AddRoom() {
           font-size: 15px;
           font-weight: 500;
           cursor: pointer;
-          transition: all 0.2s;
         }
 
         .button-primary {
@@ -992,7 +982,7 @@ export default function AddRoom() {
           color: white;
         }
 
-        .button-primary:active:not(:disabled) {
+        .button-primary:hover:not(:disabled) {
           background: #1E4466;
         }
 
@@ -1006,7 +996,7 @@ export default function AddRoom() {
           color: #2A2A2A;
         }
 
-        .button-secondary:active:not(:disabled) {
+        .button-secondary:hover:not(:disabled) {
           background: #EBE8E1;
         }
 

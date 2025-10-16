@@ -681,7 +681,6 @@ export default function CreatePropertyReport() {
           font-weight: 500;
           color: #8B6914;
           cursor: pointer;
-          transition: all 0.2s;
         }
 
         .quick-action-btn:active {
@@ -733,7 +732,6 @@ export default function CreatePropertyReport() {
           border-radius: 8px;
           font-size: 15px;
           font-family: inherit;
-          transition: border-color 0.2s;
         }
 
         input:focus,
@@ -883,7 +881,6 @@ export default function CreatePropertyReport() {
           font-size: 15px;
           font-weight: 500;
           cursor: pointer;
-          transition: all 0.2s;
         }
 
         .button-primary {

@@ -286,7 +286,6 @@ export default function PropertyInformation() {
           font-size: 14px;
           font-weight: 500;
           cursor: pointer;
-          transition: all 0.2s;
         }
 
         .button-primary {
@@ -361,7 +360,6 @@ export default function PropertyInformation() {
           border: 1px solid #E6E3DD;
           border-radius: 8px;
           font-size: 15px;
-          transition: border-color 0.2s;
         }
 
         .info-input:focus {
