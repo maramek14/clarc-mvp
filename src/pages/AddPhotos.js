@@ -104,7 +104,7 @@ export default function AddPhotos() {
     }));
 
     addPhotos(newPhotos);
-    navigate(`/properties/${id}/rooms/${roomId}/photos`);
+    navigate(`/properties/${id}/rooms/${roomId}/inventory`);
   };
 
   // Step 1: Select Photos

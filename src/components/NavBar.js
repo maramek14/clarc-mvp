@@ -6,7 +6,6 @@ export default function NavBar() {
 
   const navItems = [
     { path: "/properties", label: "Properties", icon: <Home size={20}/> },
-    { path: "/gallery", label: "Gallery", icon: <Image size={20}/> },
     { path: "/reports", label: "Reports", icon: <FileText size={20}/> },
     { path: "/settings", label: "Profile", icon: <User size={20}/> },
   ];

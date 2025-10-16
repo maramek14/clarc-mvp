@@ -14,8 +14,6 @@ import RoomInventory from "./pages/RoomInventory";
 import CreateInventoryList from "./pages/CreateInventoryList";
 import ViewInventoryList from "./pages/ViewInventoryList";
 import AddPhotos from "./pages/AddPhotos";
-import Gallery from "./pages/Gallery";
-import AddToGallery from "./pages/AddToGallery";
 import PhoneGallery from "./pages/PhoneGallery";
 import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
@@ -82,14 +80,6 @@ export default function App() {
             <Route
               path="/properties/:id/rooms/:roomId/add-photos"
               element={<Page title="Add Photos"><AddPhotos /></Page>}
-            />
-            <Route
-              path="/gallery"
-              element={<Page title="Gallery"><Gallery /></Page>}
-            />
-            <Route
-              path="/gallery/add"
-              element={<Page title="Add to Gallery"><AddToGallery /></Page>}
             />
             <Route
               path="/phone"
