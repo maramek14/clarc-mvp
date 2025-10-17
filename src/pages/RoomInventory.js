@@ -11,7 +11,10 @@ export default function RoomInventory() {
   const navigate = useNavigate();
   const property = getPropertyById(id);
   const room = getRoomById(property, roomId);
-  const [inventoryLists] = useState(getInventoryListsByRoom(id, roomId));
+  
+  // Don't use useState - get fresh data each render
+  const inventoryLists = getInventoryListsByRoom(id, roomId);
+  
   const { photos, deletePhotos, movePhotos } = useAppGallery();
   
   const [activeTab, setActiveTab] = useState("inventory");

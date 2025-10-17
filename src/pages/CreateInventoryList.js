@@ -253,7 +253,10 @@ export default function CreateInventoryList() {
       return;
     }
 
-    // In a real app, this would save to a database
+    // Import the add function
+    const { addInventoryList } = require("../inventoryData");
+
+    // Create the new list
     const newList = {
       id: `inv-list-${Date.now()}`,
       roomId: roomId,
@@ -266,8 +269,10 @@ export default function CreateInventoryList() {
       items: items
     };
 
-    console.log("New inventory list created:", newList);
-    alert("Inventory list created successfully! (Data persists until page refresh)");
+    // Actually add it to the global list
+    addInventoryList(newList);
+    
+    alert("Inventory list created successfully!");
     navigate(`/properties/${id}/rooms/${roomId}/inventory`);
   };
 

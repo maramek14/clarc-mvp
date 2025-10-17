@@ -26,7 +26,6 @@ export default function AddPhotos() {
     setSelectedPhotos(prev => {
       const isSelected = prev.find(p => p.id === photo.id);
       if (isSelected) {
-        // Remove photo and its tags
         const newTags = { ...photoTags };
         delete newTags[photo.id];
         setPhotoTags(newTags);
@@ -41,7 +40,6 @@ export default function AddPhotos() {
     return selectedPhotos.find(p => p.id === photo.id);
   };
 
-  // Toggle tag for current photo
   const toggleTag = (tag) => {
     const currentPhoto = selectedPhotos[currentPhotoIndex];
     if (!currentPhoto) return;
@@ -93,7 +91,6 @@ export default function AddPhotos() {
   };
 
   const handleConfirm = () => {
-    // Check if all photos have at least one tag
     const untaggedPhotos = selectedPhotos.filter(
       photo => !photoTags[photo.id] || photoTags[photo.id].length === 0
     );
@@ -103,7 +100,6 @@ export default function AddPhotos() {
       return;
     }
 
-    // Create new photos with metadata including tenancy
     const newPhotos = selectedPhotos.map(photo => ({
       ...photo,
       id: crypto.randomUUID(),
@@ -111,7 +107,7 @@ export default function AddPhotos() {
       roomId,
       tags: photoTags[photo.id] || [],
       tenancyId: selectedTenancy.value === 'maintenance' ? null : selectedTenancy.value,
-      tenancyType: selectedTenancy.type, // current, upcoming, or maintenance
+      tenancyType: selectedTenancy.type,
       addedAt: new Date().toISOString()
     }));
 
@@ -123,53 +119,88 @@ export default function AddPhotos() {
   if (step === 1) {
     return (
       <div className="page-content">
-        <h2>Assign Photos To</h2>
-        <p className="subtitle">Select which tenancy these photos belong to</p>
+        <div className="page-header">
+          <h2>Assign Photos To</h2>
+          <p style={{ color: '#9B958C', fontSize: '14px', margin: '4px 0 0 0' }}>
+            Select which tenancy these photos belong to
+          </p>
+        </div>
 
-        <div className="tenancy-options">
-          {tenancyOptions.map((option) => (
-            <div
-              key={option.value}
-              className="tenancy-option-card"
-              onClick={() => handleSelectTenancy(option)}
-            >
-              <div className="tenancy-option-header">
-                {option.type === 'maintenance' ? (
-                  <Calendar size={24} />
-                ) : (
-                  <User size={24} />
-                )}
-                <div className="tenancy-option-info">
-                  <h4>{option.type === 'maintenance' ? 'Property Maintenance' : option.tenancy.tenantName}</h4>
-                  <p>{option.label}</p>
+        {tenancyOptions.length > 0 ? (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '24px' }}>
+            {tenancyOptions.map((option) => (
+              <div
+                key={option.value}
+                onClick={() => handleSelectTenancy(option)}
+                style={{
+                  background: 'white',
+                  border: '2px solid #E6E3DD',
+                  borderRadius: '12px',
+                  padding: '24px',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  WebkitTapHighlightColor: 'transparent'
+                }}
+                onTouchStart={(e) => {
+                  e.currentTarget.style.transform = 'scale(0.98)';
+                  e.currentTarget.style.borderColor = '#2C5F8D';
+                }}
+                onTouchEnd={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                  e.currentTarget.style.borderColor = '#E6E3DD';
+                }}
+              >
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center', marginBottom: option.tenancy ? '16px' : '0' }}>
+                  {option.type === 'maintenance' ? (
+                    <Calendar size={28} style={{ color: '#2C5F8D', flexShrink: 0 }} />
+                  ) : (
+                    <User size={28} style={{ color: '#2C5F8D', flexShrink: 0 }} />
+                  )}
+                  <div style={{ flex: 1 }}>
+                    <h4 style={{ margin: '0 0 4px 0', fontSize: '20px', fontWeight: '600', color: '#2A2A2A' }}>
+                      {option.type === 'maintenance' ? 'Property Maintenance' : option.tenancy.tenantName}
+                    </h4>
+                    <p style={{ margin: 0, fontSize: '14px', color: '#9B958C' }}>
+                      {option.label}
+                    </p>
+                  </div>
                 </div>
-              </div>
 
-              {option.tenancy && (
-                <div className="tenancy-option-details">
-                  <div className="detail-item">
+                {option.tenancy && (
+                  <div style={{ 
+                    display: 'flex', 
+                    gap: '8px', 
+                    alignItems: 'center',
+                    paddingTop: '16px',
+                    borderTop: '1px solid #F5F3EF',
+                    fontSize: '14px',
+                    color: '#6B7280'
+                  }}>
                     <Calendar size={14} />
                     <span>
                       {new Date(option.tenancy.startDate).toLocaleDateString('en-GB')} - {new Date(option.tenancy.endDate).toLocaleDateString('en-GB')}
                     </span>
                   </div>
+                )}
+
+                <div style={{
+                  position: 'absolute',
+                  top: '20px',
+                  right: '20px',
+                  padding: '6px 14px',
+                  borderRadius: '20px',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  color: 'white',
+                  textTransform: 'capitalize',
+                  background: option.type === 'current' ? '#10b981' : option.type === 'upcoming' ? '#3b82f6' : '#9B958C'
+                }}>
+                  {option.type === 'current' ? 'Active Now' : option.type === 'upcoming' ? 'Upcoming' : 'Between Tenancies'}
                 </div>
-              )}
-
-              {option.type === 'current' && (
-                <div className="tenancy-badge current">Active Now</div>
-              )}
-              {option.type === 'upcoming' && (
-                <div className="tenancy-badge upcoming">Upcoming</div>
-              )}
-              {option.type === 'maintenance' && (
-                <div className="tenancy-badge maintenance">Between Tenancies</div>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {tenancyOptions.length === 0 && (
+              </div>
+            ))}
+          </div>
+        ) : (
           <div className="empty-state">
             <p>No tenancy information available. Please add a tenancy in Property Information first.</p>
             <button
@@ -189,8 +220,19 @@ export default function AddPhotos() {
     return (
       <>
         <div className="page-content" style={{ paddingBottom: '80px' }}>
-          {/* Show selected tenancy */}
-          <div className="selected-tenancy-banner">
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            background: 'linear-gradient(135deg, #F5F3EF 0%, #EBE8E1 100%)',
+            border: '1px solid #2C5F8D',
+            borderRadius: '8px',
+            padding: '12px 16px',
+            marginBottom: '16px',
+            fontSize: '14px',
+            fontWeight: '500',
+            color: '#2A2A2A'
+          }}>
             {selectedTenancy.type === 'maintenance' ? (
               <>
                 <Calendar size={18} />
@@ -243,8 +285,19 @@ export default function AddPhotos() {
 
   return (
     <div className="page-content">
-      {/* Show selected tenancy */}
-      <div className="selected-tenancy-banner">
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px',
+        background: 'linear-gradient(135deg, #F5F3EF 0%, #EBE8E1 100%)',
+        border: '1px solid #2C5F8D',
+        borderRadius: '8px',
+        padding: '12px 16px',
+        marginBottom: '16px',
+        fontSize: '14px',
+        fontWeight: '500',
+        color: '#2A2A2A'
+      }}>
         {selectedTenancy.type === 'maintenance' ? (
           <>
             <Calendar size={18} />
@@ -260,7 +313,6 @@ export default function AddPhotos() {
 
       <p className="subtitle">Add Tags:</p>
 
-      {/* Photo Preview */}
       <div className="tagging-photo-preview">
         <img src={currentPhoto.url} alt="" />
         {currentTags.length > 0 && (
@@ -270,7 +322,6 @@ export default function AddPhotos() {
         )}
       </div>
 
-      {/* Selected Tags Display */}
       {currentTags.length > 0 && (
         <div className="selected-tags-display">
           <span className="tags-label">Tags:</span>
@@ -282,12 +333,10 @@ export default function AddPhotos() {
         </div>
       )}
 
-      {/* Date Display */}
       <div className="date-display">
         Date: {new Date().toLocaleDateString('en-GB')}
       </div>
 
-      {/* Tag Buttons */}
       <div className="tag-buttons-column">
         {availableTags.map(tag => (
           <button
@@ -300,7 +349,6 @@ export default function AddPhotos() {
         ))}
       </div>
 
-      {/* Navigation */}
       <div className="photo-tagging-nav">
         {currentPhotoIndex > 0 && (
           <button
@@ -321,151 +369,6 @@ export default function AddPhotos() {
           {currentPhotoIndex < selectedPhotos.length - 1 ? 'Next' : 'Confirm'}
         </button>
       </div>
-
-      <style jsx>{`
-        .page-content {
-          padding-bottom: 20px;
-        }
-
-        .page-content h2 {
-          margin: 0 0 8px 0;
-          font-size: 24px;
-          font-weight: 600;
-        }
-
-        .subtitle {
-          color: #9B958C;
-          font-size: 14px;
-          margin: 0 0 24px 0;
-        }
-
-        .tenancy-options {
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
-        }
-
-        .tenancy-option-card {
-          background: white;
-          border: 2px solid #E6E3DD;
-          border-radius: 12px;
-          padding: 20px;
-          cursor: pointer;
-          transition: all 0.2s;
-          position: relative;
-        }
-
-        .tenancy-option-card:hover {
-          border-color: #2C5F8D;
-          transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(44, 95, 141, 0.1);
-        }
-
-        .tenancy-option-card:active {
-          transform: translateY(0);
-          border-color: #1E4466;
-        }
-
-        .tenancy-option-header {
-          display: flex;
-          gap: 16px;
-          align-items: center;
-          margin-bottom: 16px;
-        }
-
-        .tenancy-option-header > svg {
-          flex-shrink: 0;
-          color: #2C5F8D;
-        }
-
-        .tenancy-option-info {
-          flex: 1;
-        }
-
-        .tenancy-option-info h4 {
-          margin: 0 0 4px 0;
-          font-size: 20px;
-          font-weight: 600;
-          color: #2A2A2A;
-        }
-
-        .tenancy-option-info p {
-          margin: 0;
-          font-size: 14px;
-          color: #9B958C;
-        }
-
-        .tenancy-option-details {
-          display: flex;
-          gap: 16px;
-          flex-wrap: wrap;
-          padding-top: 16px;
-          border-top: 1px solid #F5F3EF;
-        }
-
-        .detail-item {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          font-size: 14px;
-          color: #6B7280;
-        }
-
-        .detail-item svg {
-          flex-shrink: 0;
-        }
-
-        .tenancy-badge {
-          position: absolute;
-          top: 20px;
-          right: 20px;
-          padding: 6px 14px;
-          border-radius: 20px;
-          font-size: 12px;
-          font-weight: 600;
-          color: white;
-          text-transform: capitalize;
-        }
-
-        .tenancy-badge.current {
-          background: #10b981;
-        }
-
-        .tenancy-badge.upcoming {
-          background: #3b82f6;
-        }
-
-        .tenancy-badge.maintenance {
-          background: #9B958C;
-        }
-
-        .selected-tenancy-banner {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          background: linear-gradient(135deg, #F5F3EF 0%, #EBE8E1 100%);
-          border: 1px solid #2C5F8D;
-          border-radius: 8px;
-          padding: 12px 16px;
-          margin-bottom: 16px;
-          font-size: 14px;
-          font-weight: 500;
-          color: #2A2A2A;
-        }
-
-        .empty-state {
-          text-align: center;
-          padding: 48px 24px;
-          background: #F5F3EF;
-          border-radius: 12px;
-          margin-top: 20px;
-        }
-
-        .empty-state p {
-          margin: 0 0 20px 0;
-          color: #6B7280;
-        }
-      `}</style>
     </div>
   );
 }
