@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Check, ChevronRight, ChevronLeft, AlertTriangle, CheckCircle, X } from "lucide-react";
+import { Check, ChevronRight, ChevronLeft, AlertTriangle, CheckCircle, X, User, Calendar } from "lucide-react";
 import { getPropertyById } from "../utils";
-import { inventoryLists } from "../inventoryData";
+import { getInventoryLists, getInventoryListsByRoom } from "../inventoryData";
 import { getRoomInventoryStatus } from "../propertyReportsData";
+import { getInventoryListTenancyOptions, getTenancyById } from "../tenancyData";
+import { addPropertyReport } from "../propertyReportsData";
+
 
 const reportTypes = [
   { value: "check-in", label: "Tenancy Check-in" },
@@ -19,7 +22,7 @@ export default function CreatePropertyReport() {
   const navigate = useNavigate();
   const property = getPropertyById(id);
 
-  const [step, setStep] = useState(1); // 1: Readiness Check, 2: Report Details, 3: Review
+  const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({
     name: "",
     reportType: "",
@@ -28,12 +31,11 @@ export default function CreatePropertyReport() {
     notes: ""
   });
 
+  const [selectedTenancyOption, setSelectedTenancyOption] = useState(null);
   const [roomStatuses] = useState(
-    getRoomInventoryStatus(id, property?.rooms || [], inventoryLists)
+    getRoomInventoryStatus(id, property?.rooms || [], getInventoryLists())
   );
-  const [selectedRooms, setSelectedRooms] = useState(
-    roomStatuses.map(r => r.roomId)
-  );
+  const [selectedRoomLists, setSelectedRoomLists] = useState({});
 
   if (!property) {
     return (
@@ -43,23 +45,42 @@ export default function CreatePropertyReport() {
     );
   }
 
+  const tenancyOptions = getInventoryListTenancyOptions(id);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const toggleRoomSelection = (roomId) => {
-    setSelectedRooms(prev =>
-      prev.includes(roomId)
-        ? prev.filter(id => id !== roomId)
-        : [...prev, roomId]
-    );
+  const handleRoomListSelection = (roomId, listId) => {
+    setSelectedRoomLists(prev => ({
+      ...prev,
+      [roomId]: listId === "none" ? null : listId
+    }));
+  };
+
+  const getAvailableListsForRoom = (roomId) => {
+    const allLists = getInventoryListsByRoom(id, roomId);
+    
+    if (!selectedTenancyOption) return allLists;
+    
+    return allLists.filter(list => {
+      // Maintenance lists can be used for any report
+      if (list.tenancyType === 'maintenance') return true;
+      
+      // Otherwise match tenancy
+      return list.tenancyId === selectedTenancyOption.value;
+    });
+  };
+
+  const getSelectedRoomIds = () => {
+    return Object.keys(selectedRoomLists).filter(roomId => selectedRoomLists[roomId] !== null);
   };
 
   const getWarnings = () => {
     const warnings = [];
     
-    selectedRooms.forEach(roomId => {
+    getSelectedRoomIds().forEach(roomId => {
       const roomStatus = roomStatuses.find(r => r.roomId === roomId);
       if (roomStatus.status === 'missing') {
         warnings.push(`${roomStatus.roomName} has no inventory data`);
@@ -75,13 +96,13 @@ export default function CreatePropertyReport() {
 
   const warnings = getWarnings();
   const hasIssues = roomStatuses.some(r => 
-    selectedRooms.includes(r.roomId) && 
+    getSelectedRoomIds().includes(r.roomId) && 
     (r.status === 'missing' || r.status === 'outdated')
   );
 
   const handleStep1Continue = () => {
-    if (selectedRooms.length === 0) {
-      alert("Please select at least one room to include in the report");
+    if (getSelectedRoomIds().length === 0) {
+      alert("Please select at least one room with an inventory list");
       return;
     }
     setStep(2);
@@ -96,9 +117,9 @@ export default function CreatePropertyReport() {
   };
 
   const handleSubmit = () => {
-    // Calculate summary data
-    const includedInventories = inventoryLists.filter(list =>
-      list.propertyId === id && selectedRooms.includes(list.roomId)
+    const selectedListIds = Object.values(selectedRoomLists).filter(id => id !== null);
+    const includedInventories = getInventoryLists().filter(list =>
+      selectedListIds.includes(list.id)
     );
 
     const totalItems = includedInventories.reduce((sum, list) => sum + list.items.length, 0);
@@ -120,19 +141,22 @@ export default function CreatePropertyReport() {
       inspectionDate: formData.inspectionDate,
       tenantName: formData.tenantName,
       status: warnings.length === 0 ? 'complete' : 'incomplete',
-      roomsIncluded: selectedRooms,
+      roomsIncluded: getSelectedRoomIds(),
       roomsExcluded: roomStatuses
-        .filter(r => !selectedRooms.includes(r.roomId))
+        .filter(r => !getSelectedRoomIds().includes(r.roomId))
         .map(r => r.roomId),
+      roomInventoryListIds: selectedListIds,
       warnings: warnings,
       totalItems,
       conditionSummary,
       notes: formData.notes
     };
 
-    console.log("New Property Report:", newReport);
-    alert("Property report created successfully! (Data persists until page refresh)");
-    navigate(`/properties/${id}/inventory`);
+    // Import at top: import { addPropertyReport } from "../propertyReportsData";
+
+    addPropertyReport(newReport);
+    alert("Property report created successfully!");
+    navigate(`/properties/${id}/inventory`, { replace: true });
   };
 
   const getStatusIcon = (status) => {
@@ -164,13 +188,79 @@ export default function CreatePropertyReport() {
     }
   };
 
+  const getAvailableReportTypes = () => {
+    if (!selectedTenancyOption) return reportTypes;
+    
+    if (selectedTenancyOption.type === 'current') {
+      return reportTypes.filter(t => 
+        ['mid-tenancy', 'annual-inspection', 'damage-assessment'].includes(t.value)
+      );
+    } else if (selectedTenancyOption.type === 'upcoming') {
+      return reportTypes.filter(t => t.value === 'check-in');
+    } else if (selectedTenancyOption.type === 'maintenance') {
+      return reportTypes.filter(t => t.value === 'maintenance');
+    }
+    return reportTypes;
+  };
+
+  const handleSelectTenancy = (option) => {
+    setSelectedTenancyOption(option);
+    
+    const tenancy = option.tenancy;
+    
+    if (option.type === 'maintenance') {
+      setFormData(prev => ({
+        ...prev,
+        tenantName: "Property Maintenance",
+        name: `Maintenance Inspection - ${property.name}`
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        tenantName: tenancy.tenantName,
+        name: `Property Report - ${tenancy.tenantName}`
+      }));
+    }
+    // Auto-select most recent list for each room
+    const autoSelectedLists = {};
+    property.rooms.forEach(room => {
+      const availableLists = getInventoryListsByRoom(id, room.id).filter(list => {
+        // Maintenance lists can be used for any report
+        if (list.tenancyType === 'maintenance') return true;
+        // Otherwise match tenancy
+        return list.tenancyId === option.value;
+      });
+      
+      if (availableLists.length > 0) {
+        // Sort by inspection date, most recent first
+        const sortedLists = availableLists.sort((a, b) => 
+          new Date(b.inspectionDate) - new Date(a.inspectionDate)
+        );
+        autoSelectedLists[room.id] = sortedLists[0].id;
+      }
+    });
+    
+    setSelectedRoomLists(autoSelectedLists);
+
+    setStep(1);
+  };
+
+  const handleCancel = () => {
+    navigate(`/properties/${id}/inventory`, { replace: true });
+  };
+
   return (
     <div className="page-content">
       {/* Progress Steps */}
       <div className="progress-steps">
+        <div className={`progress-step ${step >= 0 ? 'active' : ''} ${step > 0 ? 'completed' : ''}`}>
+          <div className="step-circle">{step > 0 ? <Check size={20} /> : '0'}</div>
+          <span>Select Tenancy</span>
+        </div>
+        <div className="step-line"></div>
         <div className={`progress-step ${step >= 1 ? 'active' : ''} ${step > 1 ? 'completed' : ''}`}>
           <div className="step-circle">{step > 1 ? <Check size={20} /> : '1'}</div>
-          <span>Room Readiness</span>
+          <span>Select Lists</span>
         </div>
         <div className="step-line"></div>
         <div className={`progress-step ${step >= 2 ? 'active' : ''} ${step > 2 ? 'completed' : ''}`}>
@@ -180,16 +270,82 @@ export default function CreatePropertyReport() {
         <div className="step-line"></div>
         <div className={`progress-step ${step >= 3 ? 'active' : ''}`}>
           <div className="step-circle">3</div>
-          <span>Review & Generate</span>
+          <span>Review</span>
         </div>
       </div>
 
-      {/* Step 1: Room Readiness Check */}
+      {/* Step 0: Select Tenancy */}
+      {step === 0 && (
+        <div className="form-step">
+          <h2>Select Tenancy</h2>
+          <p className="step-description">
+            Choose which tenancy this property report is for
+          </p>
+
+          {tenancyOptions.length > 0 ? (
+            <div className="tenancy-options">
+              {tenancyOptions.map((option) => (
+                <div
+                  key={option.value}
+                  className="tenancy-option-card"
+                  onClick={() => handleSelectTenancy(option)}
+                >
+                  <div className="tenancy-option-header">
+                    <User size={24} />
+                    <div className="tenancy-option-info">
+                      <h4>{option.tenancy.tenantName}</h4>
+                      <p>{option.label}</p>
+                    </div>
+                  </div>
+
+                  <div className="tenancy-option-details">
+                    <div className="detail-item">
+                      <Calendar size={14} />
+                      <span>
+                        {new Date(option.tenancy.startDate).toLocaleDateString('en-GB')} - {new Date(option.tenancy.endDate).toLocaleDateString('en-GB')}
+                      </span>
+                    </div>
+                  </div>
+
+                  {option.type === 'current' && (
+                    <div className="tenancy-badge current">Current</div>
+                  )}
+                  {option.type === 'upcoming' && (
+                    <div className="tenancy-badge upcoming">Upcoming</div>
+                  )}
+                  {option.type === 'maintenance' && (
+                    <div className="tenancy-badge maintenance">Maintenance</div>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="empty-state">
+              <p>No tenancies found. Please add a tenancy in Property Information first.</p>
+              <button
+                className="button-primary"
+                onClick={() => navigate(`/properties/${id}/information`)}
+              >
+                Go to Property Information
+              </button>
+            </div>
+          )}
+
+          <div className="step-actions">
+            <button className="button-secondary" onClick={handleCancel}>
+              <X size={18} />
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Step 1: Select Inventory Lists */}
       {step === 1 && (
         <div className="form-step">
-          <h2>Room Inventory Readiness Check</h2>
+          <h2>Select Inventory Lists</h2>
           <p className="step-description">
-            Review the inventory status of each room before creating the property report
+            Choose which inventory list to use for each room
           </p>
 
           {hasIssues && (
@@ -197,69 +353,64 @@ export default function CreatePropertyReport() {
               <AlertTriangle size={24} />
               <div>
                 <strong>Some rooms have inventory issues</strong>
-                <p>You can proceed with the report, but it may be incomplete. Consider updating room inventories first.</p>
+                <p>You can proceed with the report, but it may be incomplete.</p>
               </div>
             </div>
           )}
 
           <div className="room-checklist">
-            {roomStatuses.map((room) => (
-              <div key={room.roomId} className="room-check-item">
-                <div className="room-check-header">
-                  <label className="checkbox-label">
-                    <input
-                      type="checkbox"
-                      checked={selectedRooms.includes(room.roomId)}
-                      onChange={() => toggleRoomSelection(room.roomId)}
-                    />
+            {roomStatuses.map((room) => {
+              const availableLists = getAvailableListsForRoom(room.roomId);
+              
+              return (
+                <div key={room.roomId} className="room-select-item">
+                  <div className="room-select-header">
                     <span className="room-name">{room.roomName}</span>
-                  </label>
-                  <div
-                    className="status-badge"
-                    style={{ backgroundColor: room.color }}
-                  >
-                    {getStatusIcon(room.status)}
-                    <span>{getStatusLabel(room.status)}</span>
+                    <div className="status-badge" style={{ backgroundColor: room.color }}>
+                      {getStatusIcon(room.status)}
+                      <span>{getStatusLabel(room.status)}</span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="room-check-details">
-                  {room.lastInventoryDate ? (
-                    <>
-                      <span>Last inventory: {room.lastInventoryDate}</span>
-                      <span>•</span>
-                      <span>{room.daysSinceLastInventory} days ago</span>
-                      <span>•</span>
-                      <span>{room.inventoryCount} lists available</span>
-                    </>
-                  ) : (
-                    <span className="no-data">No inventory data available</span>
+                  <div className="list-selector">
+                    <select
+                      value={selectedRoomLists[room.roomId] || "none"}
+                      onChange={(e) => handleRoomListSelection(room.roomId, e.target.value)}
+                      className="list-dropdown"
+                    >
+                      <option value="none">Don't include this room</option>
+                      {availableLists.map(list => (
+                        <option key={list.id} value={list.id}>
+                          {list.name} - {list.inspectionDate} ({list.items.length} items)
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {availableLists.length === 0 && (
+                    <div className="room-action-hint">
+                      <AlertTriangle size={14} />
+                      <span>No inventory lists available for this room and tenancy</span>
+                      <button
+                        type="button"
+                        className="quick-action-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/properties/${id}/rooms/${room.roomId}/inventory/create`);
+                        }}
+                      >
+                        Create List →
+                      </button>
+                    </div>
                   )}
                 </div>
-
-                {(room.status === 'missing' || room.status === 'outdated') && selectedRooms.includes(room.roomId) && (
-                  <div className="room-action-hint">
-                    <AlertTriangle size={14} />
-                    <span>Consider updating this room's inventory before proceeding</span>
-                    <button
-                      type="button"
-                      className="quick-action-btn"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigate(`/properties/${id}/rooms/${room.roomId}/inventory`);
-                      }}
-                    >
-                      Update Now →
-                    </button>
-                  </div>
-                )}
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="selection-summary">
             <p>
-              <strong>{selectedRooms.length}</strong> of <strong>{roomStatuses.length}</strong> rooms selected
+              <strong>{getSelectedRoomIds().length}</strong> of <strong>{roomStatuses.length}</strong> rooms selected
             </p>
             {warnings.length > 0 && (
               <p className="warning-text">
@@ -273,9 +424,10 @@ export default function CreatePropertyReport() {
             <button
               type="button"
               className="button-secondary"
-              onClick={() => navigate(`/properties/${id}/inventory`)}
+              onClick={() => setStep(0)}
             >
-              Cancel
+              <ChevronLeft size={20} />
+              Back
             </button>
             <button
               type="button"
@@ -318,7 +470,7 @@ export default function CreatePropertyReport() {
               required
             >
               <option value="">Select report type</option>
-              {reportTypes.map(type => (
+              {getAvailableReportTypes().map(type => (
                 <option key={type.value} value={type.value}>
                   {type.label}
                 </option>
@@ -336,6 +488,7 @@ export default function CreatePropertyReport() {
               onChange={handleInputChange}
               placeholder="e.g., John Smith"
               required
+              disabled
             />
           </div>
 
@@ -390,7 +543,6 @@ export default function CreatePropertyReport() {
           <h2>Review & Generate Report</h2>
           <p className="step-description">Review the summary before generating the property report</p>
 
-          {/* Report Summary */}
           <div className="review-section">
             <h3>Report Information</h3>
             <div className="review-grid">
@@ -415,12 +567,11 @@ export default function CreatePropertyReport() {
             </div>
           </div>
 
-          {/* Rooms Summary */}
           <div className="review-section">
-            <h3>Rooms Included ({selectedRooms.length})</h3>
+            <h3>Rooms Included ({getSelectedRoomIds().length})</h3>
             <div className="rooms-summary-grid">
               {roomStatuses
-                .filter(r => selectedRooms.includes(r.roomId))
+                .filter(r => getSelectedRoomIds().includes(r.roomId))
                 .map(room => (
                   <div key={room.roomId} className="room-summary-card">
                     <div className="room-summary-header">
@@ -442,7 +593,6 @@ export default function CreatePropertyReport() {
             </div>
           </div>
 
-          {/* Warnings */}
           {warnings.length > 0 && (
             <div className="review-section">
               <h3>Warnings ({warnings.length})</h3>
@@ -461,7 +611,6 @@ export default function CreatePropertyReport() {
             </div>
           )}
 
-          {/* Notes */}
           {formData.notes && (
             <div className="review-section">
               <h3>Notes</h3>
@@ -490,7 +639,7 @@ export default function CreatePropertyReport() {
         </div>
       )}
 
-<style jsx>{`
+      <style jsx>{`
         .progress-steps {
           display: flex;
           align-items: center;
@@ -574,6 +723,94 @@ export default function CreatePropertyReport() {
           font-size: 14px;
         }
 
+        .tenancy-options {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-bottom: 24px;
+        }
+
+        .tenancy-option-card {
+          background: white;
+          border: 2px solid #E6E3DD;
+          border-radius: 12px;
+          padding: 20px;
+          cursor: pointer;
+          transition: all 0.2s;
+          position: relative;
+        }
+
+        .tenancy-option-card:hover {
+          border-color: #2C5F8D;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(44, 95, 141, 0.1);
+        }
+
+        .tenancy-option-header {
+          display: flex;
+          gap: 16px;
+          align-items: flex-start;
+          margin-bottom: 12px;
+        }
+
+        .tenancy-option-info {
+          flex: 1;
+        }
+
+        .tenancy-option-info h4 {
+          margin: 0 0 4px 0;
+          font-size: 18px;
+          font-weight: 600;
+          color: #2A2A2A;
+        }
+
+        .tenancy-option-info p {
+          margin: 0;
+          font-size: 14px;
+          color: #9B958C;
+        }
+
+        .tenancy-option-details {
+          display: flex;
+          gap: 16px;
+          flex-wrap: wrap;
+          padding-top: 12px;
+          border-top: 1px solid #F5F3EF;
+        }
+
+        .detail-item {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 13px;
+          color: #6B7280;
+        }
+
+        .tenancy-badge {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          padding: 6px 12px;
+          border-radius: 12px;
+          font-size: 11px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          color: white;
+        }
+
+        .tenancy-badge.current {
+          background: #10b981;
+        }
+
+        .tenancy-badge.upcoming {
+          background: #3b82f6;
+        }
+
+        .tenancy-badge.maintenance {
+          background: #f59e0b;
+        }
+
         .warning-banner {
           display: flex;
           gap: 16px;
@@ -601,31 +838,18 @@ export default function CreatePropertyReport() {
           margin-bottom: 24px;
         }
 
-        .room-check-item {
+        .room-select-item {
           background: #F9F8F6;
           border: 1px solid #E6E3DD;
           border-radius: 12px;
           padding: 16px;
         }
 
-        .room-check-header {
+        .room-select-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-bottom: 8px;
-        }
-
-        .checkbox-label {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          cursor: pointer;
-        }
-
-        .checkbox-label input[type="checkbox"] {
-          width: 20px;
-          height: 20px;
-          cursor: pointer;
+          margin-bottom: 12px;
         }
 
         .room-name {
@@ -645,18 +869,23 @@ export default function CreatePropertyReport() {
           color: white;
         }
 
-        .room-check-details {
-          display: flex;
-          gap: 8px;
-          flex-wrap: wrap;
-          font-size: 13px;
-          color: #9B958C;
+        .list-selector {
           margin-bottom: 8px;
         }
 
-        .no-data {
-          color: #B85C4F;
-          font-weight: 500;
+        .list-dropdown {
+          width: 100%;
+          padding: 10px 12px;
+          border: 1px solid #E6E3DD;
+          border-radius: 8px;
+          font-size: 14px;
+          font-family: inherit;
+          background: white;
+        }
+
+        .list-dropdown:focus {
+          outline: none;
+          border-color: #2C5F8D;
         }
 
         .room-action-hint {
@@ -668,7 +897,6 @@ export default function CreatePropertyReport() {
           border-radius: 8px;
           font-size: 13px;
           color: #8B6914;
-          margin-top: 8px;
         }
 
         .quick-action-btn {
@@ -741,8 +969,26 @@ export default function CreatePropertyReport() {
           border-color: #2C5F8D;
         }
 
+        input:disabled {
+          background: #F5F3EF;
+          cursor: not-allowed;
+        }
+
         textarea {
           resize: vertical;
+        }
+
+        .empty-state {
+          text-align: center;
+          padding: 48px 24px;
+          background: #F5F3EF;
+          border-radius: 12px;
+          margin-bottom: 24px;
+        }
+
+        .empty-state p {
+          margin: 0 0 16px 0;
+          color: #6B7280;
         }
 
         .review-section {
@@ -903,24 +1149,20 @@ export default function CreatePropertyReport() {
 
         @media (max-width: 768px) {
           .progress-steps {
-            flex-direction: column;
-            gap: 16px;
+            padding: 16px;
           }
 
           .step-line {
-            width: 2px;
-            height: 30px;
-            margin: 0;
+            width: 30px;
+            margin: 0 8px;
+          }
+
+          .progress-step span {
+            font-size: 11px;
           }
 
           .form-step {
             padding: 20px;
-          }
-
-          .room-check-header {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 8px;
           }
 
           .review-grid {
@@ -929,6 +1171,10 @@ export default function CreatePropertyReport() {
 
           .rooms-summary-grid {
             grid-template-columns: 1fr;
+          }
+
+          .tenancy-option-header {
+            flex-direction: column;
           }
         }
       `}</style>

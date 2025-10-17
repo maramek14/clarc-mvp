@@ -67,7 +67,9 @@ let globalInventoryLists = [
 ];
 
 // Export the array directly for reading
-export const inventoryLists = globalInventoryLists;
+export function getInventoryLists() {
+  return globalInventoryLists;
+}
 
 // Helper function to add an inventory list
 export function addInventoryList(newList) {

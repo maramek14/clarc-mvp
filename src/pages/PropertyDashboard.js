@@ -1,8 +1,8 @@
-import { useState } from "react";
+
 import { useParams, useNavigate } from "react-router-dom";
 import { Plus, AlertTriangle, CheckCircle, Clock, FileText, Package, Calendar, Info } from "lucide-react";
 import { getPropertyById } from "../utils";
-import { inventoryLists } from "../inventoryData";
+import { getInventoryLists } from "../inventoryData";
 import { getPropertyReportsByProperty, getRoomInventoryStatus } from "../propertyReportsData";
 
 export default function PropertyDashboard() {
@@ -11,9 +11,8 @@ export default function PropertyDashboard() {
   const property = getPropertyById(id);
   const propertyReports = getPropertyReportsByProperty(id) || [];
   
-  const [roomStatuses] = useState(
-    getRoomInventoryStatus(id, property?.rooms || [], inventoryLists)
-  );
+  // Remove useState and just calculate it directly each render
+  const roomStatuses = getRoomInventoryStatus(id, property?.rooms || [], getInventoryLists());
 
   if (!property) {
     return (

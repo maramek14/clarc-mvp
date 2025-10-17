@@ -60,6 +60,10 @@ export default function CreateInventoryList() {
         if (p.tenancyType === 'maintenance' && selectedTenancyOption.type === 'upcoming') {
           return true;
         }
+        // If selecting maintenance option, show maintenance photos
+        if (selectedTenancyOption.type === 'maintenance' && p.tenancyType === 'maintenance') {
+          return true;
+        }
         // Otherwise match the tenancy ID
         return p.tenancyId === selectedTenancyOption.value;
       });
@@ -285,7 +289,7 @@ export default function CreateInventoryList() {
     addInventoryList(newList);
     
     alert("Inventory list created successfully!");
-    navigate(`/properties/${id}/rooms/${roomId}/inventory`);
+    navigate(`/properties/${id}/rooms/${roomId}/inventory`, { replace: true });
   };
 
   const handleCancel = () => {

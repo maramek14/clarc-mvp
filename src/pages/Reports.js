@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { FileText, Filter, Search, AlertTriangle, Calendar, User, Package, Home, ChevronDown } from "lucide-react";
 import { propertyReports } from "../propertyReportsData";
 import { properties } from "../data";
+import { getPropertyReports } from "../propertyReportsData";
 
 export default function Reports() {
   const navigate = useNavigate();
@@ -14,7 +15,8 @@ export default function Reports() {
   const [filterStatus, setFilterStatus] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState("date-desc"); // date-desc, date-asc, name
-
+  const propertyReports = getPropertyReports();
+  
   // Helper to get property name
   const getPropertyName = (propertyId) => {
     const property = properties.find(p => p.id === propertyId);

@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { FileDown, Calendar, User, Package, AlertTriangle, Home } from "lucide-react";
 import { getPropertyById } from "../utils";
 import { getPropertyReportById } from "../propertyReportsData";
-import { inventoryLists } from "../inventoryData";
+import { getInventoryLists } from "../inventoryData";
 
 const conditionColors = {
   "excellent": "#3D7C5C",    // muted sage green
@@ -38,7 +38,7 @@ export default function ViewPropertyReport() {
 
   // Get all inventory data for included rooms
   const roomInventories = includedRooms.map(room => {
-    const roomLists = inventoryLists.filter(
+    const roomLists = getInventoryLists().filter(
       list => list.propertyId === id && list.roomId === room.id
     );
     

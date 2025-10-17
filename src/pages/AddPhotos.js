@@ -112,7 +112,7 @@ export default function AddPhotos() {
     }));
 
     addPhotos(newPhotos);
-    navigate(`/properties/${id}/rooms/${roomId}/inventory`);
+    navigate(`/properties/${id}/rooms/${roomId}/inventory`, { replace: true });
   };
 
   // Step 1: Select Tenancy

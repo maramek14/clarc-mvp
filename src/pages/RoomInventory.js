@@ -13,7 +13,7 @@ export default function RoomInventory() {
   const room = getRoomById(property, roomId);
   
   // Don't use useState - get fresh data each render
-  const inventoryLists = getInventoryListsByRoom(id, roomId);
+  const roomInventoryLists = getInventoryListsByRoom(id, roomId);
   
   const { photos, deletePhotos, movePhotos } = useAppGallery();
   
@@ -51,8 +51,8 @@ export default function RoomInventory() {
 
   // Filter inventory lists by tenancy
   const filteredInventoryLists = filterTenancy === "all" 
-    ? inventoryLists
-    : inventoryLists.filter(list => list.tenancyId === filterTenancy);
+    ? roomInventoryLists
+    : roomInventoryLists.filter(list => list.tenancyId === filterTenancy);
 
   // Group inventory lists by tenancy
   const groupedLists = filteredInventoryLists.reduce((acc, list) => {
@@ -139,7 +139,7 @@ export default function RoomInventory() {
           onClick={() => setActiveTab("inventory")}
         >
           <FileText size={20} />
-          <span>Inventory Lists ({inventoryLists.length})</span>
+          <span>Inventory Lists ({roomInventoryLists.length})</span>
         </button>
         <button
           className={`tab ${activeTab === "photos" ? "active" : ""}`}
@@ -200,7 +200,7 @@ export default function RoomInventory() {
             </div>
             <button
               className="button-primary"
-              onClick={() => navigate(`/properties/${id}/rooms/${roomId}/inventory/create`)}
+              onClick={() => navigate(`/properties/${id}/rooms/${roomId}/inventory/create`, { replace: true })}
             >
               <Plus size={20} />
               Create New List
@@ -219,7 +219,7 @@ export default function RoomInventory() {
               {filterTenancy === "all" && (
                 <button
                   className="button-primary"
-                  onClick={() => navigate(`/properties/${id}/rooms/${roomId}/inventory/create`)}
+                  onClick={() => navigate(`/properties/${id}/rooms/${roomId}/inventory/create`, { replace: true })}
                 >
                   <Plus size={20} />
                   Create First List
@@ -236,7 +236,7 @@ export default function RoomInventory() {
                     <div key={tenancyId} className="tenancy-group">
                       <div className="tenancy-group-header">
                         <User size={20} />
-                        <h3>{tenancy ? tenancy.tenantName : 'Unknown Tenancy'}</h3>
+                        <h3>{tenancy ? tenancy.tenantName : 'Maintenance'}</h3>
                         {tenancy && (
                           <span 
                             className="status-badge"

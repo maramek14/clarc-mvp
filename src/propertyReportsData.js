@@ -1,7 +1,7 @@
 // Demo property-level reports data
 // In a real app, this would come from a database
 
-export const propertyReports = [
+let globalPropertyReports = [
   {
     id: "prop-report-1",
     propertyId: "prop-1",
@@ -13,7 +13,7 @@ export const propertyReports = [
     status: "complete",
     roomsIncluded: ["room-1", "room-2", "room-3"],
     roomsExcluded: [],
-    roomInventoryListIds: ["inv-list-1", "inv-list-2", "inv-list-3"], // Links to specific inventory lists used
+    roomInventoryListIds: ["inv-list-1", "inv-list-2", "inv-list-3"],
     warnings: [],
     totalItems: 15,
     conditionSummary: {
@@ -36,7 +36,7 @@ export const propertyReports = [
     status: "complete",
     roomsIncluded: ["room-1", "room-2", "room-3", "room-4"],
     roomsExcluded: ["room-5", "room-6", "room-7"],
-    roomInventoryListIds: ["inv-list-1", "inv-list-2", "inv-list-3", "inv-list-4"], // Links to specific inventory lists
+    roomInventoryListIds: ["inv-list-1", "inv-list-2", "inv-list-3", "inv-list-4"],
     warnings: [
       "Bathrooms 1 & 2 and Entrance Hall excluded - no recent inventories"
     ],
@@ -61,7 +61,7 @@ export const propertyReports = [
     status: "complete",
     roomsIncluded: ["room-1", "room-2", "room-3"],
     roomsExcluded: [],
-    roomInventoryListIds: ["inv-list-liverpool-1", "inv-list-liverpool-2", "inv-list-liverpool-3"], // Liverpool Grove inventory lists
+    roomInventoryListIds: ["inv-list-liverpool-1", "inv-list-liverpool-2", "inv-list-liverpool-3"],
     warnings: [],
     totalItems: 12,
     conditionSummary: {
@@ -87,7 +87,7 @@ export const liverpoolPropertyReport = {
   status: "complete",
   roomsIncluded: ["room-1", "room-2", "room-3"],
   roomsExcluded: [],
-  roomInventoryListIds: ["inv-list-liverpool-1", "inv-list-liverpool-2", "inv-list-liverpool-3"], // Liverpool Grove inventory lists
+  roomInventoryListIds: ["inv-list-liverpool-1", "inv-list-liverpool-2", "inv-list-liverpool-3"],
   warnings: [],
   totalItems: 34,
   conditionSummary: {
@@ -100,15 +100,25 @@ export const liverpoolPropertyReport = {
   notes: "Complete check-in inspection for Jack Brookes. All rooms inspected and documented. Property in excellent overall condition with minor wear on select furniture items. All appliances tested and working. Tenant briefed on property condition and given keys."
 };
 
+// Export function to get all reports
+export function getPropertyReports() {
+  return globalPropertyReports;
+}
+
+// Add function to add new reports
+export function addPropertyReport(newReport) {
+  globalPropertyReports = [...globalPropertyReports, newReport];
+  return globalPropertyReports;
+}
 
 // Helper function to get property reports by property
 export function getPropertyReportsByProperty(propertyId) {
-  return propertyReports.filter(report => report.propertyId === propertyId);
+  return globalPropertyReports.filter(report => report.propertyId === propertyId);
 }
 
 // Helper function to get a specific property report
 export function getPropertyReportById(reportId) {
-  return propertyReports.find(report => report.id === reportId);
+  return globalPropertyReports.find(report => report.id === reportId);
 }
 
 // Helper function to get room inventory status for a property
@@ -116,7 +126,6 @@ export function getRoomInventoryStatus(propertyId, rooms, inventoryLists) {
   const now = new Date();
   
   return rooms.map(room => {
-    // Get all inventory lists for this room
     const roomLists = inventoryLists.filter(
       list => list.propertyId === propertyId && list.roomId === room.id
     );
@@ -133,7 +142,6 @@ export function getRoomInventoryStatus(propertyId, rooms, inventoryLists) {
       };
     }
 
-    // Find most recent inventory
     const latestList = roomLists.reduce((latest, current) => {
       const currentDate = new Date(current.inspectionDate);
       const latestDate = new Date(latest.inspectionDate);
@@ -146,13 +154,13 @@ export function getRoomInventoryStatus(propertyId, rooms, inventoryLists) {
     let status, color;
     if (daysSince <= 30) {
       status = 'up-to-date';
-      color = '#10b981'; // Green
+      color = '#10b981';
     } else if (daysSince <= 90) {
       status = 'needs-attention';
-      color = '#f59e0b'; // Yellow
+      color = '#f59e0b';
     } else {
       status = 'outdated';
-      color = '#ef4444'; // Red
+      color = '#ef4444';
     }
 
     return {
