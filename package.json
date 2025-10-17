@@ -12,10 +12,10 @@
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.4",
     "react-scripts": "5.0.1",
+    "styled-jsx": "^5.1.7",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-
     "start": "node node_modules/react-scripts/bin/react-scripts start",
     "build": "node node_modules/react-scripts/bin/react-scripts build",
     "test": "node node_modules/react-scripts/bin/react-scripts test",

@@ -5,7 +5,7 @@ import Page from "./components/Page";
 import Properties from "./pages/Properties";
 import AddProperty from "./pages/AddProperty";
 import PropertyInformation from "./pages/PropertyInformation";
-import PropertyInventoryOverview from "./pages/PropertyInventoryOverview";
+import PropertyDashboard from "./pages/PropertyDashboard";
 import CreatePropertyReport from "./pages/CreatePropertyReport";
 import ViewPropertyReport from "./pages/ViewPropertyReport";
 import InventoryReports from "./pages/InventoryReports";
@@ -38,7 +38,7 @@ export default function App() {
             />
             <Route
               path="/properties/:id/dashboard"
-              element={<Page title="Property Dashboard"><PropertyInventoryOverview /></Page>}
+              element={<Page title="Property Dashboard"><PropertyDashboard /></Page>}
             />
             <Route
               path="/properties/:id/information"
@@ -46,7 +46,7 @@ export default function App() {
             />
             <Route
               path="/properties/:id/inventory"
-              element={<Page title="Property Inventory"><PropertyInventoryOverview /></Page>}
+              element={<Page title="Property Inventory"><PropertyDashboard /></Page>}
             />
             <Route
               path="/properties/:id/inventory/create-report"
