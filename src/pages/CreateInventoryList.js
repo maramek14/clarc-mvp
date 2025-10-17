@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Plus, Trash2, Save, X, ArrowRight, Check, Sparkles } from "lucide-react";
+import { Plus, Trash2, Save, X, ArrowRight, Check, Sparkles, User, Calendar } from "lucide-react";
 import { getPropertyById, getRoomById } from "../utils";
 import { useAppGallery } from "../hooks";
+import { getInventoryListTenancyOptions, getTenancyById } from "../tenancyData";
 
 const eventTypeOptions = ["check-in", "check-out", "mid-tenancy", "annual-inspection"];
 const conditionOptions = ["Excellent", "Good", "Fair", "Poor", "Damaged", "Missing"];
@@ -15,9 +16,12 @@ export default function CreateInventoryList() {
   const room = getRoomById(property, roomId);
   const { photos } = useAppGallery();
 
-  const [step, setStep] = useState(1); // 1: Select Photos, 2: List Details, 3: Review Items
+  const [step, setStep] = useState(1); // 1: Select Tenancy, 2: Select Photos, 3: List Details & Items, 4: Review
 
-  // Form data
+  // Selected tenancy
+  const [selectedTenancyOption, setSelectedTenancyOption] = useState(null);
+
+  // Form data (will be auto-filled from tenancy)
   const [formData, setFormData] = useState({
     name: "",
     eventType: "check-in",
@@ -41,16 +45,54 @@ export default function CreateInventoryList() {
     );
   }
 
-  // Get photos for this room
-  const roomPhotos = photos.filter(
-    (p) => p.propertyId === id && p.roomId === roomId
-  );
+  const tenancyOptions = getInventoryListTenancyOptions(id);
+
+  // Get photos for this room filtered by selected tenancy
+  const getRoomPhotos = () => {
+    const roomPhotos = photos.filter(
+      (p) => p.propertyId === id && p.roomId === roomId
+    );
+
+    // If tenancy selected, filter by tenancy
+    if (selectedTenancyOption) {
+      return roomPhotos.filter(p => {
+        // If maintenance photos, they can be used for upcoming tenancies
+        if (p.tenancyType === 'maintenance' && selectedTenancyOption.type === 'upcoming') {
+          return true;
+        }
+        // Otherwise match the tenancy ID
+        return p.tenancyId === selectedTenancyOption.value;
+      });
+    }
+
+    return roomPhotos;
+  };
+
+  const roomPhotos = getRoomPhotos();
 
   const handleFormChange = (field, value) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
     }));
+  };
+
+  const handleSelectTenancy = (option) => {
+    setSelectedTenancyOption(option);
+    
+    // Auto-fill form data from tenancy
+    const tenancy = option.tenancy;
+    const startDate = new Date(tenancy.startDate).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+    const endDate = new Date(tenancy.endDate).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+    
+    setFormData(prev => ({
+      ...prev,
+      tenantName: tenancy.tenantName,
+      tenancyPeriod: `${startDate} - ${endDate}`,
+      name: `${prev.eventType === 'check-in' ? 'Check-in' : prev.eventType === 'check-out' ? 'Check-out' : 'Mid-tenancy'} Inventory - ${tenancy.tenantName}`
+    }));
+
+    setStep(2);
   };
 
   const togglePhotoSelection = (photo) => {
@@ -168,7 +210,7 @@ export default function CreateInventoryList() {
     });
 
     setItems(newItems);
-    setStep(2);
+    setStep(3);
   };
 
   const handleItemChange = (itemId, field, value) => {
@@ -216,6 +258,7 @@ export default function CreateInventoryList() {
       id: `inv-list-${Date.now()}`,
       roomId: roomId,
       propertyId: id,
+      tenancyId: selectedTenancyOption.value,
       ...formData,
       createdDate: new Date().toISOString().split('T')[0],
       status: "active",
@@ -253,34 +296,105 @@ export default function CreateInventoryList() {
       <div className="steps-container">
         <div className={`step ${step >= 1 ? 'active' : ''} ${step > 1 ? 'completed' : ''}`}>
           <div className="step-number">1</div>
-          <span>Select Photos</span>
+          <span>Select Tenancy</span>
         </div>
         <div className="step-divider"></div>
         <div className={`step ${step >= 2 ? 'active' : ''} ${step > 2 ? 'completed' : ''}`}>
           <div className="step-number">2</div>
+          <span>Select Photos</span>
+        </div>
+        <div className="step-divider"></div>
+        <div className={`step ${step >= 3 ? 'active' : ''} ${step > 3 ? 'completed' : ''}`}>
+          <div className="step-number">3</div>
           <span>List Details</span>
         </div>
         <div className="step-divider"></div>
-        <div className={`step ${step >= 3 ? 'active' : ''}`}>
-          <div className="step-number">3</div>
-          <span>Review Items</span>
+        <div className={`step ${step >= 4 ? 'active' : ''}`}>
+          <div className="step-number">4</div>
+          <span>Review</span>
         </div>
       </div>
 
-      {/* Step 1: Select Photos */}
+      {/* Step 1: Select Tenancy */}
       {step === 1 && (
+        <>
+          <div className="page-header-section">
+            <div>
+              <h2>Select Tenancy</h2>
+              <p className="subtitle">
+                Choose which tenancy this inventory list is for
+              </p>
+            </div>
+            <button className="button-secondary" onClick={handleCancel}>
+              <X size={18} />
+              Cancel
+            </button>
+          </div>
+
+          {tenancyOptions.length > 0 ? (
+            <div className="tenancy-options">
+              {tenancyOptions.map((option) => (
+                <div
+                  key={option.value}
+                  className="tenancy-option-card"
+                  onClick={() => handleSelectTenancy(option)}
+                >
+                  <div className="tenancy-option-header">
+                    <User size={24} />
+                    <div className="tenancy-option-info">
+                      <h4>{option.tenancy.tenantName}</h4>
+                      <p>{option.label}</p>
+                    </div>
+                  </div>
+
+                  <div className="tenancy-option-details">
+                    <div className="detail-item">
+                      <Calendar size={14} />
+                      <span>
+                        {new Date(option.tenancy.startDate).toLocaleDateString('en-GB')} - {new Date(option.tenancy.endDate).toLocaleDateString('en-GB')}
+                      </span>
+                    </div>
+                  </div>
+
+                  {option.type === 'current' && (
+                    <div className="tenancy-badge current">Current</div>
+                  )}
+                  {option.type === 'upcoming' && (
+                    <div className="tenancy-badge upcoming">Upcoming</div>
+                  )}
+                  {option.type === 'past' && (
+                    <div className="tenancy-badge past">Past</div>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="empty-state">
+              <p>No tenancies found. Please add a tenancy in Property Information first.</p>
+              <button
+                className="button-primary"
+                onClick={() => navigate(`/properties/${id}/information`)}
+              >
+                Go to Property Information
+              </button>
+            </div>
+          )}
+        </>
+      )}
+
+      {/* Step 2: Select Photos */}
+      {step === 2 && (
         <>
           <div className="page-header-section">
             <div>
               <h2>Select Photos</h2>
               <p className="subtitle">
-                Choose photos from {room.name} to generate inventory items
+                Choose photos from {room.name} for {selectedTenancyOption.tenancy.tenantName}
               </p>
             </div>
             <div className="action-buttons">
-              <button className="button-secondary" onClick={handleCancel}>
-                <X size={18} />
-                Cancel
+              <button className="button-secondary" onClick={() => setStep(1)}>
+                Back
               </button>
               <button 
                 className="button-primary" 
@@ -291,6 +405,12 @@ export default function CreateInventoryList() {
                 Generate Items ({selectedPhotos.length})
               </button>
             </div>
+          </div>
+
+          {/* Selected Tenancy Banner */}
+          <div className="selected-tenancy-banner">
+            <User size={18} />
+            <span>{selectedTenancyOption.tenancy.tenantName} ({selectedTenancyOption.type === 'current' ? 'Current' : selectedTenancyOption.type === 'upcoming' ? 'Upcoming' : 'Past'})</span>
           </div>
 
           {roomPhotos.length > 0 ? (
@@ -317,7 +437,7 @@ export default function CreateInventoryList() {
             </div>
           ) : (
             <div className="empty-state">
-              <p>No photos in this room yet. Add photos first to create an inventory list.</p>
+              <p>No photos for this tenancy yet. Add photos first to create an inventory list.</p>
               <button
                 className="button-primary"
                 onClick={() => navigate(`/properties/${id}/rooms/${roomId}/add-photos`)}
@@ -330,8 +450,8 @@ export default function CreateInventoryList() {
         </>
       )}
 
-      {/* Step 2: List Details & Items */}
-      {step === 2 && (
+      {/* Step 3: List Details & Items */}
+      {step === 3 && (
         <>
           <div className="page-header-section">
             <div>
@@ -341,14 +461,20 @@ export default function CreateInventoryList() {
               </p>
             </div>
             <div className="action-buttons">
-              <button className="button-secondary" onClick={() => setStep(1)}>
+              <button className="button-secondary" onClick={() => setStep(2)}>
                 Back
               </button>
-              <button className="button-primary" onClick={() => setStep(3)}>
+              <button className="button-primary" onClick={() => setStep(4)}>
                 <ArrowRight size={18} />
                 Review & Save
               </button>
             </div>
+          </div>
+
+          {/* Selected Tenancy Banner */}
+          <div className="selected-tenancy-banner">
+            <User size={18} />
+            <span>{selectedTenancyOption.tenancy.tenantName} ({selectedTenancyOption.type === 'current' ? 'Current' : selectedTenancyOption.type === 'upcoming' ? 'Upcoming' : 'Past'})</span>
           </div>
 
           {/* List Details Form */}
@@ -372,7 +498,13 @@ export default function CreateInventoryList() {
                 <select
                   className="form-input"
                   value={formData.eventType}
-                  onChange={(e) => handleFormChange('eventType', e.target.value)}
+                  onChange={(e) => {
+                    handleFormChange('eventType', e.target.value);
+                    // Update list name when event type changes
+                    const eventLabel = e.target.value === 'check-in' ? 'Check-in' : 
+                                     e.target.value === 'check-out' ? 'Check-out' : 'Mid-tenancy';
+                    handleFormChange('name', `${eventLabel} Inventory - ${selectedTenancyOption.tenancy.tenantName}`);
+                  }}
                 >
                   {eventTypeOptions.map(type => (
                     <option key={type} value={type}>
@@ -396,7 +528,7 @@ export default function CreateInventoryList() {
             </div>
 
             <div className="form-group">
-              <label>Tenant Name *</label>
+              <label>Tenant Name * (Auto-filled)</label>
               <input
                 type="text"
                 className="form-input"
@@ -407,7 +539,7 @@ export default function CreateInventoryList() {
             </div>
 
             <div className="form-group">
-              <label>Tenancy Period</label>
+              <label>Tenancy Period (Auto-filled)</label>
               <input
                 type="text"
                 className="form-input"
@@ -509,8 +641,8 @@ export default function CreateInventoryList() {
         </>
       )}
 
-      {/* Step 3: Review & Save */}
-      {step === 3 && (
+      {/* Step 4: Review & Save */}
+      {step === 4 && (
         <>
           <div className="page-header-section">
             <div>
@@ -520,7 +652,7 @@ export default function CreateInventoryList() {
               </p>
             </div>
             <div className="action-buttons">
-              <button className="button-secondary" onClick={() => setStep(2)}>
+              <button className="button-secondary" onClick={() => setStep(3)}>
                 Back to Edit
               </button>
               <button className="button-primary" onClick={handleSave}>
@@ -534,6 +666,10 @@ export default function CreateInventoryList() {
           <div className="form-card">
             <h3>{formData.name || "Untitled List"}</h3>
             <div className="summary-grid">
+              <div className="summary-item">
+                <span className="label">Tenancy:</span>
+                <span className="value">{selectedTenancyOption.tenancy.tenantName} ({selectedTenancyOption.type})</span>
+              </div>
               <div className="summary-item">
                 <span className="label">Event Type:</span>
                 <span className="value">{formData.eventType}</span>
@@ -667,10 +803,116 @@ export default function CreateInventoryList() {
         }
 
         .step-divider {
-          width: 60px;
+          width: 40px;
           height: 2px;
           background: #E6E3DD;
-          margin: 0 16px;
+          margin: 0 12px;
+        }
+
+        .tenancy-options {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-top: 20px;
+        }
+
+        .tenancy-option-card {
+          background: white;
+          border: 2px solid #E6E3DD;
+          border-radius: 12px;
+          padding: 20px;
+          cursor: pointer;
+          transition: all 0.2s;
+          position: relative;
+        }
+
+        .tenancy-option-card:hover {
+          border-color: #2C5F8D;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(44, 95, 141, 0.1);
+        }
+
+        .tenancy-option-card:active {
+          transform: translateY(0);
+        }
+
+        .tenancy-option-header {
+          display: flex;
+          gap: 16px;
+          align-items: flex-start;
+          margin-bottom: 12px;
+        }
+
+        .tenancy-option-info {
+          flex: 1;
+        }
+
+        .tenancy-option-info h4 {
+          margin: 0 0 4px 0;
+          font-size: 18px;
+          font-weight: 600;
+          color: #2A2A2A;
+        }
+
+        .tenancy-option-info p {
+          margin: 0;
+          font-size: 14px;
+          color: #9B958C;
+        }
+
+        .tenancy-option-details {
+          display: flex;
+          gap: 16px;
+          flex-wrap: wrap;
+          padding-top: 12px;
+          border-top: 1px solid #F5F3EF;
+        }
+
+        .detail-item {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 13px;
+          color: #6B7280;
+        }
+
+        .tenancy-badge {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          padding: 6px 12px;
+          border-radius: 12px;
+          font-size: 11px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          color: white;
+        }
+
+        .tenancy-badge.current {
+          background: #10b981;
+        }
+
+        .tenancy-badge.upcoming {
+          background: #3b82f6;
+        }
+
+        .tenancy-badge.past {
+          background: #6b7280;
+        }
+
+        .selected-tenancy-banner {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          background: linear-gradient(135deg, #F5F3EF 0%, #EBE8E1 100%);
+          border: 1px solid #2C5F8D;
+          border-radius: 8px;
+          padding: 12px 16px;
+          margin-bottom: 16px;
+          font-size: 14px;
+          font-weight: 500;
+          color: #2A2A2A;
         }
 
         .photo-grid {
@@ -996,7 +1238,7 @@ export default function CreateInventoryList() {
           }
 
           .step-divider {
-            width: 30px;
+            width: 20px;
             margin: 0 8px;
           }
         }

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Plus, FileText, Calendar, User, Package, Camera, X, Check, Trash2, FolderOpen } from "lucide-react";
+import { Plus, FileText, Calendar, User, Package, Camera, X, Check, Trash2, FolderOpen, Filter } from "lucide-react";
 import { getPropertyById, getRoomById } from "../utils";
 import { getInventoryListsByRoom } from "../inventoryData";
 import { useAppGallery } from "../hooks";
+import { getTenanciesByProperty, getTenancyById, getTenancyStatusColor, getTenancyStatusLabel } from "../tenancyData";
 
 export default function RoomInventory() {
   const { id, roomId } = useParams();
@@ -15,6 +16,7 @@ export default function RoomInventory() {
   
   const [activeTab, setActiveTab] = useState("inventory");
   const [filterTag, setFilterTag] = useState("all");
+  const [filterTenancy, setFilterTenancy] = useState("all"); // New: tenancy filter
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [selectionMode, setSelectionMode] = useState(false);
   const [selectedPhotos, setSelectedPhotos] = useState([]);
@@ -29,14 +31,35 @@ export default function RoomInventory() {
   }
 
   const availableTags = ["check-in", "check-out", "damage", "maintenance", "clean", "furnished"];
+  const tenancies = getTenanciesByProperty(id);
 
   const roomPhotos = photos.filter(
     (p) => p.propertyId === id && p.roomId === roomId
   );
 
-  const filteredPhotos = filterTag === "all" 
-    ? roomPhotos 
-    : roomPhotos.filter(p => p.tags?.includes(filterTag));
+  // Filter photos by tag AND tenancy
+  const filteredPhotos = roomPhotos.filter(p => {
+    const tagMatch = filterTag === "all" || p.tags?.includes(filterTag);
+    const tenancyMatch = filterTenancy === "all" || 
+                         p.tenancyId === filterTenancy || 
+                         (filterTenancy === "maintenance" && p.tenancyType === "maintenance");
+    return tagMatch && tenancyMatch;
+  });
+
+  // Filter inventory lists by tenancy
+  const filteredInventoryLists = filterTenancy === "all" 
+    ? inventoryLists
+    : inventoryLists.filter(list => list.tenancyId === filterTenancy);
+
+  // Group inventory lists by tenancy
+  const groupedLists = filteredInventoryLists.reduce((acc, list) => {
+    const tenancyId = list.tenancyId || 'unknown';
+    if (!acc[tenancyId]) {
+      acc[tenancyId] = [];
+    }
+    acc[tenancyId].push(list);
+    return acc;
+  }, {});
 
   const getEventTypeBadgeColor = (eventType) => {
     const colors = {
@@ -44,7 +67,8 @@ export default function RoomInventory() {
       'check-out': '#ef4444',
       'mid-tenancy': '#f59e0b',
       'damage-assessment': '#dc2626',
-      'maintenance': '#3b82f6'
+      'maintenance': '#3b82f6',
+      'annual-inspection': '#8b5cf6'
     };
     return colors[eventType] || '#6b7280';
   };
@@ -123,6 +147,43 @@ export default function RoomInventory() {
         </button>
       </div>
 
+      {/* Tenancy Filter (shown on both tabs) */}
+      <div className="filter-section">
+        <div className="filter-header">
+          <Filter size={16} />
+          <span>Filter by Tenancy:</span>
+        </div>
+        <div className="filter-buttons">
+          <button
+            className={`filter-btn ${filterTenancy === "all" ? "active" : ""}`}
+            onClick={() => setFilterTenancy("all")}
+          >
+            All
+          </button>
+          {tenancies.map(tenancy => (
+            <button
+              key={tenancy.id}
+              className={`filter-btn ${filterTenancy === tenancy.id ? "active" : ""}`}
+              onClick={() => setFilterTenancy(tenancy.id)}
+            >
+              <span>{tenancy.tenantName}</span>
+              <span 
+                className="filter-badge"
+                style={{ backgroundColor: getTenancyStatusColor(tenancy.status) }}
+              >
+                {getTenancyStatusLabel(tenancy.status)}
+              </span>
+            </button>
+          ))}
+          <button
+            className={`filter-btn ${filterTenancy === "maintenance" ? "active" : ""}`}
+            onClick={() => setFilterTenancy("maintenance")}
+          >
+            Maintenance
+          </button>
+        </div>
+      </div>
+
       {/* Inventory Tab */}
       {activeTab === "inventory" && (
         <>
@@ -130,7 +191,8 @@ export default function RoomInventory() {
             <div>
               <h2>Inventory Lists</h2>
               <p className="subtitle">
-                {inventoryLists.length} {inventoryLists.length === 1 ? 'list' : 'lists'} for this room
+                {filteredInventoryLists.length} {filteredInventoryLists.length === 1 ? 'list' : 'lists'} 
+                {filterTenancy !== "all" && " for this tenancy"}
               </p>
             </div>
             <button
@@ -142,72 +204,152 @@ export default function RoomInventory() {
             </button>
           </div>
 
-          {inventoryLists.length === 0 ? (
+          {filteredInventoryLists.length === 0 ? (
             <div className="empty-state">
               <FileText size={64} strokeWidth={1.5} />
-              <h3>No Inventory Lists Yet</h3>
-              <p>Create your first inventory list to start tracking items in this room.</p>
-              <button
-                className="button-primary"
-                onClick={() => navigate(`/properties/${id}/rooms/${roomId}/inventory/create`)}
-              >
-                <Plus size={20} />
-                Create First List
-              </button>
+              <h3>No Inventory Lists {filterTenancy !== "all" && "for this tenancy"}</h3>
+              <p>
+                {filterTenancy !== "all" 
+                  ? "No inventory lists found for the selected tenancy." 
+                  : "Create your first inventory list to start tracking items in this room."}
+              </p>
+              {filterTenancy === "all" && (
+                <button
+                  className="button-primary"
+                  onClick={() => navigate(`/properties/${id}/rooms/${roomId}/inventory/create`)}
+                >
+                  <Plus size={20} />
+                  Create First List
+                </button>
+              )}
             </div>
           ) : (
-            <div className="inventory-lists-grid">
-              {inventoryLists.map((list) => (
-                <div
-                  key={list.id}
-                  className="inventory-list-card"
-                  onClick={() => navigate(`/properties/${id}/rooms/${roomId}/inventory/${list.id}`)}
-                  role="button"
-                  tabIndex={0}
-                >
-                  <div className="card-header">
-                    <div className="card-title-section">
-                      <h3>{list.name}</h3>
-                      <div className="badges">
-                        <span
-                          className="badge"
-                          style={{ backgroundColor: getEventTypeBadgeColor(list.eventType) }}
-                        >
-                          {list.eventType}
-                        </span>
-                        <span
-                          className="badge"
-                          style={{ backgroundColor: getStatusBadgeColor(list.status) }}
-                        >
-                          {list.status}
-                        </span>
+            <>
+              {/* Group lists by tenancy if showing all */}
+              {filterTenancy === "all" ? (
+                Object.entries(groupedLists).map(([tenancyId, lists]) => {
+                  const tenancy = getTenancyById(tenancyId);
+                  return (
+                    <div key={tenancyId} className="tenancy-group">
+                      <div className="tenancy-group-header">
+                        <User size={20} />
+                        <h3>{tenancy ? tenancy.tenantName : 'Unknown Tenancy'}</h3>
+                        {tenancy && (
+                          <span 
+                            className="status-badge"
+                            style={{ backgroundColor: getTenancyStatusColor(tenancy.status) }}
+                          >
+                            {getTenancyStatusLabel(tenancy.status)}
+                          </span>
+                        )}
+                      </div>
+                      <div className="inventory-lists-grid">
+                        {lists.map((list) => (
+                          <div
+                            key={list.id}
+                            className="inventory-list-card"
+                            onClick={() => navigate(`/properties/${id}/rooms/${roomId}/inventory/${list.id}`)}
+                            role="button"
+                            tabIndex={0}
+                          >
+                            <div className="card-header">
+                              <div className="card-title-section">
+                                <h3>{list.name}</h3>
+                                <div className="badges">
+                                  <span
+                                    className="badge"
+                                    style={{ backgroundColor: getEventTypeBadgeColor(list.eventType) }}
+                                  >
+                                    {list.eventType}
+                                  </span>
+                                  <span
+                                    className="badge"
+                                    style={{ backgroundColor: getStatusBadgeColor(list.status) }}
+                                  >
+                                    {list.status}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="card-content">
+                              <div className="info-row">
+                                <Calendar size={16} />
+                                <span>{list.inspectionDate}</span>
+                              </div>
+                              <div className="info-row">
+                                <Package size={16} />
+                                <span>{list.items.length} items tracked</span>
+                              </div>
+                            </div>
+
+                            {list.notes && (
+                              <div className="card-notes">
+                                <p>{list.notes}</p>
+                              </div>
+                            )}
+                          </div>
+                        ))}
                       </div>
                     </div>
-                  </div>
+                  );
+                })
+              ) : (
+                // Showing filtered lists without grouping
+                <div className="inventory-lists-grid">
+                  {filteredInventoryLists.map((list) => (
+                    <div
+                      key={list.id}
+                      className="inventory-list-card"
+                      onClick={() => navigate(`/properties/${id}/rooms/${roomId}/inventory/${list.id}`)}
+                      role="button"
+                      tabIndex={0}
+                    >
+                      <div className="card-header">
+                        <div className="card-title-section">
+                          <h3>{list.name}</h3>
+                          <div className="badges">
+                            <span
+                              className="badge"
+                              style={{ backgroundColor: getEventTypeBadgeColor(list.eventType) }}
+                            >
+                              {list.eventType}
+                            </span>
+                            <span
+                              className="badge"
+                              style={{ backgroundColor: getStatusBadgeColor(list.status) }}
+                            >
+                              {list.status}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
 
-                  <div className="card-content">
-                    <div className="info-row">
-                      <User size={16} />
-                      <span>{list.tenantName}</span>
-                    </div>
-                    <div className="info-row">
-                      <Calendar size={16} />
-                      <span>{list.tenancyPeriod}</span>
-                    </div>
-                    <div className="info-row">
-                      <Package size={16} />
-                      <span>{list.items.length} items tracked</span>
-                    </div>
-                  </div>
+                      <div className="card-content">
+                        <div className="info-row">
+                          <User size={16} />
+                          <span>{list.tenantName}</span>
+                        </div>
+                        <div className="info-row">
+                          <Calendar size={16} />
+                          <span>{list.inspectionDate}</span>
+                        </div>
+                        <div className="info-row">
+                          <Package size={16} />
+                          <span>{list.items.length} items tracked</span>
+                        </div>
+                      </div>
 
-                  {list.notes && (
-                    <div className="card-notes">
-                      <p>{list.notes}</p>
+                      {list.notes && (
+                        <div className="card-notes">
+                          <p>{list.notes}</p>
+                        </div>
+                      )}
                     </div>
-                  )}
+                  ))}
                 </div>
-              ))}
-            </div>
+              )}
+            </>
           )}
         </>
       )}
@@ -220,77 +362,87 @@ export default function RoomInventory() {
               <h2>Room Photos</h2>
               <p className="subtitle">
                 {selectionMode 
-                  ? `${selectedPhotos.length} selected`
-                  : `${filteredPhotos.length} ${filteredPhotos.length === 1 ? 'photo' : 'photos'}`
+                  ? `${selectedPhotos.length} selected` 
+                  : `${filteredPhotos.length} photos${filterTenancy !== "all" || filterTag !== "all" ? " (filtered)" : ""}`
                 }
-                {filterTag !== "all" && !selectionMode && ` with tag: ${filterTag}`}
               </p>
             </div>
-            {!selectionMode ? (
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <div className="header-actions">
+              {!selectionMode ? (
+                <>
+                  <button
+                    className="button-secondary"
+                    onClick={toggleSelectionMode}
+                  >
+                    Select
+                  </button>
+                  <button
+                    className="button-primary"
+                    onClick={() => navigate(`/properties/${id}/rooms/${roomId}/add-photos`)}
+                  >
+                    <Plus size={20} />
+                    Add Photos
+                  </button>
+                </>
+              ) : (
                 <button
                   className="button-secondary"
                   onClick={toggleSelectionMode}
                 >
-                  Select
+                  <X size={18} />
+                  Cancel
                 </button>
-                <button
-                  className="button-primary"
-                  onClick={() => navigate(`/properties/${id}/rooms/${roomId}/add-photos`)}
-                >
-                  <Plus size={20} />
-                  Add Photos
-                </button>
-              </div>
-            ) : (
-              <button
-                className="button-secondary"
-                onClick={toggleSelectionMode}
-              >
-                Cancel
-              </button>
-            )}
+              )}
+            </div>
           </div>
 
-          {/* Filter Section - Only show when not in selection mode */}
-          {!selectionMode && (
-            <div className="filter-buttons-row">
+          {/* Tag Filter */}
+          <div className="tag-filter-section">
+            <div className="filter-header">
+              <span>Filter by Tag:</span>
+            </div>
+            <div className="tag-filter-buttons">
               <button
-                className={`filter-chip ${filterTag === "all" ? 'active' : ''}`}
+                className={`tag-filter-btn ${filterTag === "all" ? "active" : ""}`}
                 onClick={() => setFilterTag("all")}
               >
-                All Tags
+                All
               </button>
               {availableTags.map(tag => (
                 <button
                   key={tag}
-                  className={`filter-chip ${filterTag === tag ? 'active' : ''}`}
+                  className={`tag-filter-btn ${filterTag === tag ? "active" : ""}`}
                   onClick={() => setFilterTag(tag)}
                 >
                   {tag}
                 </button>
               ))}
             </div>
-          )}
+          </div>
 
-          {/* Photo Grid */}
           {filteredPhotos.length > 0 ? (
             <div className="photo-grid">
               {filteredPhotos.map((photo) => (
-                <div 
-                  key={photo.id} 
-                  className={`gallery-photo-card ${selectionMode && isPhotoSelected(photo) ? 'selected' : ''}`}
+                <div
+                  key={photo.id}
+                  className={`gallery-photo-card ${isPhotoSelected(photo) ? 'selected' : ''}`}
                   onClick={() => handlePhotoClick(photo)}
                 >
                   <img src={photo.url} alt="" />
                   {selectionMode && isPhotoSelected(photo) && (
                     <div className="selection-indicator">
-                      <Check size={24} strokeWidth={3} />
+                      <Check size={20} />
                     </div>
                   )}
-                  {!selectionMode && (
+                  {photo.tags && photo.tags.length > 0 && (
                     <div className="photo-card-overlay">
-                      <span className="photo-tag">{photo.tags?.[0] || "untagged"}</span>
+                      <span className="photo-tag">{photo.tags[0]}</span>
+                    </div>
+                  )}
+                  {/* Show tenancy info */}
+                  {photo.tenancyId && (
+                    <div className="photo-tenancy-badge">
+                      <User size={12} />
                     </div>
                   )}
                 </div>
@@ -299,15 +451,21 @@ export default function RoomInventory() {
           ) : (
             <div className="empty-state">
               <Camera size={64} strokeWidth={1.5} />
-              <h3>No Photos {filterTag !== "all" ? `with tag: ${filterTag}` : 'Yet'}</h3>
-              <p>Add photos to start building your room gallery.</p>
-              <button
-                className="button-primary"
-                onClick={() => navigate(`/properties/${id}/rooms/${roomId}/add-photos`)}
-              >
-                <Plus size={20} />
-                Add First Photo
-              </button>
+              <h3>No Photos {filterTag !== "all" || filterTenancy !== "all" ? "matching filters" : "Yet"}</h3>
+              <p>
+                {filterTag !== "all" || filterTenancy !== "all"
+                  ? "Try adjusting your filters or add new photos."
+                  : "Add photos to start building your room gallery."}
+              </p>
+              {filterTag === "all" && filterTenancy === "all" && (
+                <button
+                  className="button-primary"
+                  onClick={() => navigate(`/properties/${id}/rooms/${roomId}/add-photos`)}
+                >
+                  <Plus size={20} />
+                  Add First Photo
+                </button>
+              )}
             </div>
           )}
         </>
@@ -325,6 +483,18 @@ export default function RoomInventory() {
             </button>
             <img src={selectedPhoto.url} alt="" className="detail-photo" />
             <div className="photo-details">
+              {selectedPhoto.tenancyId && (
+                <div className="detail-row">
+                  <strong>Tenancy</strong>
+                  <span>{getTenancyById(selectedPhoto.tenancyId)?.tenantName || 'Unknown'}</span>
+                </div>
+              )}
+              {selectedPhoto.tenancyType === 'maintenance' && (
+                <div className="detail-row">
+                  <strong>Type</strong>
+                  <span>Property Maintenance</span>
+                </div>
+              )}
               <div className="detail-row">
                 <strong>Tags</strong>
                 <div className="tag-list">
@@ -357,17 +527,10 @@ export default function RoomInventory() {
             <button
               className="button-primary"
               onClick={handleDeleteSelected}
-              style={{ 
-                flex: '1', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center', 
-                gap: '0.5rem',
-                background: 'var(--error)',
-              }}
+              style={{ flex: '1', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', background: '#dc2626' }}
             >
               <Trash2 size={20} />
-              Delete
+              Delete ({selectedPhotos.length})
             </button>
           </div>
         </div>
@@ -376,30 +539,28 @@ export default function RoomInventory() {
       {/* Move Photos Modal */}
       {showMoveModal && (
         <div className="photo-detail-modal" onClick={() => setShowMoveModal(false)}>
-          <div className="move-modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
-              <h3>Move {selectedPhotos.length} photo(s) to:</h3>
-              <button
-                className="close-modal-btn"
-                onClick={() => setShowMoveModal(false)}
-              >
-                <X size={24} />
-              </button>
-            </div>
-            <div className="room-list">
+          <div className="modal-content-small" onClick={(e) => e.stopPropagation()}>
+            <h3>Move to Room</h3>
+            <div className="room-list-modal">
               {property.rooms
                 .filter(r => r.id !== roomId)
-                .map((targetRoom) => (
+                .map(targetRoom => (
                   <button
                     key={targetRoom.id}
-                    className="room-option"
+                    className="room-option-btn"
                     onClick={() => confirmMove(targetRoom.id)}
                   >
-                    <span className="room-icon">{targetRoom.icon}</span>
-                    <span className="room-name">{targetRoom.name}</span>
+                    {targetRoom.name}
                   </button>
                 ))}
             </div>
+            <button
+              className="button-secondary"
+              onClick={() => setShowMoveModal(false)}
+              style={{ width: '100%', marginTop: '12px' }}
+            >
+              Cancel
+            </button>
           </div>
         </div>
       )}
@@ -407,24 +568,21 @@ export default function RoomInventory() {
       <style jsx>{`
         .tabs-container {
           display: flex;
-          gap: 8px;
-          margin-bottom: 24px;
           border-bottom: 2px solid #E6E3DD;
+          margin-bottom: 20px;
         }
 
         .tab {
-          flex: 1;
           display: flex;
           align-items: center;
-          justify-content: center;
           gap: 8px;
-          padding: 12px 16px;
+          padding: 12px 20px;
           background: none;
           border: none;
           border-bottom: 3px solid transparent;
           cursor: pointer;
-          color: #9B958C;
           font-size: 15px;
+          color: #9B958C;
           font-weight: 500;
           margin-bottom: -2px;
         }
@@ -437,6 +595,64 @@ export default function RoomInventory() {
           color: #2C5F8D;
           border-bottom-color: #2C5F8D;
           font-weight: 600;
+        }
+
+        .filter-section {
+          background: white;
+          border: 1px solid #E6E3DD;
+          border-radius: 12px;
+          padding: 16px;
+          margin-bottom: 20px;
+        }
+
+        .filter-header {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: 12px;
+          font-size: 14px;
+          font-weight: 600;
+          color: #2A2A2A;
+        }
+
+        .filter-buttons {
+          display: flex;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+
+        .filter-btn {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 8px 16px;
+          background: #F5F3EF;
+          border: 2px solid transparent;
+          border-radius: 8px;
+          font-size: 14px;
+          font-weight: 500;
+          cursor: pointer;
+          color: #2A2A2A;
+        }
+
+        .filter-btn:hover {
+          background: #EBE8E1;
+        }
+
+        .filter-btn.active {
+          background: white;
+          border-color: #2C5F8D;
+          color: #2C5F8D;
+        }
+
+        .filter-badge {
+          padding: 2px 8px;
+          border-radius: 8px;
+          font-size: 10px;
+          font-weight: 600;
+          color: white;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
         }
 
         .page-header-section {
@@ -459,6 +675,41 @@ export default function RoomInventory() {
           margin: 0;
         }
 
+        .header-actions {
+          display: flex;
+          gap: 12px;
+        }
+
+        .tenancy-group {
+          margin-bottom: 32px;
+        }
+
+        .tenancy-group-header {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-bottom: 16px;
+          padding-bottom: 12px;
+          border-bottom: 2px solid #E6E3DD;
+        }
+
+        .tenancy-group-header h3 {
+          margin: 0;
+          font-size: 18px;
+          font-weight: 600;
+          flex: 1;
+        }
+
+        .status-badge {
+          padding: 4px 12px;
+          border-radius: 12px;
+          font-size: 11px;
+          font-weight: 600;
+          color: white;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+
         .inventory-lists-grid {
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -471,12 +722,17 @@ export default function RoomInventory() {
           border-radius: 12px;
           padding: 20px;
           cursor: pointer;
+          transition: all 0.2s;
         }
 
-        .inventory-list-card:active {
+        .inventory-list-card:hover {
           border-color: #2C5F8D;
           box-shadow: 0 4px 12px rgba(44, 95, 141, 0.1);
           transform: translateY(-2px);
+        }
+
+        .inventory-list-card:active {
+          transform: translateY(0);
         }
 
         .card-header {
@@ -533,11 +789,42 @@ export default function RoomInventory() {
           font-style: italic;
         }
 
+        .tag-filter-section {
+          margin-bottom: 20px;
+        }
+
+        .tag-filter-buttons {
+          display: flex;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+
+        .tag-filter-btn {
+          padding: 6px 14px;
+          background: #F5F3EF;
+          border: 2px solid transparent;
+          border-radius: 20px;
+          font-size: 13px;
+          font-weight: 500;
+          cursor: pointer;
+          color: #2A2A2A;
+          text-transform: capitalize;
+        }
+
+        .tag-filter-btn:hover {
+          background: #EBE8E1;
+        }
+
+        .tag-filter-btn.active {
+          background: white;
+          border-color: #2C5F8D;
+          color: #2C5F8D;
+        }
+
         .photo-grid {
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
           gap: 12px;
-          margin-top: 20px;
         }
 
         .gallery-photo-card {
@@ -547,9 +834,10 @@ export default function RoomInventory() {
           overflow: hidden;
           cursor: pointer;
           border: 3px solid transparent;
+          transition: all 0.2s;
         }
 
-        .gallery-photo-card:active {
+        .gallery-photo-card:hover {
           transform: scale(1.05);
         }
 
@@ -561,6 +849,21 @@ export default function RoomInventory() {
           width: 100%;
           height: 100%;
           object-fit: cover;
+        }
+
+        .selection-indicator {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          background: #2C5F8D;
+          color: white;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
         .photo-card-overlay {
@@ -583,19 +886,18 @@ export default function RoomInventory() {
           color: #2A2A2A;
         }
 
-        .selection-indicator {
+        .photo-tenancy-badge {
           position: absolute;
           top: 8px;
-          right: 8px;
-          background: #2C5F8D;
+          left: 8px;
+          background: rgba(44, 95, 141, 0.9);
           color: white;
-          width: 32px;
-          height: 32px;
+          width: 24px;
+          height: 24px;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
         .photo-detail-modal {
@@ -619,48 +921,29 @@ export default function RoomInventory() {
           background: white;
           border-radius: 12px;
           overflow: hidden;
-          display: flex;
-          flex-direction: column;
-        }
-
-        .close-modal-btn {
-          position: absolute;
-          top: 16px;
-          right: 16px;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          background: rgba(0, 0, 0, 0.5);
-          color: white;
-          border: none;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 10;
-        }
-
-        .close-modal-btn:active {
-          background: rgba(0, 0, 0, 0.7);
         }
 
         .detail-photo {
           width: 100%;
           max-height: 60vh;
           object-fit: contain;
+          background: #000;
         }
 
         .photo-details {
           padding: 20px;
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
         }
 
         .detail-row {
           display: flex;
           flex-direction: column;
           gap: 8px;
+          padding: 12px 0;
+          border-bottom: 1px solid #E6E3DD;
+        }
+
+        .detail-row:last-child {
+          border-bottom: none;
         }
 
         .detail-row strong {
@@ -670,138 +953,135 @@ export default function RoomInventory() {
           letter-spacing: 0.5px;
         }
 
+        .detail-row span {
+          font-size: 15px;
+          color: #2A2A2A;
+        }
+
         .tag-list {
           display: flex;
-          flex-wrap: wrap;
           gap: 8px;
+          flex-wrap: wrap;
         }
 
         .tag-badge {
-          background: #E8F1F8;
-          color: #2C5F8D;
-          padding: 6px 12px;
-          border-radius: 16px;
-          font-size: 13px;
+          padding: 4px 10px;
+          background: #F5F3EF;
+          border-radius: 12px;
+          font-size: 12px;
+          font-weight: 500;
+          color: #2A2A2A;
+        }
+
+        .close-modal-btn {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          background: rgba(0, 0, 0, 0.7);
+          color: white;
+          border: none;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 10;
+        }
+
+        .close-modal-btn:hover {
+          background: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content-small {
+          background: white;
+          border-radius: 12px;
+          padding: 24px;
+          max-width: 400px;
+          width: 90%;
+        }
+
+        .modal-content-small h3 {
+          margin: 0 0 16px 0;
+          font-size: 18px;
           font-weight: 600;
         }
 
-        .filter-buttons-row {
+        .room-list-modal {
           display: flex;
+          flex-direction: column;
           gap: 8px;
-          overflow-x: auto;
-          padding-bottom: 8px;
           margin-bottom: 16px;
-          -webkit-overflow-scrolling: touch;
         }
 
-        .filter-chip {
-          flex-shrink: 0;
-          padding: 8px 16px;
-          border: 2px solid #E6E3DD;
-          background: white;
-          border-radius: 20px;
+        .room-option-btn {
+          padding: 12px 16px;
+          background: #F5F3EF;
+          border: 2px solid transparent;
+          border-radius: 8px;
           font-size: 14px;
           font-weight: 500;
-          color: #2A2A2A;
           cursor: pointer;
-          white-space: nowrap;
+          text-align: left;
+          color: #2A2A2A;
         }
 
-        .filter-chip:active {
+        .room-option-btn:hover {
+          background: #EBE8E1;
           border-color: #2C5F8D;
-          background: #E8F1F8;
-        }
-
-        .filter-chip.active {
-          border-color: #2C5F8D;
-          background: #2C5F8D;
-          color: white;
         }
 
         .empty-state {
           text-align: center;
-          padding: 60px 20px;
-          color: #9B958C;
+          padding: 48px 24px;
+          background: #F5F3EF;
+          border-radius: 12px;
+          margin-top: 20px;
         }
 
         .empty-state h3 {
-          margin: 16px 0 8px;
+          margin: 12px 0 8px 0;
           font-size: 20px;
+          font-weight: 600;
           color: #2A2A2A;
         }
 
         .empty-state p {
-          margin-bottom: 24px;
-          font-size: 15px;
+          margin: 0 0 20px 0;
+          color: #9B958C;
         }
 
-        .move-modal-content {
-          background: white;
-          border-radius: 16px;
-          max-width: 400px;
-          width: 90%;
-          max-height: 80vh;
-          display: flex;
-          flex-direction: column;
-          overflow: hidden;
-        }
+        @media (max-width: 768px) {
+          .page-header-section {
+            flex-direction: column;
+            align-items: stretch;
+          }
 
-        .modal-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 20px;
-          border-bottom: 1px solid #E6E3DD;
-        }
+          .header-actions {
+            width: 100%;
+          }
 
-        .modal-header h3 {
-          margin: 0;
-          font-size: 18px;
-          font-weight: 600;
-          color: #2A2A2A;
-        }
+          .header-actions button {
+            flex: 1;
+          }
 
-        .room-list {
-          padding: 16px;
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-          overflow-y: auto;
-        }
+          .filter-buttons,
+          .tag-filter-buttons {
+            justify-content: flex-start;
+          }
 
-        .room-option {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          padding: 16px;
-          background: white;
-          border: 2px solid #E6E3DD;
-          border-radius: 12px;
-          cursor: pointer;
-          text-align: left;
-          width: 100%;
-        }
+          .inventory-lists-grid {
+            grid-template-columns: 1fr;
+          }
 
-        .room-option:active {
-          background: #E8F1F8;
-          border-color: #2C5F8D;
-        }
+          .photo-grid {
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+          }
 
-        .room-icon {
-          font-size: 32px;
-          width: 48px;
-          height: 48px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: #F5F3EF;
-          border-radius: 12px;
-        }
-
-        .room-name {
-          font-size: 16px;
-          font-weight: 600;
-          color: #2A2A2A;
+          .tenancy-group-header {
+            flex-wrap: wrap;
+          }
         }
       `}</style>
     </div>

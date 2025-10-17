@@ -57,6 +57,7 @@ const initialPhoneGallery = [
 ];
 
 // App Gallery - photos that have been added to properties/rooms
+// Updated with tenancy fields
 let globalAppGallery = [
   { 
     id: "app1", 
@@ -64,7 +65,10 @@ let globalAppGallery = [
     propertyId: "prop-1",
     roomId: "room-1",
     tags: ["check-in"],
-    category: "living-room"
+    category: "living-room",
+    tenancyId: "tenancy-1", // John Sheeves current tenancy
+    tenancyType: "current",
+    addedAt: "2024-06-01T10:00:00Z"
   },
   { 
     id: "app2", 
@@ -72,7 +76,10 @@ let globalAppGallery = [
     propertyId: "prop-1",
     roomId: "room-2",
     tags: ["check-in"],
-    category: "kitchen"
+    category: "kitchen",
+    tenancyId: "tenancy-1", // John Sheeves current tenancy
+    tenancyType: "current",
+    addedAt: "2024-06-01T10:15:00Z"
   },
 ];
 
