@@ -271,7 +271,9 @@ h3 {
 .page-content {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
   padding: 1rem 1.25rem 5rem;
   box-sizing: border-box;
   background: var(--bg);
@@ -1142,9 +1144,12 @@ h3 {
 .photo-detail-modal {
   position: fixed;
   top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 420px;
+  min-width: 420px;
+  max-width: 420px;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1160,13 +1165,11 @@ h3 {
   background: rgba(0, 0, 0, 0.85);
 }
 
-.modal-content,
-.photo-detail-content {
+.modal-content {
   background: white;
   border-radius: var(--radius);
-  max-width: 600px;
+  max-width: 380px;
   width: 100%;
-
   max-height: 80vh;
   display: flex;
   flex-direction: column;
@@ -1174,9 +1177,25 @@ h3 {
 }
 
 .photo-detail-content {
-  max-height: 90vh;
-  overflow-y: auto;
   position: relative;
+  width: 100%;
+  max-width: 380px;
+  max-height: 80vh;
+  background: white;
+  border-radius: 12px;
+  overflow-y: auto;
+}
+
+.photo-detail-content {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  max-height: 80vh;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .modal-header {
@@ -1287,11 +1306,19 @@ tr:last-child td {
     box-shadow: none;
   }
   
+  .photo-gallery-modal,
+  .photo-detail-modal {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    left: 0;
+    transform: none;
+  }
+  
   .page-header-section {
     flex-direction: column;
     align-items: stretch;
   }
-  
   .page-header-section .button-primary {
     width: 100%;
   }

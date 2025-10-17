@@ -1,32 +1,15 @@
 import { useState } from "react";
-import { User, Mail, Phone, MapPin, Bell, Lock, FileText, HelpCircle, LogOut } from "lucide-react";
+import { Bell, Lock, FileText, LogOut } from "lucide-react";
 
 export default function Settings() {
-  const [profileData, setProfileData] = useState({
-    name: "John Smith",
-    email: "john.smith@email.com",
-    phone: "+44 7700 900000",
-    company: "Property Management Ltd",
-    address: "123 Main Street, London"
-  });
-
   const [notifications, setNotifications] = useState({
     emailAlerts: true,
     reportReminders: true,
     inventoryReminders: false
   });
 
-  const handleProfileChange = (e) => {
-    const { name, value } = e.target;
-    setProfileData(prev => ({ ...prev, [name]: value }));
-  };
-
   const handleNotificationToggle = (key) => {
     setNotifications(prev => ({ ...prev, [key]: !prev[key] }));
-  };
-
-  const handleSaveProfile = () => {
-    alert("Profile saved! (Changes will reset on page refresh)");
   };
 
   const handleChangePassword = () => {
@@ -43,70 +26,6 @@ export default function Settings() {
 
   return (
     <div className="page-content">
-      {/* Profile Section */}
-      <section className="settings-section">
-        <div className="section-header">
-          <User size={24} />
-          <h2>Profile Information</h2>
-        </div>
-        
-        <div className="profile-form">
-          <div className="form-field">
-            <label>Full Name</label>
-            <input
-              type="text"
-              name="name"
-              value={profileData.name}
-              onChange={handleProfileChange}
-            />
-          </div>
-
-          <div className="form-field">
-            <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              value={profileData.email}
-              onChange={handleProfileChange}
-            />
-          </div>
-
-          <div className="form-field">
-            <label>Phone</label>
-            <input
-              type="tel"
-              name="phone"
-              value={profileData.phone}
-              onChange={handleProfileChange}
-            />
-          </div>
-
-          <div className="form-field">
-            <label>Company</label>
-            <input
-              type="text"
-              name="company"
-              value={profileData.company}
-              onChange={handleProfileChange}
-            />
-          </div>
-
-          <div className="form-field">
-            <label>Address</label>
-            <input
-              type="text"
-              name="address"
-              value={profileData.address}
-              onChange={handleProfileChange}
-            />
-          </div>
-
-          <button className="button-primary" onClick={handleSaveProfile}>
-            Save Profile
-          </button>
-        </div>
-      </section>
-
       {/* Notifications Section */}
       <section className="settings-section">
         <div className="section-header">
@@ -124,7 +43,7 @@ export default function Settings() {
               <input
                 type="checkbox"
                 checked={notifications.emailAlerts}
-                onChange={() => handleNotificationToggle('emailAlerts')}
+                onChange={() => handleNotificationToggle("emailAlerts")}
               />
               <span className="toggle-slider"></span>
             </label>
@@ -133,13 +52,13 @@ export default function Settings() {
           <div className="toggle-item">
             <div className="toggle-info">
               <p className="toggle-label">Report Reminders</p>
-              <p className="toggle-description">Get reminded about upcoming inspections</p>
+              <p className="toggle-description">Get reminders for upcoming property reports</p>
             </div>
             <label className="toggle-switch">
               <input
                 type="checkbox"
                 checked={notifications.reportReminders}
-                onChange={() => handleNotificationToggle('reportReminders')}
+                onChange={() => handleNotificationToggle("reportReminders")}
               />
               <span className="toggle-slider"></span>
             </label>
@@ -148,13 +67,13 @@ export default function Settings() {
           <div className="toggle-item">
             <div className="toggle-info">
               <p className="toggle-label">Inventory Reminders</p>
-              <p className="toggle-description">Notifications when inventories need updating</p>
+              <p className="toggle-description">Reminders for inventory checks and updates</p>
             </div>
             <label className="toggle-switch">
               <input
                 type="checkbox"
                 checked={notifications.inventoryReminders}
-                onChange={() => handleNotificationToggle('inventoryReminders')}
+                onChange={() => handleNotificationToggle("inventoryReminders")}
               />
               <span className="toggle-slider"></span>
             </label>
@@ -162,11 +81,11 @@ export default function Settings() {
         </div>
       </section>
 
-      {/* Quick Actions Section */}
+      {/* Account Actions */}
       <section className="settings-section">
         <div className="section-header">
-          <HelpCircle size={24} />
-          <h2>Quick Actions</h2>
+          <Lock size={24} />
+          <h2>Account & Security</h2>
         </div>
 
         <div className="action-list">
@@ -202,7 +121,7 @@ export default function Settings() {
         <p className="app-info-sub">© 2024 - MVP Version</p>
       </div>
 
-<style jsx>{`
+      <style jsx>{`
         .settings-section {
           background: white;
           border: 1px solid #E6E3DD;
@@ -231,54 +150,6 @@ export default function Settings() {
           color: #2A2A2A;
         }
 
-        .profile-form {
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
-        }
-
-        .form-field {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-        }
-
-        .form-field label {
-          font-size: 14px;
-          font-weight: 500;
-          color: #2A2A2A;
-        }
-
-        .form-field input {
-          padding: 12px 16px;
-          border: 1px solid #E6E3DD;
-          border-radius: 8px;
-          font-size: 15px;
-          color: #2A2A2A;
-        }
-
-        .form-field input:focus {
-          outline: none;
-          border-color: #2C5F8D;
-          box-shadow: 0 0 0 3px rgba(44, 95, 141, 0.1);
-        }
-
-        .button-primary {
-          padding: 12px 24px;
-          background: #2C5F8D;
-          color: white;
-          border: none;
-          border-radius: 8px;
-          font-size: 15px;
-          font-weight: 500;
-          cursor: pointer;
-          align-self: flex-start;
-        }
-
-        .button-primary:active {
-          background: #1E4466;
-        }
-
         .toggle-list {
           display: flex;
           flex-direction: column;
@@ -289,7 +160,6 @@ export default function Settings() {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          gap: 16px;
           padding: 16px;
           background: #F9F8F6;
           border-radius: 8px;
@@ -317,7 +187,6 @@ export default function Settings() {
           display: inline-block;
           width: 48px;
           height: 26px;
-          flex-shrink: 0;
         }
 
         .toggle-switch input {
@@ -334,6 +203,7 @@ export default function Settings() {
           right: 0;
           bottom: 0;
           background-color: #E6E3DD;
+          transition: 0.3s;
           border-radius: 26px;
         }
 
@@ -345,6 +215,7 @@ export default function Settings() {
           left: 3px;
           bottom: 3px;
           background-color: white;
+          transition: 0.3s;
           border-radius: 50%;
         }
 
@@ -373,10 +244,15 @@ export default function Settings() {
           cursor: pointer;
           text-align: left;
           width: 100%;
+          transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+          background: #F9F8F6;
         }
 
         .action-btn:active {
-          background: #F9F8F6;
+          background: #F5F3EF;
           border-color: #2C5F8D;
         }
 
@@ -385,13 +261,21 @@ export default function Settings() {
           flex-shrink: 0;
         }
 
-        .action-btn.logout:active {
-          background: #FEF5F4;
-          border-color: #B85C4F;
+        .action-btn.logout {
+          color: #B85C4F;
         }
 
-        .action-btn.logout:active svg {
+        .action-btn.logout svg {
           color: #B85C4F;
+        }
+
+        .action-btn.logout:hover {
+          background: #FEF5F4;
+        }
+
+        .action-btn.logout:active {
+          background: #FDE8E6;
+          border-color: #B85C4F;
         }
 
         .action-content {
@@ -403,6 +287,10 @@ export default function Settings() {
           font-size: 15px;
           font-weight: 500;
           color: #2A2A2A;
+        }
+
+        .action-btn.logout .action-label {
+          color: #B85C4F;
         }
 
         .action-description {
@@ -435,6 +323,7 @@ export default function Settings() {
           .toggle-item {
             flex-direction: column;
             align-items: flex-start;
+            gap: 12px;
           }
 
           .toggle-switch {

@@ -3,6 +3,7 @@ import { X, Bell, User, Settings, LogOut, Calendar, AlertCircle } from "lucide-r
 
 export default function Sidebar({ isOpen, onClose }) {
   const navigate = useNavigate();
+  
   // Mock notifications - you'll replace with real data
   const notifications = [
     {
@@ -67,13 +68,13 @@ export default function Sidebar({ isOpen, onClose }) {
 
         {/* Menu Items */}
         <div className="menu-section">
+          <button className="menu-item" onClick={() => { navigate('/profile'); onClose(); }}>
+            <User size={20} />
+            <span>Profile</span>
+          </button>
           <button className="menu-item" onClick={() => { navigate('/settings'); onClose(); }}>
             <Settings size={20} />
             <span>Settings</span>
-          </button>
-          <button className="menu-item" onClick={() => { alert('Profile coming soon!'); onClose(); }}>
-            <User size={20} />
-            <span>Profile</span>
           </button>
           <button className="menu-item logout" onClick={() => { alert('Logout coming soon!'); onClose(); }}>
             <LogOut size={20} />
@@ -150,6 +151,7 @@ export default function Sidebar({ isOpen, onClose }) {
           align-items: center;
           justify-content: center;
           border-radius: 6px;
+          transition: background 0.2s;
         }
 
         .close-btn:hover {

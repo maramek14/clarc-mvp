@@ -6,50 +6,83 @@ export default function Activity() {
   const navigate = useNavigate();
   const [filter, setFilter] = useState("all"); // all, upcoming, overdue
 
-  // Mock activity data - you'll replace this with real data from your hooks
+  // Activity data based on your actual properties
   const activities = [
     {
       id: 1,
       type: "checkout",
-      property: "272 Dogwood Drive",
-      room: "Master Bedroom",
-      date: "2024-03-25",
-      dueIn: 8,
+      property: "272 D Earl's Court Rd",
+      room: "Bedroom 1",
+      date: "2025-11-05",
+      dueIn: 19,
       status: "upcoming",
-      action: "Checkout report due",
-      propertyId: "1",
-      roomId: "1"
+      action: "Check-out report due",
+      propertyId: "prop-1",
+      roomId: "room-3"
     },
     {
       id: 2,
       type: "report",
-      property: "45 Maple Street",
-      date: "2024-03-15",
+      property: "3 Liverpool Grove",
+      date: "2025-10-15",
       dueIn: -2,
       status: "overdue",
-      action: "Inventory report incomplete",
-      propertyId: "2"
+      action: "Annual inspection overdue",
+      propertyId: "prop-2"
     },
     {
       id: 3,
       type: "maintenance",
-      property: "272 Dogwood Drive",
+      property: "272 D Earl's Court Rd",
       room: "Kitchen",
-      date: "2024-03-30",
-      dueIn: 13,
+      date: "2025-10-25",
+      dueIn: 8,
       status: "upcoming",
-      action: "Maintenance inspection scheduled",
-      propertyId: "1",
-      roomId: "2"
+      action: "Kitchen appliance check scheduled",
+      propertyId: "prop-1",
+      roomId: "room-2"
     },
     {
       id: 4,
       type: "completed",
-      property: "45 Maple Street",
-      date: "2024-03-12",
+      property: "272 D Earl's Court Rd",
+      date: "2024-09-15",
       status: "completed",
-      action: "Check-in report completed",
-      propertyId: "2"
+      action: "Annual Inspection 2024 completed",
+      propertyId: "prop-1"
+    },
+    {
+      id: 5,
+      type: "checkout",
+      property: "3 Liverpool Grove",
+      room: "Living Room",
+      date: "2025-08-10",
+      dueIn: -68,
+      status: "overdue",
+      action: "Tenancy ending - inventory needed",
+      propertyId: "prop-2",
+      roomId: "room-1"
+    },
+    {
+      id: 6,
+      type: "completed",
+      property: "3 Liverpool Grove",
+      date: "2023-08-15",
+      status: "completed",
+      action: "Check-in report - Jack Brookes",
+      propertyId: "prop-2"
+    },
+    {
+      id: 7,
+      type: "maintenance",
+      property: "272 D Earl's Court Rd",
+      room: "Bathroom 1",
+      date: "2025-11-01",
+      dueIn: 15,
+      status: "upcoming",
+      action: "Bathroom maintenance inspection",
+      propertyId: "prop-1",
+      roomId: "room-5"
     }
   ];
 
@@ -92,7 +125,7 @@ export default function Activity() {
   };
 
   return (
-    <div className="page-content">
+    <div className="page-content" style={{ paddingBottom: '8rem' }}>
       {/* Filter Chips */}
       <div className="filter-row">
         <button

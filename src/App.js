@@ -1,8 +1,10 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
 import Sidebar from "./components/Sidebar";
 import Page from "./components/Page";
+import LoadingSplash from "./components/LoadingSplash";
+
 
 import Properties from "./pages/Properties";
 import Activity from "./pages/Activity";
@@ -20,11 +22,34 @@ import AddPhotos from "./pages/AddPhotos";
 import PhoneGallery from "./pages/PhoneGallery";
 import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
+import Profile from "./pages/Profile";
 
 import "./App.css";
 
 export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showSplash, setShowSplash] = useState(false);
+
+  useEffect(() => {
+    // Show splash after 200ms delay
+    const showTimer = setTimeout(() => {
+      setShowSplash(true);
+    }, 1000);
+
+    // Hide splash after 5 seconds
+    const hideTimer = setTimeout(() => {
+      setShowSplash(false);
+    }, 2500); // 200ms delay + 5000ms display
+
+    return () => {
+      clearTimeout(showTimer);
+      clearTimeout(hideTimer);
+    };
+  }, []);
+
+  if (showSplash) {
+    return <LoadingSplash />;
+  }
 
   return (
     <BrowserRouter>
@@ -102,6 +127,10 @@ export default function App() {
             <Route
               path="/settings"
               element={<Page title="Settings"><Settings /></Page>}
+            />
+            <Route
+              path="/profile"
+              element={<Page title="Profile"><Profile /></Page>}
             />
           </Routes>
         </div>

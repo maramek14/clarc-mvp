@@ -27,7 +27,7 @@ export default function RoomInventory() {
 
   if (!property || !room) {
     return (
-      <div className="page-content">
+      <div className="page-content" style={{ paddingBottom: '8rem' }}>
         <p>Room not found.</p>
       </div>
     );
@@ -131,7 +131,7 @@ export default function RoomInventory() {
   };
 
   return (
-    <div className="page-content">
+    <div className="page-content" style={{ paddingBottom: '8rem' }}>
       {/* Tab Navigation */}
       <div className="tabs-container">
         <button
@@ -906,9 +906,10 @@ export default function RoomInventory() {
         .photo-detail-modal {
           position: fixed;
           top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 420px;
+          height: 100vh;
           background: rgba(0, 0, 0, 0.9);
           display: flex;
           align-items: center;

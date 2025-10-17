@@ -1,4 +1,5 @@
 import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import { ArrowLeft, ChevronRight } from "lucide-react";
 import { getPropertyById, getRoomById } from "../utils";
 import Logo from "./Logo";
@@ -20,6 +21,16 @@ export default function Page({ title, children }) {
   const property = propertyId ? getPropertyById(propertyId) : null;
   const room = property && roomId ? getRoomById(property, roomId) : null;
 
+
+  // Scroll to top whenever pathname changes
+  const pageContentRef = useRef(null);
+  
+  useEffect(() => {
+    if (pageContentRef.current) {
+      pageContentRef.current.scrollTop = 0;
+    }
+  }, [pathname]);
+
   return (
     <div className="page">
       <header className="page-header">
@@ -33,12 +44,7 @@ export default function Page({ title, children }) {
           </button>
         )}
         
-        {/* Show logo on main pages instead of back button */}
-        {hideBack && (
-          <div className="logo-container">
-            <Logo width={180} height={96} />
-          </div>
-        )}
+
         
         <div className="page-title-section">
           {/* Breadcrumb for context */}
@@ -59,7 +65,7 @@ export default function Page({ title, children }) {
         </div>
       </header>
 
-      <main className="page-content">{children}</main>
+      <main className="page-content" ref={pageContentRef}>{children}</main>
 
       <style jsx>{`
         .page {

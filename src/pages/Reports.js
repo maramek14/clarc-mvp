@@ -16,7 +16,7 @@ export default function Reports() {
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState("date-desc"); // date-desc, date-asc, name
   const propertyReports = getPropertyReports();
-  
+
   // Helper to get property name
   const getPropertyName = (propertyId) => {
     const property = properties.find(p => p.id === propertyId);
@@ -97,7 +97,7 @@ export default function Reports() {
   };
 
   return (
-    <div className="page-content">
+    <div className="page-content" style={{ paddingBottom: '8rem' }}>
       {/* Search and Filter Bar */}
       <div className="search-filter-bar">
         <div className="search-box">

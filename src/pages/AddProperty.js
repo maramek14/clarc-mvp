@@ -75,7 +75,7 @@ export default function AddProperty() {
   };
 
   return (
-    <div className="page-content">
+    <div className="page-content" style={{ paddingBottom: '8rem' }}>
       <form onSubmit={handleSubmit} className="property-form">
         
         {/* Property Name */}

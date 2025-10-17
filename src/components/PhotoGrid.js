@@ -2,7 +2,7 @@ export default function PhotoGrid({ photos }) {
   if (!photos?.length) return <p>No photos available.</p>;
 
   return (
-    <div className="photo-grid">
+    <div className="photo-grid" >
       {photos.map((p) => (
         <img
           key={p.id}
