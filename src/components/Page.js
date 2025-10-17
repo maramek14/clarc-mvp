@@ -12,7 +12,7 @@ export default function Page({ title, children }) {
   const { id: propertyId, roomId } = useParams();
 
   // Define root-level pages where back button should be hidden
-  const hideBack = ["/properties", "/gallery", "/reports", "/settings"].includes(
+  const hideBack = ["/properties", "/activity", "/reports", "/settings"].includes(
     pathname
   );
 

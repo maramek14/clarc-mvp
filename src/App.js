@@ -1,8 +1,11 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useState } from "react";
 import NavBar from "./components/NavBar";
+import Sidebar from "./components/Sidebar";
 import Page from "./components/Page";
 
 import Properties from "./pages/Properties";
+import Activity from "./pages/Activity";
 import AddProperty from "./pages/AddProperty";
 import PropertyInformation from "./pages/PropertyInformation";
 import PropertyDashboard from "./pages/PropertyDashboard";
@@ -21,16 +24,24 @@ import Settings from "./pages/Settings";
 import "./App.css";
 
 export default function App() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <BrowserRouter>
       <div className="app-shell">
-        <NavBar />
+        <NavBar onMenuClick={() => setSidebarOpen(true)} />
+        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        
         <div className="app-content">
           <Routes>
             <Route path="/" element={<Navigate to="/properties" replace />} />
             <Route
               path="/properties"
               element={<Page title="My Properties"><Properties /></Page>}
+            />
+            <Route
+              path="/activity"
+              element={<Page title="Activity"><Activity /></Page>}
             />
             <Route
               path="/add-property"
@@ -64,7 +75,6 @@ export default function App() {
               path="/properties/:id/add-room"
               element={<Page title="Add New Room"><AddRoom /></Page>}
             />
-            {/* NEW COMBINED ROUTE - Room Inventory with tabs for lists & photos */}
             <Route
               path="/properties/:id/rooms/:roomId/inventory"
               element={<Page title="Room Inventory"><RoomInventory /></Page>}

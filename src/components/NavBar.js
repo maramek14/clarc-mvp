@@ -1,7 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
-import { Home, FileText, User } from "lucide-react";
+import { Home, Activity, FileText, Menu } from "lucide-react";
 
-export default function NavBar() {
+export default function NavBar({ onMenuClick }) {
   const { pathname } = useLocation();
 
   // Hide navbar on these routes
@@ -10,8 +10,8 @@ export default function NavBar() {
 
   const navItems = [
     { path: "/properties", label: "Properties", icon: <Home size={20}/> },
+    { path: "/activity", label: "Activity", icon: <Activity size={20}/> },
     { path: "/reports", label: "Reports", icon: <FileText size={20}/> },
-    { path: "/settings", label: "Profile", icon: <User size={20}/> },
   ];
 
   if (shouldHide) {
@@ -32,6 +32,31 @@ export default function NavBar() {
           </div>
         </Link>
       ))}
+      
+      {/* Hamburger Menu Button */}
+      <button 
+        className="nav-item menu-button"
+        onClick={onMenuClick}
+        aria-label="Open menu"
+      >
+        <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:"2px"}}>
+          <Menu size={20}/>
+          <span>Menu</span>
+        </div>
+      </button>
+      
+      <style jsx>{`
+        .menu-button {
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0;
+        }
+
+        .menu-button:active {
+          color: var(--accent);
+        }
+      `}</style>
     </nav>
   );
 }
