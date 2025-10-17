@@ -82,15 +82,27 @@ export default function CreateInventoryList() {
     
     // Auto-fill form data from tenancy
     const tenancy = option.tenancy;
-    const startDate = new Date(tenancy.startDate).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
-    const endDate = new Date(tenancy.endDate).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
     
-    setFormData(prev => ({
-      ...prev,
-      tenantName: tenancy.tenantName,
-      tenancyPeriod: `${startDate} - ${endDate}`,
-      name: `${prev.eventType === 'check-in' ? 'Check-in' : prev.eventType === 'check-out' ? 'Check-out' : 'Mid-tenancy'} Inventory - ${tenancy.tenantName}`
-    }));
+    if (option.type === 'maintenance') {
+      // Handle maintenance option
+      setFormData(prev => ({
+        ...prev,
+        tenantName: "Property Maintenance",
+        tenancyPeriod: "N/A",
+        name: `Maintenance Inventory - ${room.name}`
+      }));
+    } else {
+      // Handle regular tenancy option
+      const startDate = new Date(tenancy.startDate).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+      const endDate = new Date(tenancy.endDate).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+      
+      setFormData(prev => ({
+        ...prev,
+        tenantName: tenancy.tenantName,
+        tenancyPeriod: `${startDate} - ${endDate}`,
+        name: `${prev.eventType === 'check-in' ? 'Check-in' : prev.eventType === 'check-out' ? 'Check-out' : 'Mid-tenancy'} Inventory - ${tenancy.tenantName}`
+      }));
+    }
 
     setStep(2);
   };
@@ -370,6 +382,9 @@ export default function CreateInventoryList() {
                   {option.type === 'past' && (
                     <div className="tenancy-badge past">Past</div>
                   )}
+                  {option.type === 'maintenance' && (
+                    <div className="tenancy-badge maintenance">Maintenance</div>
+                  )}
                 </div>
               ))}
             </div>
@@ -415,7 +430,7 @@ export default function CreateInventoryList() {
           {/* Selected Tenancy Banner */}
           <div className="selected-tenancy-banner">
             <User size={18} />
-            <span>{selectedTenancyOption.tenancy.tenantName} ({selectedTenancyOption.type === 'current' ? 'Current' : selectedTenancyOption.type === 'upcoming' ? 'Upcoming' : 'Past'})</span>
+            <span>{selectedTenancyOption.tenancy.tenantName} ({selectedTenancyOption.type === 'current' ? 'Current' : selectedTenancyOption.type === 'upcoming' ? 'Upcoming' : selectedTenancyOption.type === 'maintenance' ? 'Maintenance' : 'Past'})</span>
           </div>
 
           {roomPhotos.length > 0 ? (
@@ -479,7 +494,7 @@ export default function CreateInventoryList() {
           {/* Selected Tenancy Banner */}
           <div className="selected-tenancy-banner">
             <User size={18} />
-            <span>{selectedTenancyOption.tenancy.tenantName} ({selectedTenancyOption.type === 'current' ? 'Current' : selectedTenancyOption.type === 'upcoming' ? 'Upcoming' : 'Past'})</span>
+            <span>{selectedTenancyOption.tenancy.tenantName} ({selectedTenancyOption.type === 'current' ? 'Current' : selectedTenancyOption.type === 'upcoming' ? 'Upcoming' : selectedTenancyOption.type === 'maintenance' ? 'Maintenance' : 'Past'})</span>
           </div>
 
           {/* List Details Form */}
@@ -904,6 +919,10 @@ export default function CreateInventoryList() {
 
         .tenancy-badge.past {
           background: #6b7280;
+        }
+
+        .tenancy-badge.maintenance {
+          background: #f59e0b;
         }
 
         .selected-tenancy-banner {

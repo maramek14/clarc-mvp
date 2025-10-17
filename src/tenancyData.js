@@ -33,7 +33,7 @@ export const tenancies = [
     propertyId: "prop-2",
     tenantName: "Jack Brookes",
     startDate: "2024-08-15",
-    endDate: "2026-08-15", // Extended to 2026 so it's still current
+    endDate: "2025-08-15", // Extended to 2026 so it's still current
     status: "current",
     tenantEmail: "jack.brookes@email.com",
     tenantPhone: "+44 7700 900789",
@@ -53,6 +53,19 @@ export const tenancies = [
     monthlyRent: 1950,
     deposit: 2250,
     notes: "Future tenant, starts after John's tenancy"
+  },
+  {
+    id: "tenancy-5",
+    propertyId: "prop-2",
+    tenantName: "Emma Thompson",
+    startDate: "2025-11-01",
+    endDate: "2026-11-01", // Future tenancy - starts November 2025
+    status: "upcoming",
+    tenantEmail: "emma.t@email.com",
+    tenantPhone: "+44 7700 900555",
+    monthlyRent: 1450,
+    deposit: 1650,
+    notes: "Upcoming tenant at Liverpool Grove"
   }
 ];
 
@@ -172,37 +185,41 @@ export function getPhotoAssignmentOptions(propertyId) {
 export function getInventoryListTenancyOptions(propertyId) {
   const current = getCurrentTenancy(propertyId);
   const upcoming = getUpcomingTenancy(propertyId);
-  const past = getPastTenancies(propertyId);
   
   const options = [];
   
   if (current) {
+    // Active tenancy - can create lists for current tenant
     options.push({
       type: "current",
       tenancy: current,
       label: `${current.tenantName} (Current: ${formatDateRange(current.startDate, current.endDate)})`,
       value: current.id
     });
-  }
-  
-  if (upcoming) {
+  } else {
+    // No active tenancy - offer maintenance or upcoming check-in prep options
+    if (upcoming) {
+      options.push({
+        type: "upcoming",
+        tenancy: upcoming,
+        label: `${upcoming.tenantName} (Upcoming: ${formatDateRange(upcoming.startDate, upcoming.endDate)})`,
+        value: upcoming.id,
+        description: "Create check-in inventory for upcoming tenant"
+      });
+    }
+    
     options.push({
-      type: "upcoming",
-      tenancy: upcoming,
-      label: `${upcoming.tenantName} (Upcoming: ${formatDateRange(upcoming.startDate, upcoming.endDate)})`,
-      value: upcoming.id
+      type: "maintenance",
+      tenancy: {
+        tenantName: "Property Maintenance",
+        startDate: new Date().toISOString().split('T')[0],
+        endDate: new Date().toISOString().split('T')[0]
+      },
+      label: "Property Maintenance / Between Tenancies",
+      value: "maintenance",
+      description: "Document current property condition for maintenance records"
     });
   }
-  
-  // Include recent past tenancies (last 2)
-  past.slice(0, 2).forEach(tenancy => {
-    options.push({
-      type: "past",
-      tenancy: tenancy,
-      label: `${tenancy.tenantName} (Past: ${formatDateRange(tenancy.startDate, tenancy.endDate)})`,
-      value: tenancy.id
-    });
-  });
   
   return options;
 }

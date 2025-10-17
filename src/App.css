@@ -85,7 +85,10 @@ button:disabled {
 /* =========================
    APP SHELL
 ========================= */
+/* Add this to your existing App.css - just the critical fix */
+
 .app-shell {
+  position: relative; /* THIS IS THE KEY FIX - allows absolute positioned children to be contained */
   display: flex;
   flex-direction: column;
   width: 420px;

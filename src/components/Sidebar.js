@@ -48,10 +48,7 @@ export default function Sidebar({ isOpen, onClose }) {
         {/* Notifications List */}
         <div className="notifications-section">
           {notifications.length === 0 ? (
-            <div className="empty-notifications">
-              <Bell size={48} strokeWidth={1.5} />
-              <p>No new notifications</p>
-            </div>
+            <p className="empty-state">No notifications</p>
           ) : (
             notifications.map((notif) => (
               <div key={notif.id} className="notification-item">
@@ -68,47 +65,26 @@ export default function Sidebar({ isOpen, onClose }) {
           )}
         </div>
 
-        {/* Profile Section at Bottom */}
-        <div className="profile-section">
-          <div 
-            className="profile-header"
-            onClick={() => {
-              navigate('/settings');
-              onClose();
-            }}
-            style={{ cursor: 'pointer' }}
-          >
-            <div className="avatar">
-              <User size={24} />
-            </div>
-            <div className="profile-info">
-              <h3>Maram</h3>
-              <p>Property Manager</p>
-            </div>
-          </div>
-
-          <div className="profile-actions">
-            <button 
-              className="profile-action-btn"
-              onClick={() => {
-                navigate('/settings');
-                onClose();
-              }}
-            >
-              <Settings size={18} />
-              <span>Settings</span>
-            </button>
-            <button className="profile-action-btn">
-              <LogOut size={18} />
-              <span>Log Out</span>
-            </button>
-          </div>
+        {/* Menu Items */}
+        <div className="menu-section">
+          <button className="menu-item" onClick={() => { navigate('/settings'); onClose(); }}>
+            <Settings size={20} />
+            <span>Settings</span>
+          </button>
+          <button className="menu-item" onClick={() => { alert('Profile coming soon!'); onClose(); }}>
+            <User size={20} />
+            <span>Profile</span>
+          </button>
+          <button className="menu-item logout" onClick={() => { alert('Logout coming soon!'); onClose(); }}>
+            <LogOut size={20} />
+            <span>Log Out</span>
+          </button>
         </div>
       </div>
 
       <style jsx>{`
         .sidebar-backdrop {
-          position: fixed;
+          position: absolute;
           top: 0;
           left: 0;
           right: 0;
@@ -129,12 +105,12 @@ export default function Sidebar({ isOpen, onClose }) {
         }
 
         .sidebar {
-          position: fixed;
+          position: absolute;
           top: 0;
           right: 0;
           bottom: 0;
           width: 320px;
-          max-width: 90vw;
+          max-width: 90%;
           background: white;
           box-shadow: -4px 0 24px rgba(0, 0, 0, 0.2);
           z-index: 101;
@@ -176,7 +152,7 @@ export default function Sidebar({ isOpen, onClose }) {
           border-radius: 6px;
         }
 
-        .close-btn:active {
+        .close-btn:hover {
           background: #F5F3EF;
         }
 
@@ -186,51 +162,27 @@ export default function Sidebar({ isOpen, onClose }) {
           padding: 16px;
         }
 
-        .empty-notifications {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          padding: 60px 20px;
+        .empty-state {
           text-align: center;
           color: #9B958C;
-        }
-
-        .empty-notifications p {
-          margin: 12px 0 0 0;
-          font-size: 14px;
+          padding: 40px 20px;
         }
 
         .notification-item {
           display: flex;
           gap: 12px;
-          padding: 12px;
-          border-radius: 10px;
-          margin-bottom: 8px;
-          background: #F9FAFB;
-          cursor: pointer;
-          transition: all 0.2s;
-        }
-
-        .notification-item:active {
-          background: #F3F4F6;
-          transform: scale(0.98);
+          padding: 16px;
+          background: #F9F8F6;
+          border-radius: 8px;
+          margin-bottom: 12px;
         }
 
         .notif-icon {
           flex-shrink: 0;
-          width: 36px;
-          height: 36px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: white;
-          border-radius: 8px;
         }
 
         .notif-content {
           flex: 1;
-          min-width: 0;
         }
 
         .notif-content h4 {
@@ -241,9 +193,9 @@ export default function Sidebar({ isOpen, onClose }) {
         }
 
         .notif-content p {
-          margin: 0 0 4px 0;
+          margin: 0 0 8px 0;
           font-size: 13px;
-          color: #6B7280;
+          color: #5C5751;
         }
 
         .notif-date {
@@ -251,80 +203,38 @@ export default function Sidebar({ isOpen, onClose }) {
           color: #9B958C;
         }
 
-        .profile-section {
+        .menu-section {
           border-top: 1px solid #E6E3DD;
-          padding: 20px;
-          background: #F9FAFB;
+          padding: 16px;
         }
 
-        .profile-header {
+        .menu-item {
           display: flex;
           align-items: center;
           gap: 12px;
-          margin-bottom: 16px;
-          padding: 8px;
+          width: 100%;
+          padding: 16px;
+          background: none;
+          border: none;
           border-radius: 8px;
-          transition: all 0.2s;
-        }
-
-        .profile-header:active {
-          background: rgba(44, 95, 141, 0.05);
-        }
-
-        .profile-header:active {
-          background: rgba(44, 95, 141, 0.1);
-          transform: scale(0.98);
-        }
-
-        .avatar {
-          width: 48px;
-          height: 48px;
-          border-radius: 50%;
-          background: linear-gradient(135deg, #2C5F8D 0%, #1E4466 100%);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          flex-shrink: 0;
-        }
-
-        .profile-info h3 {
-          margin: 0 0 2px 0;
-          font-size: 16px;
-          font-weight: 600;
-          color: #2A2A2A;
-        }
-
-        .profile-info p {
-          margin: 0;
-          font-size: 13px;
-          color: #9B958C;
-        }
-
-        .profile-actions {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-        }
-
-        .profile-action-btn {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          padding: 10px 12px;
-          background: white;
-          border: 1px solid #E6E3DD;
-          border-radius: 8px;
-          color: #2A2A2A;
-          font-size: 14px;
-          font-weight: 500;
           cursor: pointer;
-          transition: all 0.2s;
+          font-size: 15px;
+          font-weight: 500;
+          color: #2A2A2A;
+          text-align: left;
+          transition: background 0.2s;
         }
 
-        .profile-action-btn:active {
+        .menu-item:hover {
           background: #F5F3EF;
-          transform: scale(0.98);
+        }
+
+        .menu-item.logout {
+          color: #B85C4F;
+        }
+
+        .menu-item.logout:hover {
+          background: #FEF5F4;
         }
       `}</style>
     </>
