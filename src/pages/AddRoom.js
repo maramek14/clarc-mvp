@@ -982,8 +982,9 @@ export default function AddRoom() {
           color: white;
         }
 
-        .button-primary:hover:not(:disabled) {
+        .button-primary:active:not(:disabled) {
           background: #1E4466;
+          transform: scale(0.98);
         }
 
         .button-primary:disabled {
@@ -996,8 +997,9 @@ export default function AddRoom() {
           color: #2A2A2A;
         }
 
-        .button-secondary:hover:not(:disabled) {
+        .button-secondary:active:not(:disabled) {
           background: #EBE8E1;
+          transform: scale(0.98);
         }
 
         .button-secondary:disabled {

@@ -225,12 +225,9 @@ export default function Profile() {
           transition: background 0.2s;
         }
 
-        .edit-btn:hover {
-          background: #1E4466;
-        }
-
         .edit-btn:active {
           background: #163552;
+          transform: scale(0.98);
         }
 
         /* View Mode Styles */
@@ -338,13 +335,10 @@ export default function Profile() {
           transition: all 0.2s;
         }
 
-        .button-secondary:hover {
-          background: #F9F8F6;
-          border-color: #9B958C;
-        }
-
         .button-secondary:active {
           background: #F5F3EF;
+          transform: scale(0.98);
+          border-color: #9B958C;
         }
 
         @media (max-width: 768px) {

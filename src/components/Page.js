@@ -9,13 +9,40 @@ import Logo from "./Logo";
  */
 export default function Page({ title, children }) {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const location = useLocation();
+  const { pathname } = location;
   const { id: propertyId, roomId } = useParams();
 
   // Define root-level pages where back button should be hidden
   const hideBack = ["/properties", "/activity", "/reports", "/settings"].includes(
     pathname
   );
+
+  // Get the parent path for hierarchical navigation
+  const getParentPath = () => {
+    const paths = pathname.split('/').filter(Boolean);
+    
+    // Handle root level navigation
+    if (paths.length <= 1) return '/';
+    
+    // Handle property-related paths
+    if (paths[0] === 'properties') {
+      // Property sub-page hierarchical navigation
+      if (paths[2] === 'rooms' && paths.length > 4) {
+        // From room sub-pages (inventory, photos, etc) to room dashboard
+        return `/properties/${paths[1]}/dashboard`;
+      } else if (paths[2] === 'rooms') {
+        // From room page to property dashboard
+        return `/properties/${paths[1]}/dashboard`;
+      } else if (paths.length > 2) {
+        // From property sub-pages to properties list
+        return '/properties';
+      }
+    }
+    
+    // Default: go to properties (root)
+    return '/properties';
+  };
 
   // Get property and room names if applicable
   const property = propertyId ? getPropertyById(propertyId) : null;
@@ -36,7 +63,13 @@ export default function Page({ title, children }) {
       <header className="page-header">
         {!hideBack && (
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => {
+              const parentPath = getParentPath();
+              navigate(parentPath, {
+                replace: true,
+                state: { fromPath: pathname }
+              });
+            }}
             className="back-button"
             aria-label="Go back"
           >
@@ -88,6 +121,7 @@ export default function Page({ title, children }) {
           border-bottom: 1px solid #e5e7eb;
           flex-shrink: 0;
           z-index: 5;
+          justify-content: space-between;
         }
 
         .back-button {
@@ -122,6 +156,8 @@ export default function Page({ title, children }) {
           display: flex;
           flex-direction: column;
           gap: 4px;
+          text-align: center;
+          align-items: center;
         }
 
         .breadcrumb {

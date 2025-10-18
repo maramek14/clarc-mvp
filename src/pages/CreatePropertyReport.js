@@ -740,7 +740,7 @@ export default function CreatePropertyReport() {
           position: relative;
         }
 
-        .tenancy-option-card:hover {
+        .tenancy-option-card:active {
           border-color: #2C5F8D;
           transform: translateY(-2px);
           box-shadow: 0 4px 12px rgba(44, 95, 141, 0.1);

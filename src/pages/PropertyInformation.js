@@ -219,7 +219,7 @@ export default function PropertyInformation() {
   };
 
   return (
-    <div className="page-content">
+      <div className="page-content" style={{ paddingBottom: '4rem' }} >
       <div className="info-header">
         <h2>Property Details</h2>
         {!isEditingProperty ? (
@@ -844,7 +844,7 @@ export default function PropertyInformation() {
           justify-content: center;
         }
 
-        .icon-button:hover {
+        .icon-button:active {
           background: rgba(0, 0, 0, 0.05);
           color: #2A2A2A;
         }

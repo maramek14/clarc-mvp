@@ -4,25 +4,32 @@ import { X, Bell, User, Settings, LogOut, Calendar, AlertCircle } from "lucide-r
 export default function Sidebar({ isOpen, onClose }) {
   const navigate = useNavigate();
   
-  // Mock notifications - you'll replace with real data
+  // Notifications linked to activities
   const notifications = [
     {
       id: 1,
       type: "upcoming",
-      title: "Checkout at 272D coming up",
-      description: "Due in 8 days",
-      date: "Mar 25, 2024",
+      title: "Kitchen appliance check scheduled",
+      description: "272 D Earl's Court Rd",
+      date: "Due in 8 days",
       icon: <Calendar size={18} />,
-      color: "#f59e0b"
+      color: "#f59e0b",
+      activityData: {
+        propertyId: "prop-1",
+        roomId: "room-2"
+      }
     },
     {
       id: 2,
       type: "overdue",
-      title: "Report incomplete",
-      description: "45 Maple Street",
+      title: "Annual inspection overdue",
+      description: "3 Liverpool Grove",
       date: "2 days overdue",
       icon: <AlertCircle size={18} />,
-      color: "#ef4444"
+      color: "#ef4444",
+      activityData: {
+        propertyId: "prop-2"
+      }
     }
   ];
 
@@ -52,7 +59,20 @@ export default function Sidebar({ isOpen, onClose }) {
             <p className="empty-state">No notifications</p>
           ) : (
             notifications.map((notif) => (
-              <div key={notif.id} className="notification-item">
+              <div 
+                key={notif.id} 
+                className="notification-item" 
+                onClick={() => {
+                  if (notif.activityData) {
+                    if (notif.activityData.roomId) {
+                      navigate(`/properties/${notif.activityData.propertyId}/rooms/${notif.activityData.roomId}/inventory`);
+                    } else {
+                      navigate(`/properties/${notif.activityData.propertyId}/dashboard`);
+                    }
+                    onClose();
+                  }
+                }}
+              >
                 <div className="notif-icon" style={{ color: notif.color }}>
                   {notif.icon}
                 </div>
@@ -154,7 +174,7 @@ export default function Sidebar({ isOpen, onClose }) {
           transition: background 0.2s;
         }
 
-        .close-btn:hover {
+        .close-btn:active {
           background: #F5F3EF;
         }
 
@@ -177,6 +197,12 @@ export default function Sidebar({ isOpen, onClose }) {
           background: #F9F8F6;
           border-radius: 8px;
           margin-bottom: 12px;
+          cursor: pointer;
+        }
+
+        .notification-item:active {
+          background: white;
+          transform: scale(0.98);
         }
 
         .notif-icon {
@@ -227,7 +253,7 @@ export default function Sidebar({ isOpen, onClose }) {
           transition: background 0.2s;
         }
 
-        .menu-item:hover {
+        .menu-item:active {
           background: #F5F3EF;
         }
 
@@ -235,7 +261,7 @@ export default function Sidebar({ isOpen, onClose }) {
           color: #B85C4F;
         }
 
-        .menu-item.logout:hover {
+        .menu-item.logout:active {
           background: #FEF5F4;
         }
       `}</style>

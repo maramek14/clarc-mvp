@@ -247,13 +247,10 @@ export default function Settings() {
           transition: all 0.2s;
         }
 
-        .action-btn:hover {
-          background: #F9F8F6;
-        }
-
         .action-btn:active {
           background: #F5F3EF;
           border-color: #2C5F8D;
+          transform: scale(0.98);
         }
 
         .action-btn svg {
@@ -269,13 +266,10 @@ export default function Settings() {
           color: #B85C4F;
         }
 
-        .action-btn.logout:hover {
-          background: #FEF5F4;
-        }
-
         .action-btn.logout:active {
           background: #FDE8E6;
           border-color: #B85C4F;
+          transform: scale(0.98);
         }
 
         .action-content {

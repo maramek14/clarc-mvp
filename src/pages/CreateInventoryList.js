@@ -850,7 +850,7 @@ export default function CreateInventoryList() {
           position: relative;
         }
 
-        .tenancy-option-card:hover {
+        .tenancy-option-card:active {
           border-color: #2C5F8D;
           transform: translateY(-2px);
           box-shadow: 0 4px 12px rgba(44, 95, 141, 0.1);
@@ -959,7 +959,7 @@ export default function CreateInventoryList() {
           transition: all 0.2s;
         }
 
-        .selectable-photo:hover {
+        .selectable-photo:active {
           transform: scale(1.05);
         }
 
@@ -1158,7 +1158,7 @@ export default function CreateInventoryList() {
           flex-shrink: 0;
         }
 
-        .icon-button-danger:hover {
+        .icon-button-danger:active {
           background: #fee2e2;
         }
 
